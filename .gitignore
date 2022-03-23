@@ -1,0 +1,10 @@
+# cmake
+build
+
+# antlr
+.antlr
+gen
+java
+
+# vscode
+.vscode

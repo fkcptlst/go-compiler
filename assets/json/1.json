@@ -1,0 +1,11 @@
+{
+    "message": {
+        "name": "qwq",
+        "age": 30,
+        "sex": null
+    },
+    "friend": ["lxy", "cr"],
+    "other": {},
+    "a": true,
+    "b": false
+}
