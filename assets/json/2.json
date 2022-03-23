@@ -1,11 +1,10 @@
 {
-    "message": {
-        "name": "qwq",
-        "age": 30,
-        "sex": null
+    "description": "一个文件",
+    "logs": {
+        "level": "verbose",
+        "dir": "/var/log"
     },
-    "friend": ["lxy", "cr"],
-    "other": {},
-    "a": true,
-    "b": false
+    "host": "antlr.org",
+    "admin": ["parrt", "tombu"],
+    "aliases": []
 }

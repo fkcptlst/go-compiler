@@ -1,11 +1,14 @@
-{
-    "message": {
+[
+    "json",
+    {
         "name": "qwq",
         "age": 30,
         "sex": null
     },
-    "friend": ["lxy", "cr"],
-    "other": {},
-    "a": true,
-    "b": false
-}
+    {
+        "friend": ["lxy", "cr"],
+        "other": {},
+        "a": true,
+        "b": false
+    }
+]
