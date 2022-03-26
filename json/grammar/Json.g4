@@ -6,25 +6,26 @@ json    :   object
         ;
 
 
-object  :   '{' pair (',' pair)* '}'
-        |   '{' '}'
+object  :   '{' pair (',' pair)* '}'    # NotNullObject
+        |   '{' '}'                     # EmptyObject
         ;
 
 
-array   :   '[' value (',' value)* ']'
-        |   '[' ']'
+array   :   '[' value (',' value)* ']'  # NotNullArray
+        |   '[' ']'                     # EmptyArray
         ;
 
 
 pair    :   STRING ':' value;
 
 
-value   :   STRING
-        |   NUMBER
-        |   object
-        |   array
-        |   'true' | 'false'
-        |   'null'
+value   :   STRING                      # String
+        |   NUMBER                      # Atom
+        |   object                      # ObjectValue
+        |   array                       # ArrayValue
+        |   'true'                      # Atom
+        |   'false'                     # Atom
+        |   'null'                      # Atom
         ;
 
 
