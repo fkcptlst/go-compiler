@@ -2,18 +2,19 @@ grammar CSV; //grammar for CSV
 
 options { language=Cpp; }
 
-file: hdr row+ ;
-
+file : hdr row+ ;
 hdr : row ;
 
-row : field (',' field)* '\r' ? '\n';
+row : field (',' field)* '\r'? '\n' ;
 
 field
-    :   TEXT
-    |   STRING
-    |
+    :   text
+    |   string
+    |   empty
     ;
 
-TEXT: ~[,\n\r"]+ ;
-
-STRING : '"' ('""'|~'"');
+text : TEXT ;
+string : STRING ;
+empty :  ;
+TEXT : ~[,\n\r"]+ ;
+STRING : '"' ('""'|~'"')* '"' ; // quote-quote is an escaped quote

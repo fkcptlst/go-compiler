@@ -8,9 +8,15 @@
 using namespace std;
 
 
-int main(){
+int main(int argc, char * argv[]){
 
-    antlr4::ANTLRInputStream inputStream(cin);
+    string filename = (argc == 1) ? "1.csv" : argv[1];
+    cout << "start to translate " << filename << endl;
+
+    antlr4::ANTLRFileStream file;
+    file.loadFromFile("../../assets/CSV/" + filename);
+
+    antlr4::ANTLRInputStream inputStream(file.toString());
 
     CSVLexer lexer(&inputStream);
     antlr4::CommonTokenStream tokens(&lexer);
