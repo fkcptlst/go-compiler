@@ -14,13 +14,20 @@ private:
     TACFile TACFile_;
     ASMFile ASMFile_;
 
-public:
-    Translator(SymbolTabels&, TACFile&);
-    ~Translator();
-    void Translate();
+    // 翻译数据段
     void dataTranslate();
+
+    // 翻译代码段
     void textTranslate();
-    void OutputFile();
+public:
+    // 构造函数，接受输入
+    Translator(SymbolTabels&, TACFile&);
+    
+    // 完成三地址到汇编的翻译
+    void Translate();
+
+    // 结果格式化输出到文件
+    void OutputFile(std::string);
 };
 
 
