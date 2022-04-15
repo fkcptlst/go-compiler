@@ -17,7 +17,7 @@ class myGoListener : public GoParserListener
 public:
     antlr4::tree::ParseTreeProperty<string> values;
     
-
+    
     void exitPackageClause(GoParser::PackageClauseContext *ctx);
     void enterPackageClause(GoParser::PackageClauseContext *ctx);
 
