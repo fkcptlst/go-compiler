@@ -1,0 +1,17 @@
+# cmake
+build
+
+# antlr
+.antlr
+gen
+java
+
+# vscode
+.vscode
+
+# Symbol is to contrast
+Symbol
+
+# from lxy
+grammar/gen
+
