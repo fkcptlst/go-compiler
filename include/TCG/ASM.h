@@ -8,7 +8,7 @@ enum class OP {
 };
 
 enum class REG {
-    EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP, EIP,
+    EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP, EIP, None
 };
 
 struct ASMLine {

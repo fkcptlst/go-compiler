@@ -3,7 +3,8 @@
 
 #include "Common.h"
 
-enum VairableKind {
+
+enum class VairableKind {
 	/* 布尔 */
 	BOOL,
 	/* 数字 */
@@ -19,21 +20,40 @@ enum VairableKind {
 };
 
 
+struct UseInfo {
+	int64_t next_use;		/* 待用信息 */
+	bool active;			/* 活跃信息 */
+
+
+	UseInfo(int64_t next_use=0, bool active=false)
+	: next_use(next_use), active(active) {}
+
+	UseInfo& operator=(const UseInfo& rhs) {
+		next_use = rhs.next_use;
+		active = rhs.active;
+		return *this;
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, const UseInfo& rhs) {
+		os << rhs.next_use << "," << ((rhs.active) ? "Y" : "^");
+		return os;
+	}
+};
+
+
 struct VairableInfo {
 	VairableKind kind;
+	UseInfo use_info;
 
-	/* 待用信息和活跃信息 */
-	int next_use;
-	bool active;
+	VairableInfo()
+	: kind(VairableKind::BOOL), use_info() {}
 
-	VairableInfo() : kind(INT), next_use(0), active(false) {}
+	VairableInfo(VairableKind kind)
+	: kind(kind), use_info() {}
 };
 
 
-struct SymbolTabel {
-	std::unordered_map<std::string, VairableInfo> symbol_tabel;
-};
-
+using SymbolTabel = std::unordered_map<std::string, VairableInfo>;
 
 /* crTODO: 目前想的一个代码块一个表, 还可以改 */
 using SymbolTabels = std::vector<SymbolTabel>;

@@ -2,6 +2,7 @@
 #define INCLUDE_TCG_SYMBOLMANAGER_H_
 
 #include "Common.h"
+#include "SymbolTabel.h"
 #include "TAC.h"
 #include "TCG/ASM.h"
 
@@ -22,7 +23,7 @@ public:
 	REG get_reg(const std::string& vairable);
 
 	/* 计算一个代码块中, 变量的待用信息和活跃信息 */
-	void cal_use_info(TACBlock block);
+	void cal_use_info(TACBlock& block, SymbolTabel& symbol_tabel);
 
 private:
 	/* 寄存器描述数组 */
@@ -31,6 +32,16 @@ private:
 	/* 变量地址描述数组 */
 	std::unordered_map<std::string, uint64_t> avalue_;
 };
+
+
+inline std::string SymbolManager::rvalue(REG reg) {
+	return rvalue_[static_cast<int>(reg)];
+}
+
+
+inline uint64_t SymbolManager::avalue(const std::string& vairable) {
+	return avalue_[vairable];
+}
 
 
 #endif // INCLUDE_TCG_SYMBOLMANAGER_H_
