@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <cassert>
+#include <fstream>
 
 
 #endif // INCLUDE_COMMON_H_

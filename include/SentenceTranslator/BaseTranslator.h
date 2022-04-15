@@ -6,9 +6,8 @@
 #include "TAC.h"
 
 class BaseTranslator {
-private:
-    /* data */
 public:
+    // 完成对语句的翻译
     virtual ASMLines SentenceTranslate(TACLine) = 0;
 };
 
