@@ -1,11 +1,11 @@
-#ifndef INCLUDE_TRANSLATOR_H_
-#define INCLUDE_TRANSLATOR_H_
+#ifndef INCLUDE_TCG_TRANSLATOR_H_
+#define INCLUDE_TCG_TRANSLATOR_H_
 
 #include "Common.h"
-#include "ASM.h"
 #include "TAC.h"
 #include "SymbolTabel.h"
-#include "BlockTranslator.h"
+#include "TCG/ASM.h"
+#include "TCG/BlockTranslator.h"
 
 class Translator {
 private:
@@ -24,4 +24,4 @@ public:
 };
 
 
-#endif // INCLUDE_TRANSLATOR_H_
+#endif // INCLUDE_TCG_TRANSLATOR_H_

@@ -5,14 +5,14 @@
 #include "Common.h"
 
 /* lxyTODO */
-enum OP {
+enum class TACOP {
 	ADD, SUB, MUL, DIV,
 };
 
 
 struct TACLine {
 	int64_t line;				/* 行号 */
-	OP op;
+	TACOP op;
 	std::string src1, src2;
 	std::string dst;
 };

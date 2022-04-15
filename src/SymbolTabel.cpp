@@ -1,6 +1,1 @@
-#ifndef INCLUDE_SYMBOLTABEL_H_
-#define INCLUDE_SYMBOLTABEL_H_
-
-
-
-#endif // INCLUDE_SYMBOLTABEL_H_
+#include "SymbolTabel.h"
