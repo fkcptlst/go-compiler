@@ -10,7 +10,7 @@ using namespace std;
 
 
 int main(int argc, char * argv[]){
-    string filename="test.go";
+    string filename="calculate.go";
     cout << "start to translate "+filename << endl;
 
     antlr4::ANTLRFileStream file;

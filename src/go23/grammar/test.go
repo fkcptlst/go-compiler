@@ -4,7 +4,7 @@ import "fmt"
 
 var g int = ^20
 
-func swap(x, y string) (string, string) {
+func swap(x, y int) (int, int) {
    return y, x
 }
 
@@ -33,7 +33,7 @@ func main() {
 	for {}
 
 	// 函数调用
-	var s1,s2 string = "aaa","bbb"
+	var s1,s2 int = "aaa","bbb"
 	s3, s4 := swap(s1, s2)
 
 	// 全局变量vs局部变量
