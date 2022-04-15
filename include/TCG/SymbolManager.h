@@ -1,16 +1,13 @@
-#ifndef INCLUDE_SYMBOLMANAGER_H_
-#define INCLUDE_SYMBOLMANAGER_H_
+#ifndef INCLUDE_TCG_SYMBOLMANAGER_H_
+#define INCLUDE_TCG_SYMBOLMANAGER_H_
 
 #include "Common.h"
 #include "TAC.h"
+#include "TCG/ASM.h"
 
 
 /* crTODO */
 #define reg_nums 10
-enum REG {
-	esp
-	/* crTODO */
-};
 
 
 class SymbolManager {
@@ -36,4 +33,4 @@ private:
 };
 
 
-#endif // INCLUDE_SYMBOLMANAGER_H_
+#endif // INCLUDE_TCG_SYMBOLMANAGER_H_

@@ -1,7 +1,7 @@
 add_library(src
-	SentenceTranslator/BaseTranslator.cpp
-	BlockTranslator.cpp
-	SymbolManager.cpp
+	TCG/SentenceTranslator/BaseTranslator.cpp
+	TCG/BlockTranslator.cpp
+	TCG/SymbolManager.cpp
 	SymbolTabel.cpp
 )
 target_include_directories(src PUBLIC ${CMAKE_SOURCE_DIR}/include)

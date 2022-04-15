@@ -1,13 +1,13 @@
-#ifndef INCLUDE_ASM_H_
-#define INCLUDE_ASM_H_
+#ifndef INCLUDE_TCG_ASM_H_
+#define INCLUDE_TCG_ASM_H_
 
 #include "Common.h"
 
-enum OP {
+enum class OP {
     MOV, PUSH, POP, CALL, JMP, RET,
 };
 
-enum REG {
+enum class REG {
     EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP, EIP,
 };
 
@@ -32,4 +32,4 @@ struct ASMSection {
 
 using ASMFile = std::vector<ASMSection>;
 
-#endif // INCLUDE_ASM_H_
+#endif // INCLUDE_TCG_ASM_H_
