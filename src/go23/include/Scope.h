@@ -6,20 +6,20 @@ using namespace std;
 #define SUCCESS 1
 #define FAIL 0
 
-class BaseScope{
+class Scope{
 public:
-    BaseScope* enclosingScope_;
-    map<string,Symbol> symbols;
+    Scope* enclosingScope_;
+    map<string,Symbol> symbols_;
 
-    BaseScope(){
+    Scope(){
         enclosingScope_=nullptr;
     }
-    BaseScope(BaseScope* enclosingScope){
+    Scope(Scope* enclosingScope){
         enclosingScope_=enclosingScope;
     }
     int resolve(string name,Symbol& ret){
-        if (symbols.count(name)==1){
-            Symbol ret = symbols[name];
+        if (symbols_.count(name)==1){
+            Symbol ret = symbols_[name];
             return SUCCESS;
         }
         // if not here, check any enclosing scope
@@ -31,10 +31,13 @@ public:
     }
 
     void define(Symbol& sym){
-        symbols[sym.name_]=sym;
+        symbols_[sym.name_]=sym;
     }
-    BaseScope* getEnclosingScope(){
+
+    Scope* getEnclosingScope(){
         return enclosingScope_;
     }
-    
+    ~Scope(){
+        // cout<<"fuck"<<endl;
+    }
 };

@@ -15,6 +15,10 @@ struct TACLine {
 	TACOP op;
 	std::string src1, src2;
 	std::string dst;
+	
+	TACLine(int64_t _line, TACOP _op, std::string _src1, 
+	std::string _src2, std::string _dst) : 
+	line(_line), op(_op), src1(_src1), src2(_src2), dst(_dst){}
 };
 
 

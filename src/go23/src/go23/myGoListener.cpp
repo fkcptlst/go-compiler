@@ -1,6 +1,8 @@
 #include <iostream>
 #include <antlr4-runtime.h>
 #include <vector>
+#include <string>
+#include <fstream>
 #include "GoParser.h"
 #include "GoLexer.h"
 #include "GoParserListener.h"
@@ -9,6 +11,39 @@
 #include "TAC.h"
 
 using namespace std;
+
+string myGoListener::CreateLocalVar(){
+    string Local;
+    bool CheckResult = 0;
+    do
+    {
+        Local = "T" + to_string(myGoListener::LocalIndex);
+        myGoListener::LocalIndex ++;
+        
+    }
+    while(CheckResult);
+    return Local;
+}
+string myGoListener::ToString(TACOP num){
+    switch (num)
+    {
+        case TACOP::ADD:    return "ADD";
+        case TACOP::SUB:    return "SUB";
+        case TACOP::DIV:    return "DIV";
+        case TACOP::MUL:    return "MUL";
+        default:  return "";
+    }
+}
+
+void myGoListener::Go23file(string filename){
+    for(auto it : test)
+    {
+        ofstream outfile;
+        outfile.open(filename, ios::out|ios::app);
+        outfile << it.line << " " << ToString(it.op) << " " << it.src1 << " " << it.src2 << " " << it.dst << endl;
+        outfile.close();
+    }
+}
 
 void myGoListener::exitPackageClause(GoParser::PackageClauseContext *ctx)
 {
@@ -38,6 +73,10 @@ void myGoListener::exitOperand(GoParser::OperandContext *ctx){
         string OperandValue = values.get(ctx->literal());
         values.put(ctx, OperandValue);
     }
+    if (ctx->expression()){
+        string OperandValue = values.get(ctx->expression());
+        values.put(ctx, OperandValue);
+    }
 }
 
 void myGoListener::enterLiteral(GoParser::LiteralContext *ctx){}
@@ -58,7 +97,6 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 
 void myGoListener::enterExpression(GoParser::ExpressionContext *ctx){}
 void myGoListener::exitExpression(GoParser::ExpressionContext *ctx){
-    
 }
 
 void myGoListener::enterUnaryOperation(GoParser::UnaryOperationContext *ctx){}
@@ -68,11 +106,29 @@ void myGoListener::exitUnaryOperation(GoParser::UnaryOperationContext *ctx){
 
 void myGoListener::enterPrimaryExpression(GoParser::PrimaryExpressionContext *ctx){}
 void myGoListener::exitPrimaryExpression(GoParser::PrimaryExpressionContext *ctx){
-
+    string ExpresionValue = values.get(ctx->primaryExpr());
+    values.put(ctx, ExpresionValue);
 }
 
 void myGoListener::enterPlusMinusOperation(GoParser::PlusMinusOperationContext *ctx){}
 void myGoListener::exitPlusMinusOperation(GoParser::PlusMinusOperationContext *ctx){
+    if(ctx->PLUS())
+    {
+        string dst = CreateLocalVar();
+        test.push_back(TACLine(myGoListener::LineIndex, TACOP::ADD, values.get(ctx->expression(0)), values.get(ctx->expression(1)), dst));
+        values.put(ctx, dst);
+        myGoListener::LineIndex++;
+        
+    }
+
+    else if(ctx->MINUS())
+    {
+        string dst = CreateLocalVar();
+        test.push_back(TACLine(myGoListener::LineIndex, TACOP::SUB, values.get(ctx->expression(0)), values.get(ctx->expression(1)), dst));
+        values.put(ctx, dst);
+        myGoListener::LineIndex++;
+        
+    }
 
 }
 
@@ -83,7 +139,23 @@ void myGoListener::exitRelationOperation(GoParser::RelationOperationContext *ctx
 
 void myGoListener::enterMulDivOperation(GoParser::MulDivOperationContext *ctx){}
 void myGoListener::exitMulDivOperation(GoParser::MulDivOperationContext *ctx){
+    if(ctx->STAR())
+    {
+        string dst = CreateLocalVar();
+        test.push_back(TACLine(myGoListener::LineIndex, TACOP::MUL, values.get(ctx->expression(0)), values.get(ctx->expression(1)), dst));
+        values.put(ctx, dst);
+        myGoListener::LineIndex++;
+        
+    }
 
+    else if(ctx->DIV())
+    {
+        string dst = CreateLocalVar();
+        test.push_back(TACLine(myGoListener::LineIndex, TACOP::DIV, values.get(ctx->expression(0)), values.get(ctx->expression(1)), dst));
+        values.put(ctx, dst);
+        myGoListener::LineIndex++;
+        
+    }
 }
 
 void myGoListener::enterLogicalOrOperation(GoParser::LogicalOrOperationContext *ctx){}
@@ -98,7 +170,13 @@ void myGoListener::exitLogicalAndOperation(GoParser::LogicalAndOperationContext 
 
 
 
-void myGoListener::enterSourceFile(GoParser::SourceFileContext *ctx){}
+void myGoListener::enterSourceFile(GoParser::SourceFileContext *ctx){
+    Scope* globalScope=new Scope();
+    currentScope = globalScope;
+    // scopes.put(ctx,currentScope);
+    deleteLine.push_back(globalScope);
+}
+
 void myGoListener::exitSourceFile(GoParser::SourceFileContext *ctx){}
 
 void myGoListener::enterImportDecl(GoParser::ImportDeclContext *ctx){}
@@ -131,8 +209,16 @@ void myGoListener::exitTypeDecl(GoParser::TypeDeclContext *ctx){}
 void myGoListener::enterTypeSpec(GoParser::TypeSpecContext *ctx){}
 void myGoListener::exitTypeSpec(GoParser::TypeSpecContext *ctx){}
 
-void myGoListener::enterFunctionDecl(GoParser::FunctionDeclContext *ctx){}
-void myGoListener::exitFunctionDecl(GoParser::FunctionDeclContext *ctx){}
+void myGoListener::enterFunctionDecl(GoParser::FunctionDeclContext *ctx){
+    if(ctx->block()){ // 有block时
+        addScope();
+    }
+}
+void myGoListener::exitFunctionDecl(GoParser::FunctionDeclContext *ctx){
+    if(ctx->block()){ // 有block时
+        popScope();
+    }
+}
 
 void myGoListener::enterMethodDecl(GoParser::MethodDeclContext *ctx){}
 void myGoListener::exitMethodDecl(GoParser::MethodDeclContext *ctx){}
@@ -144,7 +230,18 @@ void myGoListener::enterVarDecl(GoParser::VarDeclContext *ctx){}
 void myGoListener::exitVarDecl(GoParser::VarDeclContext *ctx){}
 
 void myGoListener::enterVarSpec(GoParser::VarSpecContext *ctx){}
-void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){}
+void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
+    
+    int n=ctx->identifierList()->IDENTIFIER().size();
+    for(int i=0;i<n;++i){
+        string integer=ctx->identifierList()->IDENTIFIER(i)->getText();
+        // Symbol::Type type=ctx->type_()->typeName()->getText();
+        string stype=ctx->type_()->typeName()->getText();
+        Symbol::Type type=Symbol::toType(stype);
+        Symbol symbol(integer,currentScope,Symbol::SymbolType::VAR,type);
+        myGoListener::currentScope->define(symbol);
+    }
+}
 
 void myGoListener::enterBlock(GoParser::BlockContext *ctx){}
 void myGoListener::exitBlock(GoParser::BlockContext *ctx){}
@@ -152,7 +249,9 @@ void myGoListener::exitBlock(GoParser::BlockContext *ctx){}
 void myGoListener::enterStatementList(GoParser::StatementListContext *ctx){}
 void myGoListener::exitStatementList(GoParser::StatementListContext *ctx){}
 
-void myGoListener::enterStatement(GoParser::StatementContext *ctx){}
+void myGoListener::enterStatement(GoParser::StatementContext *ctx){
+    if(ctx->block()) cout<<"----------------"<<endl;
+}
 void myGoListener::exitStatement(GoParser::StatementContext *ctx){}
 
 void myGoListener::enterSimpleStmt(GoParser::SimpleStmtContext *ctx){}
@@ -302,7 +401,17 @@ void myGoListener::exitResult(GoParser::ResultContext *ctx){}
 void myGoListener::enterParameters(GoParser::ParametersContext *ctx){}
 void myGoListener::exitParameters(GoParser::ParametersContext *ctx){}
 
-void myGoListener::enterParameterDecl(GoParser::ParameterDeclContext *ctx){}
+void myGoListener::enterParameterDecl(GoParser::ParameterDeclContext *ctx){
+    int n=ctx->identifierList()->IDENTIFIER().size();
+    for(int i=0;i<n;++i){
+        string integer=ctx->identifierList()->IDENTIFIER(i)->getText();
+        // Symbol::Type type=ctx->type_()->typeName()->getText();
+        string stype=ctx->type_()->typeName()->getText();
+        Symbol::Type type=Symbol::toType(stype);
+        Symbol symbol(integer,currentScope,Symbol::SymbolType::VAR,type);
+        myGoListener::currentScope->define(symbol);
+    }
+}
 void myGoListener::exitParameterDecl(GoParser::ParameterDeclContext *ctx){}
 
 void myGoListener::enterConversion(GoParser::ConversionContext *ctx){}

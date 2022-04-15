@@ -1,32 +1,41 @@
 #include <string>
 #include <map>
-// #include "BaseScope.h"
+// #include "Scope.h"
 
 using namespace std;
-class BaseScope;
+class Scope;
 
 class Symbol{
 public:
-    enum class symbolType{
+    enum class SymbolType{
         VAR,
         FUN,
     };
-
+    enum class Type{
+        tINT,
+    };
     string name_;
-    BaseScope scope_;
-    symbolType type_;
+    Scope* scope_;
+    SymbolType symoblType_;
+    Type type_;
+    Symbol(){
+        
+    }
+    Symbol(string name,Scope* scope,SymbolType symoblType,Type type):
+     name_(name),scope_(scope),symoblType_(symoblType),type_(type){
 
-    // string getName(){
-    //     return name_;
-    // }
-    // void setScope(BaseScope scp){
-    //     scope_=scp;
-    // }
+    }
     bool isVar(){
-        return type_== symbolType::VAR;
+        return symoblType_== SymbolType::VAR;
     }
     bool isFun(){
-        return type_== symbolType::FUN;
+        return symoblType_== SymbolType::FUN;
     }
 
+    static Type toType(string s){
+        if(s=="int"){
+            return Type::tINT;
+        }
+        
+    }
 };
