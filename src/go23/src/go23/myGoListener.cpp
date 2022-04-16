@@ -35,14 +35,33 @@ string myGoListener::ToString(TACOP num){
     }
 }
 
+
 void myGoListener::Go23file(string filename){
-    for(auto it : test)
+    for(auto it : *test)
     {
         ofstream outfile;
         outfile.open(filename, ios::out|ios::app);
         outfile << it.line << " " << ToString(it.op) << " " << it.src1 << " " << it.src2 << " " << it.dst << endl;
         outfile.close();
     }
+}
+
+
+void myGoListener::myPrint(Scope* currentScope){
+    for(auto it:currentScope->symbols_){
+        cout<<it.first<<endl;
+    }
+}
+void myGoListener::addScope(){
+    Scope* scope=new Scope(currentScope);
+    // scopes.put(ctx,scope);
+    deleteLine.push_back(scope);
+    currentScope=scope;
+}
+void myGoListener::popScope(){
+    myPrint(currentScope);
+    currentScope=currentScope->enclosingScope_;
+    
 }
 
 void myGoListener::exitPackageClause(GoParser::PackageClauseContext *ctx)
@@ -54,15 +73,15 @@ void myGoListener::enterPackageClause(GoParser::PackageClauseContext *ctx){}
 
 void myGoListener::enterInteger(GoParser::IntegerContext *ctx){}
 void myGoListener::exitInteger(GoParser::IntegerContext *ctx){
-    values.put(ctx,ctx->DECIMAL_LIT()->getText());
+    values->put(ctx,ctx->DECIMAL_LIT()->getText());
 }
 
 
 void myGoListener::enterBasicLit(GoParser::BasicLitContext *ctx){}
 void myGoListener::exitBasicLit(GoParser::BasicLitContext *ctx){
     if (ctx->integer()){
-        string BasicLitValue = values.get(ctx->integer());
-        values.put(ctx, BasicLitValue);
+        string BasicLitValue = values->get(ctx->integer());
+        values->put(ctx, BasicLitValue);
     }
 }
 
@@ -70,28 +89,28 @@ void myGoListener::exitBasicLit(GoParser::BasicLitContext *ctx){
 void myGoListener::enterOperand(GoParser::OperandContext *ctx){}
 void myGoListener::exitOperand(GoParser::OperandContext *ctx){
     if (ctx->literal()){
-        string OperandValue = values.get(ctx->literal());
-        values.put(ctx, OperandValue);
+        string OperandValue = values->get(ctx->literal());
+        values->put(ctx, OperandValue);
     }
     if (ctx->expression()){
-        string OperandValue = values.get(ctx->expression());
-        values.put(ctx, OperandValue);
+        string OperandValue = values->get(ctx->expression());
+        values->put(ctx, OperandValue);
     }
 }
 
 void myGoListener::enterLiteral(GoParser::LiteralContext *ctx){}
 void myGoListener::exitLiteral(GoParser::LiteralContext *ctx){
     if (ctx->basicLit()){
-        string LiteralValue = values.get(ctx->basicLit());
-        values.put(ctx, LiteralValue);
+        string LiteralValue = values->get(ctx->basicLit());
+        values->put(ctx, LiteralValue);
     }
 }
 
 void myGoListener::enterPrimaryExpr(GoParser::PrimaryExprContext *ctx){}
 void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
     if (ctx->operand()){
-        string PrimaryExprValue = values.get(ctx->operand());
-        values.put(ctx, PrimaryExprValue);
+        string PrimaryExprValue = values->get(ctx->operand());
+        values->put(ctx, PrimaryExprValue);
     }
 }
 
@@ -106,8 +125,8 @@ void myGoListener::exitUnaryOperation(GoParser::UnaryOperationContext *ctx){
 
 void myGoListener::enterPrimaryExpression(GoParser::PrimaryExpressionContext *ctx){}
 void myGoListener::exitPrimaryExpression(GoParser::PrimaryExpressionContext *ctx){
-    string ExpresionValue = values.get(ctx->primaryExpr());
-    values.put(ctx, ExpresionValue);
+    string ExpresionValue = values->get(ctx->primaryExpr());
+    values->put(ctx, ExpresionValue);
 }
 
 void myGoListener::enterPlusMinusOperation(GoParser::PlusMinusOperationContext *ctx){}
@@ -115,8 +134,8 @@ void myGoListener::exitPlusMinusOperation(GoParser::PlusMinusOperationContext *c
     if(ctx->PLUS())
     {
         string dst = CreateLocalVar();
-        test.push_back(TACLine(myGoListener::LineIndex, TACOP::ADD, values.get(ctx->expression(0)), values.get(ctx->expression(1)), dst));
-        values.put(ctx, dst);
+        test->push_back(TACLine(myGoListener::LineIndex, TACOP::ADD, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst));
+        values->put(ctx, dst);
         myGoListener::LineIndex++;
         
     }
@@ -124,8 +143,8 @@ void myGoListener::exitPlusMinusOperation(GoParser::PlusMinusOperationContext *c
     else if(ctx->MINUS())
     {
         string dst = CreateLocalVar();
-        test.push_back(TACLine(myGoListener::LineIndex, TACOP::SUB, values.get(ctx->expression(0)), values.get(ctx->expression(1)), dst));
-        values.put(ctx, dst);
+        test->push_back(TACLine(myGoListener::LineIndex, TACOP::SUB, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst));
+        values->put(ctx, dst);
         myGoListener::LineIndex++;
         
     }
@@ -142,8 +161,8 @@ void myGoListener::exitMulDivOperation(GoParser::MulDivOperationContext *ctx){
     if(ctx->STAR())
     {
         string dst = CreateLocalVar();
-        test.push_back(TACLine(myGoListener::LineIndex, TACOP::MUL, values.get(ctx->expression(0)), values.get(ctx->expression(1)), dst));
-        values.put(ctx, dst);
+        test->push_back(TACLine(myGoListener::LineIndex, TACOP::MUL, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst));
+        values->put(ctx, dst);
         myGoListener::LineIndex++;
         
     }
@@ -151,8 +170,8 @@ void myGoListener::exitMulDivOperation(GoParser::MulDivOperationContext *ctx){
     else if(ctx->DIV())
     {
         string dst = CreateLocalVar();
-        test.push_back(TACLine(myGoListener::LineIndex, TACOP::DIV, values.get(ctx->expression(0)), values.get(ctx->expression(1)), dst));
-        values.put(ctx, dst);
+        test->push_back(TACLine(myGoListener::LineIndex, TACOP::DIV, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst));
+        values->put(ctx, dst);
         myGoListener::LineIndex++;
         
     }

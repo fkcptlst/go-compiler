@@ -17,8 +17,8 @@ class myGoListener : public GoParserListener
 public:
     int LineIndex = 0;
     int LocalIndex = 0;
-    TACBlock test;
-    antlr4::tree::ParseTreeProperty<string> values;
+    TACBlock *test;
+    antlr4::tree::ParseTreeProperty<string> *values;
     // antlr4::tree::ParseTreeProperty<Scope*> scopes;
     Scope* currentScope;
     vector<Scope*> deleteLine;
@@ -29,22 +29,10 @@ public:
 
     string ToString(TACOP num);
 
-    void myPrint(Scope* currentScope){
-        for(auto it:currentScope->symbols_){
-            cout<<it.first<<endl;
-        }
-    }
-    void addScope(){
-        Scope* scope=new Scope(currentScope);
-        // scopes.put(ctx,scope);
-        deleteLine.push_back(scope);
-        currentScope=scope;
-    }
-    void popScope(){
-        myPrint(currentScope);
-        currentScope=currentScope->enclosingScope_;
-        
-    }
+    void myPrint(Scope* currentScope);
+    void addScope();
+    void popScope();
+
     void exitPackageClause(GoParser::PackageClauseContext *ctx);
     void enterPackageClause(GoParser::PackageClauseContext *ctx);
 
