@@ -17,8 +17,8 @@ class myGoListener : public GoParserListener
 public:
     int LineIndex = 0;
     int LocalIndex = 0;
-    TACBlock *test;
-    antlr4::tree::ParseTreeProperty<string> *values;
+    TACBlock *test = new TACBlock;
+    antlr4::tree::ParseTreeProperty<string> *values = new antlr4::tree::ParseTreeProperty<string> ;
     // antlr4::tree::ParseTreeProperty<Scope*> scopes;
     Scope* currentScope;
     vector<Scope*> deleteScopeList;

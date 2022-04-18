@@ -23,6 +23,7 @@ int main(int argc, char * argv[]){
     GoParser parser(&tokens);
     myGoListener listener;
     antlr4::tree::ParseTreeWalker::DEFAULT.walk( &listener, parser.sourceFile());
+    listener.Go23file("3code.txt");
 
     return 0;
     //std::cout << ret.as<LabeledExprVisitor*>()-> << std::endl;
