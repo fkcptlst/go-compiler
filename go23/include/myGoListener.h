@@ -21,7 +21,8 @@ public:
     antlr4::tree::ParseTreeProperty<string> *values = new antlr4::tree::ParseTreeProperty<string> ;
     // antlr4::tree::ParseTreeProperty<Scope*> scopes;
     Scope* currentScope;
-    vector<Scope*> deleteLine;
+    vector<Scope*> deleteScopeList;
+    // vector<Symbol*> deleteSymbolList;
 
     string CreateLocalVar(); // check the local_varname is illgal
     
