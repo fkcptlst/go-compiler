@@ -8,8 +8,25 @@ enum class OP {
 };
 
 enum class REG {
-    EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP, EIP, None
+    EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP, EIP,
+    None    /* None 不代表寄存器, 数值上等于 REG 个数 */
 };
+
+
+inline std::string to_string(REG reg) {
+    switch (reg) {
+        case REG::EAX : return "eax";
+        case REG::EBX : return "ebx";
+        case REG::ECX : return "ecx";
+        case REG::EDX : return "edx";
+        case REG::ESI : return "esi";
+        case REG::EDI : return "edi";
+        case REG::ESP : return "esp";
+        case REG::EBP : return "ebp";
+        case REG::EIP : return "eip";
+        default: return "None";
+    }
+}
 
 struct ASMLine {
     OP op;

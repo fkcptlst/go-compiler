@@ -38,6 +38,10 @@ struct UseInfo {
 		os << rhs.next_use << "," << ((rhs.active) ? "Y" : "^");
 		return os;
 	}
+
+	bool no_use() const {
+		return (next_use == 0 && active == false);
+	}
 };
 
 

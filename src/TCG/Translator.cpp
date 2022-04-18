@@ -1,5 +1,5 @@
 #include "Common.h"
-#include "Translator.h"
+#include "TCG/Translator.h"
 
 Translator::Translator(SymbolTabels& SymbolTabels_, TACFile& TACFile_) {
     TACFile_ = TACFile_;

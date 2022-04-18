@@ -1,7 +1,9 @@
+file(GLOB_RECURSE SRC_LIB_SRC *.cpp)
+
 add_library(src
-	TCG/SentenceTranslator/BaseTranslator.cpp
-	TCG/BlockTranslator.cpp
-	TCG/SymbolManager.cpp
-	SymbolTabel.cpp
+	${SRC_LIB_SRC}
 )
+
 target_include_directories(src PUBLIC ${CMAKE_SOURCE_DIR}/include)
+
+
