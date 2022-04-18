@@ -3,7 +3,7 @@
 
 #include "Common.h"
 
-enum class OP {
+enum class ASMOP {
     MOV, PUSH, POP, CALL, JMP, RET,
 };
 
@@ -12,6 +12,41 @@ enum class REG {
     None    /* None 不代表寄存器, 数值上等于 REG 个数 */
 };
 
+enum class OprandType {
+    t_NULL, t_IMM, t_REG, t_MEM,
+};
+
+struct ASMOprand {
+    OprandType type;
+    int32_t value;
+    ASMOprand(OprandType type, int32_t value)
+    : type(type), value(value) {} 
+};
+
+struct ASMLine {
+    ASMOP op;
+    std::vector<ASMOprand> oprands;
+    ASMLine(ASMOP op, std::vector<ASMOprand> oprands)
+    : op(op), oprands(oprands) {}
+};
+
+using ASMLines = std::vector<ASMLine>;
+
+struct ASMBlock {
+    std::string name;
+    ASMLines asmlines;
+    ASMBlock(std::string name, ASMLines asmlines)
+    : name(name), asmlines(asmlines) {}
+};
+
+struct ASMSection {
+    std::string name;
+    std::vector<ASMBlock> asmblocks;
+    ASMSection(std::string name, std::vector<ASMBlock> asmblocks)
+    : name(name), asmblocks(asmblocks) {}
+};
+
+using ASMFile = std::vector<ASMSection>;
 
 inline std::string to_string(REG reg) {
     switch (reg) {
@@ -28,25 +63,35 @@ inline std::string to_string(REG reg) {
     }
 }
 
-struct ASMLine {
-    OP op;
-    std::string oprand_1;  // 这里先待定
-    std::string oprand_2;
-    std::string oprand_3;
-};
+inline std::string to_string(ASMOprand ASMOprand_) {
+    std::stringstream ss;
+    std::string hex_s;
+    ss << std::hex << ASMOprand_.value;
+    ss >> hex_s;
+    switch (ASMOprand_.type) {
+        case OprandType::t_IMM : return "0x" + hex_s;
+        case OprandType::t_REG : return to_string(REG(ASMOprand_.value));
+        case OprandType::t_MEM : return "[" + hex_s + "]";
+        case OprandType::t_NULL : return "";
+        default: return "None";
+    }
+}
 
-using ASMLines = std::vector<ASMLine>;
+inline std::string to_string(ASMLine ASMLine_) {
+    std::string asmop;
+    switch (ASMLine_.op) {
+        case ASMOP::MOV : asmop = "mov";
+        default: asmop = "?";
+    }
+    std::string asmline = asmop;
+    for (int i = 0; i < ASMLine_.oprands.size(); i++) {
+        if (i != 0) {
+            asmline = asmline + ",";
+        }
+        asmline = asmline + to_string(ASMLine_.oprands[i]);
+    }
+    return asmline;
+}
 
-struct ASMBlock {
-    std::string name;
-    ASMLines asmlines;
-};
-
-struct ASMSection {
-    std::string name;
-    std::vector<ASMBlock> asmblocks;
-};
-
-using ASMFile = std::vector<ASMSection>;
 
 #endif // INCLUDE_TCG_ASM_H_

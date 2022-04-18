@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include<sstream>
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
