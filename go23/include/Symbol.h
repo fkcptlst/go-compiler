@@ -18,11 +18,17 @@ public:
     Scope* scope_;
     SymbolType symoblType_;
     Type type_;
+    vector<Type> funRetTypeList_;
+
     Symbol(){
         
     }
     Symbol(string name,Scope* scope,SymbolType symoblType,Type type):
-     name_(name),scope_(scope),symoblType_(symoblType),type_(type){
+      name_(name),scope_(scope),symoblType_(symoblType),type_(type){
+
+    }
+    Symbol(string name,Scope* scope,SymbolType symoblType,vector<Type> funRetTypeList):
+      name_(name),scope_(scope),symoblType_(symoblType),funRetTypeList_(funRetTypeList){
 
     }
     bool isVar(){

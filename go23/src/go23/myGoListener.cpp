@@ -55,7 +55,7 @@ void myGoListener::myPrint(Scope* currentScope){
 void myGoListener::addScope(){
     Scope* scope=new Scope(currentScope);
     // scopes.put(ctx,scope);
-    deleteLine.push_back(scope);
+    deleteScopeList.push_back(scope);
     currentScope=scope;
 }
 void myGoListener::popScope(){
@@ -193,7 +193,7 @@ void myGoListener::enterSourceFile(GoParser::SourceFileContext *ctx){
     Scope* globalScope=new Scope();
     currentScope = globalScope;
     // scopes.put(ctx,currentScope);
-    deleteLine.push_back(globalScope);
+    deleteScopeList.push_back(globalScope);
 }
 
 void myGoListener::exitSourceFile(GoParser::SourceFileContext *ctx){}
@@ -229,14 +229,33 @@ void myGoListener::enterTypeSpec(GoParser::TypeSpecContext *ctx){}
 void myGoListener::exitTypeSpec(GoParser::TypeSpecContext *ctx){}
 
 void myGoListener::enterFunctionDecl(GoParser::FunctionDeclContext *ctx){
-    if(ctx->block()){ // 有block时
-        addScope();
+    Scope* scope=new Scope(currentScope);
+    deleteScopeList.push_back(scope);
+
+    /* 构建fun symbol */
+    string identifier=ctx->IDENTIFIER()->getText();
+    vector<Symbol::Type> funRetTypeList;
+    // 无返回值
+    if(!ctx->signature()->result() || 
+      ctx->signature()->result()->parameters()->parameterDecl().size()==0){
+        // do nothing
     }
+    else{  // 有返回值
+        int n=ctx->signature()->result()->parameters()->parameterDecl().size();
+        for(int i=0;i<n;++i){
+            string eachType=ctx->signature()->result()->parameters()->
+              parameterDecl(i)->type_()->typeName()->getText();
+            Symbol::Type eachSType=Symbol::toType(eachType);
+            funRetTypeList.push_back(eachSType);
+        }
+    }
+    Symbol* symbol= new Symbol(identifier,currentScope,
+      Symbol::SymbolType::FUN,funRetTypeList);
+    myGoListener::currentScope->define(symbol);    
+    currentScope=scope;
 }
 void myGoListener::exitFunctionDecl(GoParser::FunctionDeclContext *ctx){
-    if(ctx->block()){ // 有block时
-        popScope();
-    }
+    popScope();
 }
 
 void myGoListener::enterMethodDecl(GoParser::MethodDeclContext *ctx){}
@@ -257,13 +276,17 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
         // Symbol::Type type=ctx->type_()->typeName()->getText();
         string stype=ctx->type_()->typeName()->getText();
         Symbol::Type type=Symbol::toType(stype);
-        Symbol symbol(integer,currentScope,Symbol::SymbolType::VAR,type);
+        Symbol* symbol= new Symbol(integer,currentScope,Symbol::SymbolType::VAR,type);
         myGoListener::currentScope->define(symbol);
     }
 }
 
-void myGoListener::enterBlock(GoParser::BlockContext *ctx){}
-void myGoListener::exitBlock(GoParser::BlockContext *ctx){}
+void myGoListener::enterBlock(GoParser::BlockContext *ctx){
+    addScope();
+}
+void myGoListener::exitBlock(GoParser::BlockContext *ctx){
+    popScope();
+}
 
 void myGoListener::enterStatementList(GoParser::StatementListContext *ctx){}
 void myGoListener::exitStatementList(GoParser::StatementListContext *ctx){}
@@ -427,7 +450,7 @@ void myGoListener::enterParameterDecl(GoParser::ParameterDeclContext *ctx){
         // Symbol::Type type=ctx->type_()->typeName()->getText();
         string stype=ctx->type_()->typeName()->getText();
         Symbol::Type type=Symbol::toType(stype);
-        Symbol symbol(integer,currentScope,Symbol::SymbolType::VAR,type);
+        Symbol* symbol= new Symbol(integer,currentScope,Symbol::SymbolType::VAR,type);
         myGoListener::currentScope->define(symbol);
     }
 }

@@ -9,7 +9,9 @@ using namespace std;
 class Scope{
 public:
     Scope* enclosingScope_;
-    map<string,Symbol> symbols_;
+    map<string,Symbol*> symbols_;
+    TACBlock TACBlock_;
+
 
     Scope(){
         enclosingScope_=nullptr;
@@ -19,7 +21,7 @@ public:
     }
     int resolve(string name,Symbol& ret){
         if (symbols_.count(name)==1){
-            Symbol ret = symbols_[name];
+            Symbol* ret = symbols_[name];
             return SUCCESS;
         }
         // if not here, check any enclosing scope
@@ -30,8 +32,8 @@ public:
         return FAIL; // not found
     }
 
-    void define(Symbol& sym){
-        symbols_[sym.name_]=sym;
+    void define(Symbol* sym){
+        symbols_[sym->name_]=sym;
     }
 
     Scope* getEnclosingScope(){
