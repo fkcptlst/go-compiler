@@ -31,6 +31,7 @@ string myGoListener::ToString(TACOP num){
         case TACOP::SUB:    return "SUB";
         case TACOP::DIV:    return "DIV";
         case TACOP::MUL:    return "MUL";
+        case TACOP::ASSIGN: return "ASSIGN";
         default:  return "";
     }
 }
@@ -41,6 +42,7 @@ void myGoListener::Go23file(string filename){
     {
         ofstream outfile;
         outfile.open(filename, ios::out|ios::app);
+        
         outfile << it.line << " " << ToString(it.op) << " " << it.src1 << " " << it.src2 << " " << it.dst << endl;
         outfile.close();
     }
@@ -80,6 +82,7 @@ void myGoListener::exitInteger(GoParser::IntegerContext *ctx){
 void myGoListener::enterBasicLit(GoParser::BasicLitContext *ctx){}
 void myGoListener::exitBasicLit(GoParser::BasicLitContext *ctx){
     if (ctx->integer()){
+    
         string BasicLitValue = values->get(ctx->integer());
         values->put(ctx, BasicLitValue);
     }
@@ -98,10 +101,13 @@ void myGoListener::exitOperand(GoParser::OperandContext *ctx){
     }
 }
 
-void myGoListener::enterLiteral(GoParser::LiteralContext *ctx){}
+void myGoListener::enterLiteral(GoParser::LiteralContext *ctx){
+    
+}
 void myGoListener::exitLiteral(GoParser::LiteralContext *ctx){
     if (ctx->basicLit()){
         string LiteralValue = values->get(ctx->basicLit());
+
         values->put(ctx, LiteralValue);
     }
 }
@@ -248,18 +254,33 @@ void myGoListener::exitReceiver(GoParser::ReceiverContext *ctx){}
 void myGoListener::enterVarDecl(GoParser::VarDeclContext *ctx){}
 void myGoListener::exitVarDecl(GoParser::VarDeclContext *ctx){}
 
-void myGoListener::enterVarSpec(GoParser::VarSpecContext *ctx){}
+void myGoListener::enterVarSpec(GoParser::VarSpecContext *ctx){
+}
 void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
-    
-    int n=ctx->identifierList()->IDENTIFIER().size();
-    for(int i=0;i<n;++i){
-        string integer=ctx->identifierList()->IDENTIFIER(i)->getText();
-        // Symbol::Type type=ctx->type_()->typeName()->getText();
-        string stype=ctx->type_()->typeName()->getText();
-        Symbol::Type type=Symbol::toType(stype);
-        Symbol symbol(integer,currentScope,Symbol::SymbolType::VAR,type);
-        myGoListener::currentScope->define(symbol);
+    int n = ctx->identifierList()->IDENTIFIER().size();
+    int en = ctx->expressionList()->expression().size();
+    if(n != en) 
+    {
+        // lxyTO DO: add raise fuc
+        
     }
+
+    for(int i=0;i<n;++i){
+        string varname = ctx->identifierList()->IDENTIFIER(i)->getText();
+        string varvalue = values->get(ctx->expressionList()->expression(i));
+
+        /* add var to symtbl*/
+        string stype = ctx->type_()->typeName()->getText();
+        Symbol::Type type = Symbol::toType(stype);
+        Symbol symbol(varname,currentScope,Symbol::SymbolType::VAR,type);
+        myGoListener::currentScope->define(symbol);
+
+        /* add vardel to 3-code */
+        test->push_back(TACLine(myGoListener::LineIndex, TACOP::ASSIGN, varvalue, "", varname));
+
+
+    }
+
 }
 
 void myGoListener::enterBlock(GoParser::BlockContext *ctx){}
