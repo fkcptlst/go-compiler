@@ -4,6 +4,7 @@
 Translator::Translator(SymbolTabels& SymbolTabels_, TACFile& TACFile_) {
     TACFile_ = TACFile_;
     ASMFile_.clear();
+    // 构建SymbolManager
 }
 
 
