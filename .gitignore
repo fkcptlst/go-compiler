@@ -8,7 +8,8 @@ java
 java-g4
 
 # vscode
-.vscode
+.vscode/*
+!.vscode/c_cpp_properties.json
 
 # Symbol is to contrast
 Symbol
