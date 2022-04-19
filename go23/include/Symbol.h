@@ -1,9 +1,7 @@
 #ifndef INCLUDE_SYMBOL_H_
 #define INCLUDE_SYMBOL_H_
 
-#include <string>
-#include <vector>
-#include <map>
+#include "Common.h"
 // #include "Scope.h"
 
 using namespace std;

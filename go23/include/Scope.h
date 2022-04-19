@@ -3,8 +3,7 @@
 
 #include "Symbol.h"
 #include "TAC.h"
-#include <string>
-#include <map>
+#include "Common.h"
 using namespace std;
 
 #define SUCCESS 1

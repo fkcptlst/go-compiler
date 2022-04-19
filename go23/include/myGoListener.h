@@ -1,9 +1,7 @@
 #ifndef INCLUDE_MYGOLIS_H_
 #define INCLUDE_MYGOLIS_H_
 
-#include <iostream>
-#include <antlr4-runtime.h>
-#include <vector>
+#include "Common.h"
 #include "GoParser.h"
 #include "GoLexer.h"
 #include "GoParserListener.h"
