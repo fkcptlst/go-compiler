@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INCLUDE_MYGOLIS_H_
+#define INCLUDE_MYGOLIS_H_
 
 #include <iostream>
 #include <antlr4-runtime.h>
@@ -362,3 +363,5 @@ public:
 
 private:
 };
+
+#endif

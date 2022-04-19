@@ -1,4 +1,8 @@
+#ifndef INCLUDE_SYMBOL_H_
+#define INCLUDE_SYMBOL_H_
+
 #include <string>
+#include <vector>
 #include <map>
 // #include "Scope.h"
 
@@ -31,12 +35,9 @@ public:
       name_(name),scope_(scope),symoblType_(symoblType),funRetTypeList_(funRetTypeList){
 
     }
-    bool isVar(){
-        return symoblType_== SymbolType::VAR;
-    }
-    bool isFun(){
-        return symoblType_== SymbolType::FUN;
-    }
+    bool isVar();
+
+    bool isFun();
 
     static Type toType(string s){
         if(s=="int"){
@@ -45,3 +46,5 @@ public:
         
     }
 };
+
+#endif

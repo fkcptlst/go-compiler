@@ -1,4 +1,8 @@
+#ifndef INCLUDE_SCOPE_H_
+#define INCLUDE_SCOPE_H_
+
 #include "Symbol.h"
+#include "TAC.h"
 #include <string>
 #include <map>
 using namespace std;
@@ -19,27 +23,15 @@ public:
     Scope(Scope* enclosingScope){
         enclosingScope_=enclosingScope;
     }
-    int resolve(string name,Symbol& ret){
-        if (symbols_.count(name)==1){
-            Symbol* ret = symbols_[name];
-            return SUCCESS;
-        }
-        // if not here, check any enclosing scope
-        if ( enclosingScope_ != nullptr ){
-            int ret_code=enclosingScope_->resolve(name,ret);
-            return ret_code;
-        }
-        return FAIL; // not found
-    }
+    int resolve(string name,Symbol& ret);
 
-    void define(Symbol* sym){
-        symbols_[sym->name_]=sym;
-    }
+    void define(Symbol* sym);
 
-    Scope* getEnclosingScope(){
-        return enclosingScope_;
-    }
+    Scope* getEnclosingScope();
+
     ~Scope(){
         // cout<<"fuck"<<endl;
     }
 };
+
+#endif
