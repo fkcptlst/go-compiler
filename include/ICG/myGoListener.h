@@ -1,15 +1,13 @@
 #ifndef INCLUDE_ICG_MYGOLIS_H_
 #define INCLUDE_ICG_MYGOLIS_H_
 
-#include <iostream>
-#include <antlr4-runtime.h>
-#include <vector>
+#include "Common/Common.h"
+#include "Common/Scope.h"
+#include "Common/TAC.h"
 #include "GoParser.h"
 #include "GoLexer.h"
 #include "GoParserListener.h"
 #include "GoParserBaseListener.h"
-#include "Common/TAC.h"
-#include "Common/Scope.h"
 
 using namespace std;
 

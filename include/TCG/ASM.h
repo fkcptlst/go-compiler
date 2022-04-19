@@ -19,15 +19,16 @@ enum class OprandType {
 struct ASMOprand {
     OprandType type;
     int32_t value;
+    ASMOprand() {}
     ASMOprand(OprandType type, int32_t value)
-    : type(type), value(value) {} 
+    : type(type), value(value) {}
 };
 
 struct ASMLine {
     ASMOP op;
     std::vector<ASMOprand> oprands;
 
-    ASMLine() {};
+    ASMLine() {}
     ASMLine(ASMOP op, std::vector<ASMOprand> oprands)
     : op(op), oprands(oprands) {}
 };
