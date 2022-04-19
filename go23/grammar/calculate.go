@@ -17,6 +17,6 @@ func swap3(x int,y int) (int, int) {
 func main() {
 	var main_a,main_b int
 	var main_a,main_b int = 1, 2
-
-    main_a,main_b = f()
+	main_a = 1
+	main_b = 31231
 }

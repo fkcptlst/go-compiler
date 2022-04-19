@@ -34,6 +34,7 @@ public:
     void addScope();
     void popScope();
 
+    void push_line(TACBlock *block, TACOP op, string src1, string src2, string dst);
     void exitPackageClause(GoParser::PackageClauseContext *ctx);
     void enterPackageClause(GoParser::PackageClauseContext *ctx);
 

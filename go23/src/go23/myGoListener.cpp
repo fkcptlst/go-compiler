@@ -32,22 +32,29 @@ string myGoListener::ToString(TACOP num){
         case TACOP::DIV:    return "DIV";
         case TACOP::MUL:    return "MUL";
         case TACOP::ASSIGN: return "ASSIGN";
+        case TACOP::DEF:    return "DEF";
         default:  return "";
     }
 }
 
 
 void myGoListener::Go23file(string filename){
+    ofstream outfile;
+    outfile.open(filename, ios::out);
+    outfile.clear();
+    
     for(auto it : *test)
     {
-        ofstream outfile;
-        outfile.open(filename, ios::out|ios::app);
-        
         outfile << it.line << " " << ToString(it.op) << " " << it.src1 << " " << it.src2 << " " << it.dst << endl;
-        outfile.close();
     }
+    outfile.close();
 }
 
+void myGoListener::push_line(TACBlock *block, TACOP op, string src1, string src2, string dst){
+    block->push_back(TACLine(myGoListener::LineIndex, op, src1, src2, dst));
+    myGoListener::LineIndex ++;
+
+}
 
 void myGoListener::myPrint(Scope* currentScope){
     for(auto it:currentScope->symbols_){
@@ -146,18 +153,16 @@ void myGoListener::exitPlusMinusOperation(GoParser::PlusMinusOperationContext *c
     if(ctx->PLUS())
     {
         string dst = CreateLocalVar();
-        test->push_back(TACLine(myGoListener::LineIndex, TACOP::ADD, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst));
+        push_line (test, TACOP::ADD, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst);
         values->put(ctx, dst);
-        myGoListener::LineIndex++;
         
     }
 
     else if(ctx->MINUS())
     {
         string dst = CreateLocalVar();
-        test->push_back(TACLine(myGoListener::LineIndex, TACOP::SUB, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst));
+        push_line (test, TACOP::SUB, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst);
         values->put(ctx, dst);
-        myGoListener::LineIndex++;
         
     }
 
@@ -173,19 +178,16 @@ void myGoListener::exitMulDivOperation(GoParser::MulDivOperationContext *ctx){
     if(ctx->STAR())
     {
         string dst = CreateLocalVar();
-        test->push_back(TACLine(myGoListener::LineIndex, TACOP::MUL, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst));
+        push_line (test, TACOP::MUL, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst);
         values->put(ctx, dst);
-        myGoListener::LineIndex++;
         
     }
 
     else if(ctx->DIV())
     {
         string dst = CreateLocalVar();
-        test->push_back(TACLine(myGoListener::LineIndex, TACOP::DIV, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst));
+        push_line (test, TACOP::DIV, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst);
         values->put(ctx, dst);
-        myGoListener::LineIndex++;
-        
     }
 }
 
@@ -304,8 +306,8 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
         for(int i=0;i<n;++i){
             string varname = ctx->identifierList()->IDENTIFIER(i)->getText();
             string varvalue = values->get(ctx->expressionList()->expression(i));
-            test->push_back(TACLine(myGoListener::LineIndex, TACOP::ASSIGN, varvalue, "", varname));
-            myGoListener::LineIndex++;
+            push_line (test, TACOP::DEF, varvalue, "", varname);
+            
         }
     }
 
@@ -344,7 +346,18 @@ void myGoListener::enterIncDecStmt(GoParser::IncDecStmtContext *ctx){}
 void myGoListener::exitIncDecStmt(GoParser::IncDecStmtContext *ctx){}
 
 void myGoListener::enterAssignment(GoParser::AssignmentContext *ctx){}
-void myGoListener::exitAssignment(GoParser::AssignmentContext *ctx){}
+void myGoListener::exitAssignment(GoParser::AssignmentContext *ctx){
+    if(ctx->assign_op()->getText() == "=")
+    {
+        int size = ctx->expressionList(0)->expression().size();
+        for(int i = 0; i < size; i++)
+        {
+            string varname = values->get(ctx->expressionList(0)->expression(i));
+            string varvalue = values->get(ctx->expressionList(1)->expression(i));
+            push_line (test, TACOP::ASSIGN, varvalue, "", varname);
+        }
+    }
+}
 
 void myGoListener::enterAssign_op(GoParser::Assign_opContext *ctx){}
 void myGoListener::exitAssign_op(GoParser::Assign_opContext *ctx){}

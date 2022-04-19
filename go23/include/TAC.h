@@ -6,7 +6,7 @@
 
 /* lxyTODO */
 enum class TACOP {
-	ADD, SUB, MUL, DIV, ASSIGN,
+	ADD, SUB, MUL, DIV, ASSIGN,DEF, 
 };
 
 
