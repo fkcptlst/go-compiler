@@ -5,6 +5,7 @@ build
 .antlr
 gen
 java
+java-g4
 
 # vscode
 .vscode

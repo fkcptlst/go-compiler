@@ -1,4 +1,4 @@
-#include "Common.h"
+#include "Common/Common.h"
 #include "TCG/BlockTranslator.h"
 #include "TCG/SentenceTranslator/BaseTranslator.h"
 

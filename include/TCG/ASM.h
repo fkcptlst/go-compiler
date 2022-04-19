@@ -1,7 +1,7 @@
 #ifndef INCLUDE_TCG_ASM_H_
 #define INCLUDE_TCG_ASM_H_
 
-#include "Common.h"
+#include "Common/Common.h"
 
 enum class ASMOP {
     MOV, PUSH, POP, CALL, JMP, RET,
@@ -26,6 +26,8 @@ struct ASMOprand {
 struct ASMLine {
     ASMOP op;
     std::vector<ASMOprand> oprands;
+
+    ASMLine() {};
     ASMLine(ASMOP op, std::vector<ASMOprand> oprands)
     : op(op), oprands(oprands) {}
 };
@@ -35,6 +37,8 @@ using ASMLines = std::vector<ASMLine>;
 struct ASMBlock {
     std::string name;
     ASMLines asmlines;
+
+    ASMBlock() {}
     ASMBlock(std::string name, ASMLines asmlines)
     : name(name), asmlines(asmlines) {}
 };
@@ -42,6 +46,8 @@ struct ASMBlock {
 struct ASMSection {
     std::string name;
     std::vector<ASMBlock> asmblocks;
+
+    ASMSection() {}
     ASMSection(std::string name, std::vector<ASMBlock> asmblocks)
     : name(name), asmblocks(asmblocks) {}
 };

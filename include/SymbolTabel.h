@@ -1,7 +1,7 @@
 #ifndef INCLUDE_SYMBOLTABEL_H_
 #define INCLUDE_SYMBOLTABEL_H_
 
-#include "Common.h"
+#include "Common/Common.h"
 
 
 enum class VairableKind {

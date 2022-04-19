@@ -1,6 +1,6 @@
 #include <iomanip>
-#include "Common.h"
-#include "TAC.h"
+#include "Common/Common.h"
+#include "Common/TAC.h"
 #include "TCG/SymbolManager.h"
 
 

@@ -1,9 +1,9 @@
 #ifndef INCLUDE_TCG_SYMBOLMANAGER_H_
 #define INCLUDE_TCG_SYMBOLMANAGER_H_
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "SymbolTabel.h"
-#include "TAC.h"
+#include "Common/TAC.h"
 #include "TCG/ASM.h"
 
 

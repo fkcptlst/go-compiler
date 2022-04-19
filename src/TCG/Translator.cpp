@@ -1,4 +1,4 @@
-#include "Common.h"
+#include "Common/Common.h"
 #include "TCG/Translator.h"
 
 Translator::Translator(SymbolTabels& SymbolTabels_, TACFile& TACFile_) {

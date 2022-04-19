@@ -1,8 +1,8 @@
 #ifndef INCLUDE_TCG_TRANSLATOR_H_
 #define INCLUDE_TCG_TRANSLATOR_H_
 
-#include "Common.h"
-#include "TAC.h"
+#include "Common/Common.h"
+#include "Common/TAC.h"
 #include "SymbolTabel.h"
 #include "TCG/ASM.h"
 #include "TCG/BlockTranslator.h"

@@ -1,9 +1,9 @@
 #ifndef INCLUDE_TCG_SENTENCETRANSLATOR_BASETRANSLATOR_H_
 #define INCLUDE_TCG_SENTENCETRANSLATOR_BASETRANSLATOR_H_
 
-#include "Common.h"
+#include "Common/Common.h"
+#include "Common/TAC.h"
 #include "TCG/ASM.h"
-#include "TAC.h"
 
 class BaseTranslator {
 public:
