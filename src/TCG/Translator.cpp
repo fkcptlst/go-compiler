@@ -1,7 +1,7 @@
 #include "Common/Common.h"
 #include "TCG/Translator.h"
 
-Translator::Translator(SymbolTabels& SymbolTabels_, TACFile& TACFile_) {
+Translator::Translator(Scope& Scopes_, TACFile& TACFile_) {
     TACFile_ = TACFile_;
     ASMFile_.clear();
     // 构建SymbolManager

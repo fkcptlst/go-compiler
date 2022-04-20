@@ -2,8 +2,8 @@
 #define INCLUDE_TCG_TRANSLATOR_H_
 
 #include "Common/Common.h"
+#include "Common/Scope.h"
 #include "Common/TAC.h"
-#include "SymbolTabel.h"
 #include "TCG/ASM.h"
 #include "TCG/BlockTranslator.h"
 
@@ -21,7 +21,7 @@ private:
     void textTranslate();
 public:
     // 构造函数，接受输入
-    Translator(SymbolTabels&, TACFile&);
+    Translator(Scope&, TACFile&);
     
     // 完成三地址到汇编的翻译
     void Translate();

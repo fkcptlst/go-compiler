@@ -1,10 +1,11 @@
 #include <iomanip>
 #include "Common/Common.h"
+#include "Common/Scope.h"
 #include "Common/TAC.h"
 #include "TCG/SymbolManager.h"
 
 
-void test_init(TACBlock& block, SymbolTabel& symbol_table, SymbolManager& symbol_manager) {
+void test_init(TACBlock& block, Scope& symbol_table, SymbolManager& symbol_manager) {
 	/* TAC 文件 */
 	block.emplace_back(TACLine(1, TACOP::ADD, "A", "B", "T"));
 	block.emplace_back(TACLine(2, TACOP::SUB, "A", "C", "U"));
@@ -17,20 +18,20 @@ void test_init(TACBlock& block, SymbolTabel& symbol_table, SymbolManager& symbol
 	}
 
 	/* 建立符号表 */
-	symbol_table.emplace("A", VairableInfo(VairableKind::INT));
-	symbol_table.emplace("B", VairableInfo(VairableKind::INT));
-	symbol_table.emplace("C", VairableInfo(VairableKind::INT));
-	symbol_table.emplace("T", VairableInfo(VairableKind::INT));
-	symbol_table.emplace("U", VairableInfo(VairableKind::INT));
-	symbol_table.emplace("V", VairableInfo(VairableKind::INT));
-	symbol_table.emplace("W", VairableInfo(VairableKind::INT));
+	symbol_table.symbols.emplace("A", Symbol("A", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	symbol_table.symbols.emplace("B", Symbol("B", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	symbol_table.symbols.emplace("C", Symbol("C", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	symbol_table.symbols.emplace("T", Symbol("T", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	symbol_table.symbols.emplace("U", Symbol("U", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	symbol_table.symbols.emplace("V", Symbol("V", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	symbol_table.symbols.emplace("W", Symbol("W", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
 }
 
 
-void cal_use_info(TACBlock& block, SymbolTabel& symbol_table, SymbolManager& symbol_manager) {
+void cal_use_info(TACBlock& block, Scope& scope, SymbolManager& symbol_manager) {
 	/* 计算待用信息和活跃信息 */
-	symbol_table["W"].use_info.active = true;
-	symbol_manager.cal_use_info(block, symbol_table);
+	scope.symbols["W"].use_info.active = true;
+	symbol_manager.cal_use_info(block, scope);
 
 	/* 打印结果 */
 	std::cout << "待用信息和活跃信息: " << std::endl;
@@ -44,7 +45,7 @@ void cal_use_info(TACBlock& block, SymbolTabel& symbol_table, SymbolManager& sym
 }
 
 
-void get_reg(TACBlock& block, SymbolTabel& symbol_table, SymbolManager& symbol_manager) {
+void get_reg(TACBlock& block, Scope& symbol_table, SymbolManager& symbol_manager) {
 	symbol_manager.set_variable("A", REG::EAX, 0);
 	symbol_manager.set_variable("B", REG::EBX, 0);
 	symbol_manager.set_variable("C", REG::ECX, 0);
@@ -62,7 +63,7 @@ void get_reg(TACBlock& block, SymbolTabel& symbol_table, SymbolManager& symbol_m
 
 int main() {
 	TACBlock block;
-	SymbolTabel symbol_table;
+	Scope symbol_table;
 	SymbolManager symbol_manager;
 	test_init(block, symbol_table, symbol_manager);
 	cal_use_info(block, symbol_table, symbol_manager);

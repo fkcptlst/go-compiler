@@ -55,7 +55,7 @@ void myGoListener::push_line(TACBlock *block, TACOP op, string src1, string src2
 }
 
 void myGoListener::myPrint(Scope* currentScope){
-    for(auto it:currentScope->symbols_){
+    for(auto it:currentScope->symbols){
         cout<<it.first<<endl;
     }
 }
@@ -69,7 +69,7 @@ void myGoListener::popScope(){
     
     myPrint(currentScope);
     
-    currentScope=currentScope->enclosingScope_;
+    currentScope=currentScope->enclosing_scope;
     
 }
 

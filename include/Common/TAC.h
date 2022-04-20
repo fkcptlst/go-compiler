@@ -2,9 +2,9 @@
 #define INCLUDE_COMMON_TAC_H_
 
 #include "Common/Common.h"
-#include "SymbolTabel.h"
+#include "Common/Scope.h"
 
-/* lxyTODO */
+
 enum class TACOP {
 	ADD, SUB, MUL, DIV,
 };

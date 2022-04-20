@@ -2,7 +2,7 @@
 #define INCLUDE_TCG_SYMBOLMANAGER_H_
 
 #include "Common/Common.h"
-#include "SymbolTabel.h"
+#include "Common/Scope.h"
 #include "Common/TAC.h"
 #include "TCG/ASM.h"
 
@@ -21,7 +21,7 @@ public:
 	REG get_reg(const TACLine& line);
 
 	/* 计算一个代码块中, 变量的待用信息和活跃信息 */
-	void cal_use_info(TACBlock& block, SymbolTabel& symbol_tabel);
+	void cal_use_info(TACBlock& block, Scope& scope);
 
 private:
 	/* 获得一个空间寄存器 */
