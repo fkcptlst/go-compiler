@@ -6,10 +6,10 @@
 
 void test_init(TACBlock& block, SymbolTabel& symbol_table, SymbolManager& symbol_manager) {
 	/* TAC 文件 */
-	block.emplace_back(TACLine(1, TACOP::ADD, "A", "B", "T"));
-	block.emplace_back(TACLine(2, TACOP::SUB, "A", "C", "U"));
-	block.emplace_back(TACLine(3, TACOP::ADD, "T", "U", "V"));
-	block.emplace_back(TACLine(4, TACOP::ADD, "V", "U", "W"));
+	block.emplace_back(TACLine(1, TACOP::ADD, Operand("A"), Operand("B"), Operand("T")));
+	block.emplace_back(TACLine(2, TACOP::SUB, Operand("A"), Operand("C"), Operand("U")));
+	block.emplace_back(TACLine(3, TACOP::ADD, Operand("T"), Operand("U"), Operand("V")));
+	block.emplace_back(TACLine(4, TACOP::ADD, Operand("V"), Operand("U"), Operand("W")));
 
 	std::cout << "TAC文件内容: " << std::endl;
 	for (auto& line : block) {
