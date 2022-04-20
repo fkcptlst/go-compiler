@@ -26,4 +26,4 @@ target_include_directories(icg PUBLIC
     ${CMAKE_SOURCE_DIR}/include
 )
 
-target_link_libraries(icg 3rd)
+target_link_libraries(icg 3rd common)

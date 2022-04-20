@@ -265,7 +265,7 @@ void myGoListener::enterFunctionDecl(GoParser::FunctionDeclContext *ctx){
     
     Symbol* symbol= new Symbol(identifier,currentScope,
       Symbol::SymbolType::FUN,funRetTypeList);
-    myGoListener::currentScope->define(symbol);    
+    myGoListener::currentScope->define(symbol);
     currentScope=scope;
     
 }
