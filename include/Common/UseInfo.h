@@ -5,8 +5,8 @@
 
 
 struct UseInfo {
-	int64_t next_use;		/* 待用信息 */
-	bool active;			/* 活跃信息 */
+	int64_t 		next_use;		/* 待用信息 */
+	bool 			active;			/* 活跃信息 */
 
 	UseInfo(int64_t next_use=0, bool active=false) : next_use(next_use), active(active) {}
 

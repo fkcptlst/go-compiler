@@ -5,7 +5,8 @@
 #include "TCG/SymbolManager.h"
 
 
-void test_init(TACBlock& block, Scope& symbol_table, SymbolManager& symbol_manager) {
+void test_init(Scope& scope, SymbolManager& symbol_manager) {
+	TACBlock &block = scope.block;
 	/* TAC 文件 */
 	block.emplace_back(TACLine(1, TACOP::ADD, Operand("A"), Operand("B"), Operand("T")));
 	block.emplace_back(TACLine(2, TACOP::SUB, Operand("A"), Operand("C"), Operand("U")));
@@ -18,20 +19,21 @@ void test_init(TACBlock& block, Scope& symbol_table, SymbolManager& symbol_manag
 	}
 
 	/* 建立符号表 */
-	symbol_table.symbols.emplace("A", Symbol("A", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
-	symbol_table.symbols.emplace("B", Symbol("B", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
-	symbol_table.symbols.emplace("C", Symbol("C", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
-	symbol_table.symbols.emplace("T", Symbol("T", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
-	symbol_table.symbols.emplace("U", Symbol("U", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
-	symbol_table.symbols.emplace("V", Symbol("V", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
-	symbol_table.symbols.emplace("W", Symbol("W", &symbol_table, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.symbols.emplace("A", Symbol("A", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.symbols.emplace("B", Symbol("B", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.symbols.emplace("C", Symbol("C", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.symbols.emplace("T", Symbol("T", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.symbols.emplace("U", Symbol("U", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.symbols.emplace("V", Symbol("V", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.symbols.emplace("W", Symbol("W", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
 }
 
 
-void cal_use_info(TACBlock& block, Scope& scope, SymbolManager& symbol_manager) {
+void cal_use_info(Scope& scope, SymbolManager& symbol_manager) {
+	TACBlock &block = scope.block;
 	/* 计算待用信息和活跃信息 */
-	scope.symbols["W"].use_info.active = true;
-	symbol_manager.cal_use_info(block, scope);
+	symbol_manager.set_use_info("W", {0, true});
+	symbol_manager.cal_use_info();
 
 	/* 打印结果 */
 	std::cout << "待用信息和活跃信息: " << std::endl;
@@ -45,10 +47,11 @@ void cal_use_info(TACBlock& block, Scope& scope, SymbolManager& symbol_manager) 
 }
 
 
-void get_reg(TACBlock& block, Scope& symbol_table, SymbolManager& symbol_manager) {
-	symbol_manager.set_variable("A", REG::EAX, 0);
-	symbol_manager.set_variable("B", REG::EBX, 0);
-	symbol_manager.set_variable("C", REG::ECX, 0);
+void get_reg(Scope& scope, SymbolManager& symbol_manager) {
+	TACBlock &block = scope.block;
+	symbol_manager.set_avalue_reg("A", REG::EAX);
+	symbol_manager.set_avalue_reg("B", REG::EBX);
+	symbol_manager.set_avalue_reg("C", REG::ECX);
 	std::cout << "获取寄存器: " << std::endl;
 	for (TACLine &line : block) {
 		symbol_manager.get_reg(line);
@@ -62,11 +65,10 @@ void get_reg(TACBlock& block, Scope& symbol_table, SymbolManager& symbol_manager
 
 
 int main() {
-	TACBlock block;
-	Scope symbol_table;
-	SymbolManager symbol_manager;
-	test_init(block, symbol_table, symbol_manager);
-	cal_use_info(block, symbol_table, symbol_manager);
-	get_reg(block, symbol_table, symbol_manager);
+	Scope scope;
+	SymbolManager symbol_manager(scope);
+	test_init(scope, symbol_manager);
+	cal_use_info(scope, symbol_manager);
+	get_reg(scope, symbol_manager);
 	return 0;
 }

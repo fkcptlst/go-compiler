@@ -2,7 +2,7 @@
 #define INCLUDE_COMMON_TAC_H_
 
 #include "Common/Common.h"
-#include "Common/Scope.h"
+#include "Common/UseInfo.h"
 
 
 enum class TACOP {
@@ -11,8 +11,8 @@ enum class TACOP {
 
 
 struct Operand {
-	std::string value;
-	UseInfo use_info;
+	std::string 		value;
+	UseInfo 			use_info;
 
 	Operand(std::string value)
 	: value(value), use_info() {}

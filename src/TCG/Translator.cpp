@@ -36,8 +36,9 @@ void Translator::textTranslate() {
     // todo 加入global start语句
 
     for(int i = 0; i < TACFile_.size(); i++) {
-        ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(this->SymbolManager_, TACFile_[i]);
-        ASMSection_.asmblocks.push_back(ASMBlock_);
+        /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? */
+        // ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(this->SymbolManager_, TACFile_[i]);
+        // ASMSection_.asmblocks.push_back(ASMBlock_);
     }
 
     ASMFile_.push_back(ASMSection_);

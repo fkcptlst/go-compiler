@@ -2,14 +2,10 @@
 #define INCLUDE_TCG_ASM_H_
 
 #include "Common/Common.h"
+#include "Common/REG.h"
 
 enum class ASMOP {
     MOV, PUSH, POP, CALL, JMP, RET,
-};
-
-enum class REG {
-    EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP, EIP,
-    None    /* None 不代表寄存器, 数值上等于 REG 个数 */
 };
 
 enum class OprandType {

@@ -2,7 +2,7 @@
 #define INCLUDE_COMMON_SCOPE_H_
 
 #include "Common/Common.h"
-#include "Common/UseInfo.h"
+#include "Common/TAC.h"
 
 #define SUCCESS 1
 #define FAIL 0
@@ -31,18 +31,17 @@ struct Symbol{
         /* crTODO: 其他牛逼类型 */
     };
 
-    std::string name;
-    Scope* scope;
-    SymbolType symobl_type;
-    Type type;
-    std::vector<Type> fun_ret_type_list;
-    UseInfo use_info;                           /* 待用信息和活跃信息 */
+    std::string         name;
+    Scope*              scope;
+    SymbolType          symobl_type;
+    Type                type;
+    std::vector<Type>   fun_ret_type_list;
 
     Symbol() = default;
     Symbol(std::string name, Scope* scope, SymbolType symobl_type, Type type)
-    : name(name),scope(scope), symobl_type(symobl_type), type(type), use_info() {}
+    : name(name),scope(scope), symobl_type(symobl_type), type(type) {}
     Symbol(std::string name, Scope* scope, SymbolType symobl_type, std::vector<Type> fun_ret_type_list)
-    : name(name),scope(scope), symobl_type(symobl_type), fun_ret_type_list(fun_ret_type_list), use_info() {}
+    : name(name),scope(scope), symobl_type(symobl_type), fun_ret_type_list(fun_ret_type_list) {}
 
     bool isVar();
     bool isFun();
@@ -56,8 +55,9 @@ struct Symbol{
 
 
 struct Scope{
-    Scope* enclosing_scope;
-    std::map<std::string, Symbol> symbols;
+    Scope*                          enclosing_scope;
+    std::map<std::string, Symbol>   symbols;
+    TACBlock                        block;
 
     Scope() : enclosing_scope(nullptr), symbols() {}
     Scope(Scope* enclosing_scope) : enclosing_scope(enclosing_scope), symbols() {}
