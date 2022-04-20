@@ -23,6 +23,8 @@ public:
     vector<Scope*> deleteScopeList;
     // vector<Symbol*> deleteSymbolList;
 
+    Symbol::Type defineTmpType() {return Symbol::Type::INT;}
+
     string CreateLocalVar(); // check the local_varname is illgal
     
     void Go23file(string filename);
@@ -33,7 +35,7 @@ public:
     void addScope();
     void popScope();
 
-    void push_line(TACBlock *block, TACOP op, string src1, string src2, string dst);
+    void push_line(TACBlock *block, TACOP op, Operand src1, Operand src2, Operand dst);
     void exitPackageClause(GoParser::PackageClauseContext *ctx);
     void enterPackageClause(GoParser::PackageClauseContext *ctx);
 

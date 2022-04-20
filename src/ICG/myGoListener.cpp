@@ -10,47 +10,50 @@
 using namespace std;
 
 string myGoListener::CreateLocalVar(){
-    string Local;
-    bool CheckResult = 0;
-    do
-    {
-        Local = "T" + to_string(myGoListener::LocalIndex);
-        myGoListener::LocalIndex ++;
-        
-    }
-    while(CheckResult);
-    return Local;
+	string Local;
+	bool CheckResult = 0;
+	do
+	{
+		Local = "T" + to_string(myGoListener::LocalIndex);
+		myGoListener::LocalIndex ++;
+		
+	}
+	while(CheckResult);
+	/* TODO: 判断tmp类型 */
+	Symbol* symbol= new Symbol(Local,currentScope,
+	Symbol::SymbolType::VAR,defineTmpType());
+	myGoListener::currentScope->define(symbol); 
+	return Local;
 }
 string myGoListener::ToString(TACOP num){
-    switch (num)
-    {
-        case TACOP::ADD:    return "ADD";
-        case TACOP::SUB:    return "SUB";
-        case TACOP::DIV:    return "DIV";
-        case TACOP::MUL:    return "MUL";
-        // case TACOP::ASSIGN: return "ASSIGN";
-        // case TACOP::DEF:    return "DEF";
-        default:  return "";
-    }
+	switch (num)
+	{
+		case TACOP::ADD:    return "ADD";
+		case TACOP::SUB:    return "SUB";
+		case TACOP::DIV:    return "DIV";
+		case TACOP::MUL:    return "MUL";
+		// case TACOP::ASSIGN: return "ASSIGN";
+		// case TACOP::DEF:    return "DEF";
+		default:  return "";
+	}
 }
 
 
 void myGoListener::Go23file(string filename){
-    ofstream outfile;
-    outfile.open(filename, ios::out);
-    outfile.clear();
-    
-    for(auto it : *test)
-    {
-        /* crTODO:  */
-        // outfile << it.line << " " << ToString(it.op) << " " << it.src1 << " " << it.src2 << " " << it.dst << endl;
-    }
-    outfile.close();
+	ofstream outfile;
+	outfile.open(filename, ios::out);
+	outfile.clear();
+	
+	for(auto it : *test)
+	{
+		outfile << it.line << " " << ToString(it.op) << " " << it.src1.value << " " << it.src2.value << " " << it.dst.value << endl;
+	}
+	outfile.close();
 }
 
-void myGoListener::push_line(TACBlock *block, TACOP op, string src1, string src2, string dst){
-    block->push_back(TACLine(myGoListener::LineIndex, op, src1, src2, dst));
-    myGoListener::LineIndex ++;
+void myGoListener::push_line(TACBlock *block, TACOP op, Operand src1, Operand src2, Operand dst){
+	block->push_back(TACLine(myGoListener::LineIndex, op, src1, src2, dst));
+	myGoListener::LineIndex ++;
 
 }
 
@@ -60,10 +63,10 @@ void myGoListener::myPrint(Scope* currentScope){
     }
 }
 void myGoListener::addScope(){
-    Scope* scope=new Scope(currentScope);
-    // scopes.put(ctx,scope);
-    deleteScopeList.push_back(scope);
-    currentScope=scope;
+	Scope* scope=new Scope(currentScope);
+	// scopes.put(ctx,scope);
+	deleteScopeList.push_back(scope);
+	currentScope=scope;
 }
 void myGoListener::popScope(){
     
@@ -75,60 +78,60 @@ void myGoListener::popScope(){
 
 void myGoListener::exitPackageClause(GoParser::PackageClauseContext *ctx)
 {
-    
+	
 }
 void myGoListener::enterPackageClause(GoParser::PackageClauseContext *ctx){}
 
 
 void myGoListener::enterInteger(GoParser::IntegerContext *ctx){}
 void myGoListener::exitInteger(GoParser::IntegerContext *ctx){
-    values->put(ctx,ctx->DECIMAL_LIT()->getText());
+	values->put(ctx,ctx->DECIMAL_LIT()->getText());
 }
 
 
 void myGoListener::enterBasicLit(GoParser::BasicLitContext *ctx){}
 void myGoListener::exitBasicLit(GoParser::BasicLitContext *ctx){
-    if (ctx->integer()){
-    
-        string BasicLitValue = values->get(ctx->integer());
-        values->put(ctx, BasicLitValue);
-    }
+	if (ctx->integer()){
+	
+		string BasicLitValue = values->get(ctx->integer());
+		values->put(ctx, BasicLitValue);
+	}
 }
 
 
 void myGoListener::enterOperand(GoParser::OperandContext *ctx){}
 void myGoListener::exitOperand(GoParser::OperandContext *ctx){
-    if (ctx->literal()){
-        string OperandValue = values->get(ctx->literal());
-        values->put(ctx, OperandValue);
-    }
-    if (ctx->expression()){
-        string OperandValue = values->get(ctx->expression());
-        values->put(ctx, OperandValue);
-    }
-    if (ctx->operandName()){
-        string OperandValue = values->get(ctx->operandName());
-        values->put(ctx, OperandValue);
-    }
+	if (ctx->literal()){
+		string OperandValue = values->get(ctx->literal());
+		values->put(ctx, OperandValue);
+	}
+	if (ctx->expression()){
+		string OperandValue = values->get(ctx->expression());
+		values->put(ctx, OperandValue);
+	}
+	if (ctx->operandName()){
+		string OperandValue = values->get(ctx->operandName());
+		values->put(ctx, OperandValue);
+	}
 }
 
 void myGoListener::enterLiteral(GoParser::LiteralContext *ctx){
-    
+	
 }
 void myGoListener::exitLiteral(GoParser::LiteralContext *ctx){
-    if (ctx->basicLit()){
-        string LiteralValue = values->get(ctx->basicLit());
+	if (ctx->basicLit()){
+		string LiteralValue = values->get(ctx->basicLit());
 
-        values->put(ctx, LiteralValue);
-    }
+		values->put(ctx, LiteralValue);
+	}
 }
 
 void myGoListener::enterPrimaryExpr(GoParser::PrimaryExprContext *ctx){}
 void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
-    if (ctx->operand()){
-        string PrimaryExprValue = values->get(ctx->operand());
-        values->put(ctx, PrimaryExprValue);
-    }
+	if (ctx->operand()){
+		string PrimaryExprValue = values->get(ctx->operand());
+		values->put(ctx, PrimaryExprValue);
+	}
 }
 
 void myGoListener::enterExpression(GoParser::ExpressionContext *ctx){}
@@ -142,27 +145,27 @@ void myGoListener::exitUnaryOperation(GoParser::UnaryOperationContext *ctx){
 
 void myGoListener::enterPrimaryExpression(GoParser::PrimaryExpressionContext *ctx){}
 void myGoListener::exitPrimaryExpression(GoParser::PrimaryExpressionContext *ctx){
-    string ExpresionValue = values->get(ctx->primaryExpr());
-    values->put(ctx, ExpresionValue);
+	string ExpresionValue = values->get(ctx->primaryExpr());
+	values->put(ctx, ExpresionValue);
 }
 
 void myGoListener::enterPlusMinusOperation(GoParser::PlusMinusOperationContext *ctx){}
 void myGoListener::exitPlusMinusOperation(GoParser::PlusMinusOperationContext *ctx){
-    if(ctx->PLUS())
-    {
-        string dst = CreateLocalVar();
-        push_line (test, TACOP::ADD, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst);
-        values->put(ctx, dst);
-        
-    }
+	if(ctx->PLUS())
+	{
+		string dst = CreateLocalVar();
+		push_line (test, TACOP::ADD, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst);
+		values->put(ctx, dst);
+		
+	}
 
-    else if(ctx->MINUS())
-    {
-        string dst = CreateLocalVar();
-        push_line (test, TACOP::SUB, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst);
-        values->put(ctx, dst);
-        
-    }
+	else if(ctx->MINUS())
+	{
+		string dst = CreateLocalVar();
+		push_line (test, TACOP::SUB, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst);
+		values->put(ctx, dst);
+		
+	}
 
 }
 
@@ -173,20 +176,20 @@ void myGoListener::exitRelationOperation(GoParser::RelationOperationContext *ctx
 
 void myGoListener::enterMulDivOperation(GoParser::MulDivOperationContext *ctx){}
 void myGoListener::exitMulDivOperation(GoParser::MulDivOperationContext *ctx){
-    if(ctx->STAR())
-    {
-        string dst = CreateLocalVar();
-        push_line (test, TACOP::MUL, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst);
-        values->put(ctx, dst);
-        
-    }
+	if(ctx->STAR())
+	{
+		string dst = CreateLocalVar();
+		push_line (test, TACOP::MUL, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst);
+		values->put(ctx, dst);
+		
+	}
 
-    else if(ctx->DIV())
-    {
-        string dst = CreateLocalVar();
-        push_line (test, TACOP::DIV, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst);
-        values->put(ctx, dst);
-    }
+	else if(ctx->DIV())
+	{
+		string dst = CreateLocalVar();
+		push_line (test, TACOP::DIV, values->get(ctx->expression(0)), values->get(ctx->expression(1)), dst);
+		values->put(ctx, dst);
+	}
 }
 
 void myGoListener::enterLogicalOrOperation(GoParser::LogicalOrOperationContext *ctx){}
@@ -196,16 +199,16 @@ void myGoListener::exitLogicalOrOperation(GoParser::LogicalOrOperationContext *c
 
 void myGoListener::enterLogicalAndOperation(GoParser::LogicalAndOperationContext *ctx){}
 void myGoListener::exitLogicalAndOperation(GoParser::LogicalAndOperationContext *ctx){
-    
+	
 }
 
 
 
 void myGoListener::enterSourceFile(GoParser::SourceFileContext *ctx){
-    Scope* globalScope=new Scope();
-    currentScope = globalScope;
-    // scopes.put(ctx,currentScope);
-    deleteScopeList.push_back(globalScope);
+	Scope* globalScope=new Scope();
+	currentScope = globalScope;
+	// scopes.put(ctx,currentScope);
+	deleteScopeList.push_back(globalScope);
 }
 
 void myGoListener::exitSourceFile(GoParser::SourceFileContext *ctx){}
@@ -241,37 +244,37 @@ void myGoListener::enterTypeSpec(GoParser::TypeSpecContext *ctx){}
 void myGoListener::exitTypeSpec(GoParser::TypeSpecContext *ctx){}
 
 void myGoListener::enterFunctionDecl(GoParser::FunctionDeclContext *ctx){
-    
-    Scope* scope=new Scope(currentScope);
-    deleteScopeList.push_back(scope);
+	
+	Scope* scope=new Scope(currentScope);
+	deleteScopeList.push_back(scope);
 
-    /* 构建fun symbol */
-    string identifier=ctx->IDENTIFIER()->getText();
-    vector<Symbol::Type> funRetTypeList;
-    // 无返回值
-    if(!ctx->signature()->result() || 
-      ctx->signature()->result()->parameters()->parameterDecl().size()==0){
-        // do nothing
-    }
-    else{  // 有返回值
-        int n=ctx->signature()->result()->parameters()->parameterDecl().size();
-        for(int i=0;i<n;++i){
-            string eachType=ctx->signature()->result()->parameters()->
-              parameterDecl(i)->type_()->typeName()->getText();
-            Symbol::Type eachSType=Symbol::toType(eachType);
-            funRetTypeList.push_back(eachSType);
-        }
-    }
-    
-    Symbol* symbol= new Symbol(identifier,currentScope,
-      Symbol::SymbolType::FUN,funRetTypeList);
-    myGoListener::currentScope->define(symbol);
-    currentScope=scope;
-    
+	/* 构建fun symbol */
+	string identifier=ctx->IDENTIFIER()->getText();
+	vector<Symbol::Type> funRetTypeList;
+	// 无返回值
+	if(!ctx->signature()->result() || 
+	ctx->signature()->result()->parameters()->parameterDecl().size()==0){
+		// do nothing
+	}
+	else{  // 有返回值
+		int n=ctx->signature()->result()->parameters()->parameterDecl().size();
+		for(int i=0;i<n;++i){
+			string eachType=ctx->signature()->result()->parameters()->
+			parameterDecl(i)->type_()->typeName()->getText();
+			Symbol::Type eachSType=Symbol::toType(eachType);
+			funRetTypeList.push_back(eachSType);
+		}
+	}
+	
+	Symbol* symbol= new Symbol(identifier,currentScope,
+	Symbol::SymbolType::FUN,funRetTypeList);
+	myGoListener::currentScope->define(symbol);    
+	currentScope=scope;
+	
 }
 void myGoListener::exitFunctionDecl(GoParser::FunctionDeclContext *ctx){
-    
-    popScope();
+	
+	popScope();
 }
 
 void myGoListener::enterMethodDecl(GoParser::MethodDeclContext *ctx){}
@@ -284,44 +287,43 @@ void myGoListener::enterVarDecl(GoParser::VarDeclContext *ctx){}
 void myGoListener::exitVarDecl(GoParser::VarDeclContext *ctx){}
 
 void myGoListener::enterVarSpec(GoParser::VarSpecContext *ctx){
-    
+	
 }
 void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
-    int n = ctx->identifierList()->IDENTIFIER().size();
+	int n = ctx->identifierList()->IDENTIFIER().size();
 
-    for(int i=0;i<n;++i){
-        string varname = ctx->identifierList()->IDENTIFIER(i)->getText();
-        /* add var to symtbl*/
-        string stype = ctx->type_()->typeName()->getText();
-        Symbol::Type type = Symbol::toType(stype);
-        Symbol* symbol=new Symbol(varname,currentScope,Symbol::SymbolType::VAR,type);
-        myGoListener::currentScope->define(symbol);
-    }
+	for(int i=0;i<n;++i){
+		string varname = ctx->identifierList()->IDENTIFIER(i)->getText();
+		/* add var to symtbl*/
+		string stype = ctx->type_()->typeName()->getText();
+		Symbol::Type type = Symbol::toType(stype);
+		Symbol* symbol=new Symbol(varname,currentScope,Symbol::SymbolType::VAR,type);
+		myGoListener::currentScope->define(symbol);
+	}
 
-    /* TODO:如果是函数调用怎么办？？ */
-    if(ctx->expressionList()){
-        /* add vardel to 3-code */
-        for(int i=0;i<n;++i){
-            string varname = ctx->identifierList()->IDENTIFIER(i)->getText();
-            string varvalue = values->get(ctx->expressionList()->expression(i));
-            /* crTODO */
-            // push_line (test, TACOP::DEF, varvalue, "", varname);
-            
-        }
-    }
+	/* TODO:如果是函数调用怎么办？？ */
+	if(ctx->expressionList()){
+		/* add vardel to 3-code */
+		for(int i=0;i<n;++i){
+			string varname = ctx->identifierList()->IDENTIFIER(i)->getText();
+			string varvalue = values->get(ctx->expressionList()->expression(i));
+				push_line (test, TACOP::DEF, Operand(varvalue), Operand(""), Operand(varname));
+			
+		}
+	}
 
 
 }
 
 void myGoListener::enterBlock(GoParser::BlockContext *ctx){
-    
-    addScope();
-    
+	
+	addScope();
+	
 }
 void myGoListener::exitBlock(GoParser::BlockContext *ctx){
-    popScope();
-    
-    
+	popScope();
+	
+	
 }
 
 void myGoListener::enterStatementList(GoParser::StatementListContext *ctx){}
@@ -346,17 +348,16 @@ void myGoListener::exitIncDecStmt(GoParser::IncDecStmtContext *ctx){}
 
 void myGoListener::enterAssignment(GoParser::AssignmentContext *ctx){}
 void myGoListener::exitAssignment(GoParser::AssignmentContext *ctx){
-    if(ctx->assign_op()->getText() == "=")
-    {
-        int size = ctx->expressionList(0)->expression().size();
-        for(int i = 0; i < size; i++)
-        {
-            string varname = values->get(ctx->expressionList(0)->expression(i));
-            string varvalue = values->get(ctx->expressionList(1)->expression(i));
-            /* crTODO:  */
-            // push_line (test, TACOP::ASSIGN, varvalue, "", varname);
-        }
-    }
+	if(ctx->assign_op()->getText() == "=")
+	{
+		int size = ctx->expressionList(0)->expression().size();
+		for(int i = 0; i < size; i++)
+		{
+			string varname = values->get(ctx->expressionList(0)->expression(i));
+			string varvalue = values->get(ctx->expressionList(1)->expression(i));
+			push_line (test, TACOP::ASSIGN, Operand(varvalue), Operand(""), Operand(varname));
+		}
+	}
 }
 
 void myGoListener::enterAssign_op(GoParser::Assign_opContext *ctx){}
@@ -492,21 +493,21 @@ void myGoListener::enterParameters(GoParser::ParametersContext *ctx){}
 void myGoListener::exitParameters(GoParser::ParametersContext *ctx){}
 
 void myGoListener::enterParameterDecl(GoParser::ParameterDeclContext *ctx){
-    if(ctx->identifierList()){  /* x int */
-        
-        int n=ctx->identifierList()->IDENTIFIER().size();
-        for(int i=0;i<n;++i){
-            
-            string integer=ctx->identifierList()->IDENTIFIER(i)->getText();
-            // Symbol::Type type=ctx->type_()->typeName()->getText();
-            string stype=ctx->type_()->typeName()->getText();
-            Symbol::Type type=Symbol::toType(stype);
-            Symbol* symbol= new Symbol(integer,currentScope,Symbol::SymbolType::VAR,type);
-            myGoListener::currentScope->define(symbol);
-        }
-        
-    }
-    
+	if(ctx->identifierList()){  /* x int */
+		
+		int n=ctx->identifierList()->IDENTIFIER().size();
+		for(int i=0;i<n;++i){
+			
+			string integer=ctx->identifierList()->IDENTIFIER(i)->getText();
+			// Symbol::Type type=ctx->type_()->typeName()->getText();
+			string stype=ctx->type_()->typeName()->getText();
+			Symbol::Type type=Symbol::toType(stype);
+			Symbol* symbol= new Symbol(integer,currentScope,Symbol::SymbolType::VAR,type);
+			myGoListener::currentScope->define(symbol);
+		}
+		
+	}
+	
 }
 void myGoListener::exitParameterDecl(GoParser::ParameterDeclContext *ctx){}
 
@@ -520,7 +521,7 @@ void myGoListener::exitNonNamedType(GoParser::NonNamedTypeContext *ctx){}
 
 void myGoListener::enterOperandName(GoParser::OperandNameContext *ctx){}
 void myGoListener::exitOperandName(GoParser::OperandNameContext *ctx){
-    values->put(ctx,ctx->IDENTIFIER()->getText());
+	values->put(ctx,ctx->IDENTIFIER()->getText());
 }
 
 void myGoListener::enterQualifiedIdent(GoParser::QualifiedIdentContext *ctx){}

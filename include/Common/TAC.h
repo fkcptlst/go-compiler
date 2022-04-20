@@ -6,7 +6,7 @@
 
 
 enum class TACOP {
-	ADD, SUB, MUL, DIV,
+	ADD, SUB, MUL, DIV, DEF, ASSIGN,
 };
 
 
@@ -25,7 +25,7 @@ struct TACLine {
 	Operand src1, src2;
 	Operand dst;
 
-	TACLine(int64_t line, TACOP op, std::string src1, std::string src2, std::string dst)
+	TACLine(int64_t line, TACOP op, Operand src1, Operand src2, Operand dst)
 	: line(line), op(op), src1(src1), src2(src2), dst(dst) {}
 
 	std::string to_string() const;
