@@ -24,6 +24,9 @@ public:
 	REG get_reg(const TACLine& line);
 	void cal_use_info();
 
+	/* 当接受一个函数的三地址代码块时，重新初始化 */
+	void init_block(const std::string block_name);
+
 private:
 	REG get_free_reg();
 
@@ -32,6 +35,10 @@ private:
 	std::unordered_map<std::string, uint64_t> 	avalue_mem_;
 	std::unordered_map<std::string, UseInfo> 	use_info_;
 	Scope &scope;
+
+	/* 函数堆栈模拟 */
+	int stack_ebp;
+	int stack_esp;
 };
 
 inline UseInfo SymbolManager::use_info(const std::string& vairable) const {

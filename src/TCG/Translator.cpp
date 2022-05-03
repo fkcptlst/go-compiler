@@ -1,10 +1,8 @@
 #include "Common/Common.h"
 #include "TCG/Translator.h"
 
-Translator::Translator(Scope& Scopes_, TACFile& TACFile_) {
-    TACFile_ = TACFile_;
-    ASMFile_.clear();
-    // 构建SymbolManager
+Translator::Translator(Scope& Scopes_, TACFile& TACFile_) : TACFile_(TACFile_), SymbolManager_(SymbolManager(Scopes_)) {
+     // todo 关于如何输入TAC待定
 }
 
 
@@ -35,8 +33,10 @@ void Translator::textTranslate() {
 
     // todo 加入global start语句
 
+    // todo 如何遍历TACblock待定
     for(int i = 0; i < TACFile_.size(); i++) {
-        /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? */
+        /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? ljh 不用 */
+        SymbolManager_.init_block("funcname");
         // ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(this->SymbolManager_, TACFile_[i]);
         // ASMSection_.asmblocks.push_back(ASMBlock_);
     }

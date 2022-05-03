@@ -9,7 +9,7 @@
 
 class Translator {
 private:
-    // SymbolManager SymbolManager_;        /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? */
+    SymbolManager SymbolManager_;        /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? ljh: 不用吧 */
     BlockTranslator BlockTranslator_;
     TACFile TACFile_;
     ASMFile ASMFile_;
