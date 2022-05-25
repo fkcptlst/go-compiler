@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <cassert>
 #include <fstream>
+#include <memory>
 
 
 #endif // INCLUDE_COMMON_COMMON_H_

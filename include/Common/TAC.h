@@ -34,7 +34,7 @@ struct TACLine {
 
 using TACBlock = std::vector<TACLine>;
 
-using TACFile = std::vector<TACBlock>;
+using TACFile = std::unordered_map<std::string, TACBlock>;
 
 
 inline std::string TACLine::to_string() const {
