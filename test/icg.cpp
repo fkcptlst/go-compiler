@@ -14,7 +14,7 @@ int main(int argc, char * argv[]){
     cout << "start to translate "+filename << endl;
 
     antlr4::ANTLRFileStream file;
-    file.loadFromFile("../grammar/"+filename);
+    file.loadFromFile("../../grammar/"+filename);
 
     antlr4::ANTLRInputStream inputStream(file.toString());
 
