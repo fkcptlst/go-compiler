@@ -10,12 +10,12 @@
 class SymbolManager {
 public:
 	SymbolManager() = delete;
-	SymbolManager(Scope& scope) : scope(scope) {}
+	SymbolManager(std::shared_ptr<Scope> Scope_) : Scope_(Scope_), stack_esp(0) {}
 
 	/* get and set */
 	std::string rvalue(REG reg);
 	REG 		avalue_reg(const std::string& vairable) const;
-	int 	avalue_mem(const std::string& vairable) const;
+	int 		avalue_mem(const std::string& vairable) const;
 	UseInfo		use_info(const std::string& vairable) const;
 	void		set_avalue_reg(const std::string& vairable, REG reg);  // 让一个变量存在reg里面
 	void		set_avalue_mem(const std::string& variable, int mem);  // 让一个变量存在堆栈里，用跟ebp的偏移
@@ -32,16 +32,17 @@ public:
 	/* 当接受一个函数的三地址代码块时，重新初始化 */
 	// todo 重新计算待用信息 重置堆栈和寄存器
 	// todo 根据block_name找到对应的三地址代码
-	void init_block(std::shared_ptr<TACBlock>);
+	void init_block(const TACBlock&);
 
 private:
 	REG get_free_reg();
 
 	std::string                                 rvalue_[static_cast<int>(REG::None)];
+	std::vector<std::string>					svalue_;
 	std::unordered_map<std::string, REG> 		avalue_reg_;
-	std::unordered_map<std::string, int> 	avalue_mem_;  // 存与ebp的偏移
+	std::unordered_map<std::string, int> 		avalue_mem_;  // 存与ebp的偏移
 	std::unordered_map<std::string, UseInfo> 	use_info_;
-	Scope &scope;
+	std::shared_ptr<Scope> 						Scope_;
 
 	/* 函数堆栈模拟 */
 	int stack_esp;
@@ -105,5 +106,25 @@ inline void SymbolManager::set_avalue_reg(const std::string& vairable, REG reg) 
 inline void SymbolManager::set_avalue_mem(const std::string& variable, int mem) {
 	avalue_mem_[variable] = mem;
 }
+
+inline void SymbolManager::push_reg(REG reg) {
+	std::string var = rvalue_[static_cast<int>(reg)];
+	svalue_.push_back(var);
+	set_avalue_mem(var, stack_esp);
+	stack_esp++;
+}
+
+inline void SymbolManager::pop_reg(REG reg) {
+	std::string var = svalue_.back();
+	svalue_.pop_back();
+	set_avalue_reg(var, reg);
+	rvalue_[static_cast<int>(reg)] = var;
+	stack_esp--;  //todo 还要考虑栈空的情况
+}
+
+inline void SymbolManager::set_esp_bias(int bias) {
+	stack_esp += bias;
+}
+
 
 #endif // INCLUDE_TCG_SYMBOLMANAGER_H_
