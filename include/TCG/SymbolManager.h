@@ -10,7 +10,7 @@
 class SymbolManager {
 public:
 	SymbolManager() = delete;
-	SymbolManager(std::shared_ptr<Scope> Scope_) : Scope_(Scope_), stack_esp(0) {}
+	SymbolManager(std::shared_ptr<Scope> Scope_) : Global_Scope(Scope_), Local_Scope(Scope_), stack_esp(0) {}
 
 	/* get and set */
 	std::string rvalue(REG reg);
@@ -21,9 +21,10 @@ public:
 	void		set_avalue_mem(const std::string& variable, int mem);  // 让一个变量存在堆栈里，用跟ebp的偏移
 	void		set_use_info(const std::string& vairable, UseInfo use_info);
 
-	REG get_reg(const TACLine& line);  // 解决a = b op c 以及 a = 3 stat存放状态，如果没有，返回none
+	REG get_reg(std::string dst, std::string src1, std::string src2);  // 解决a = b op c 以及 a = 3 stat存放状态，如果没有，返回none
 	REG get_reg();  // 当寄存器满的时候，找到一个将要替换的reg，要有替换策略
 	void cal_use_info();
+	std::string encode_var(std::string);
 
 	void push_reg(REG reg);  // 模拟堆栈 push指令 把reg里面的变量放到mem里 并且让reg空
 	void pop_reg(REG reg);  // 模拟堆栈 pop指令 把栈顶的变量pop到reg里
@@ -32,7 +33,7 @@ public:
 	/* 当接受一个函数的三地址代码块时，重新初始化 */
 	// todo 重新计算待用信息 重置堆栈和寄存器
 	// todo 根据block_name找到对应的三地址代码
-	void init_block(const TACBlock&);
+	void set_scope(std::shared_ptr<Scope> local_scope);
 
 private:
 	REG get_free_reg();
@@ -44,11 +45,16 @@ private:
 	std::unordered_map<std::string, UseInfo> 	use_info_;
 	// Scope &scope;
 	// TACBlock block;
-	std::shared_ptr<Scope> 						Scope_;
+	std::shared_ptr<Scope> 						Global_Scope;
+	std::shared_ptr<Scope> 						Local_Scope;
 
 	/* 函数堆栈模拟 */
 	int stack_esp;
 };
+
+inline void SymbolManager::set_scope(std::shared_ptr<Scope> local_scope) {
+	Local_Scope = local_scope;
+}
 
 inline UseInfo SymbolManager::use_info(const std::string& vairable) const {
 	std::cout << "const" << std::endl;

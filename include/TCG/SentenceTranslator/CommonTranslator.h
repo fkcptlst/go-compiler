@@ -7,7 +7,7 @@
 
 class CommonTranslator : public BaseTranslator {
 public:
-    ASMLines SentenceTranslate(SymbolManager&, TACLine&) override;
+    ASMLines SentenceTranslate_(SymbolManager&, TACLine&) override;
 };
 
 #endif // INCLUDE_TCG_SENTENCETRANSLATOR_COMMONTRANSLATOR_H_

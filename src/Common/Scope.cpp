@@ -5,7 +5,7 @@ using namespace std;
 
 
 
-int Scope::resolve(string name, std::shared_ptr<Symbol> & ret){
+int Scope::resolve(string name, std::shared_ptr<Symbol>& ret){
     if (fun_symbols.count(name)==1){
         ret = fun_symbols[name];
         return SUCCESS;
@@ -20,6 +20,16 @@ int Scope::resolve(string name, std::shared_ptr<Symbol> & ret){
         return ret_code;
     }
     return FAIL; // not found
+}
+
+std::shared_ptr<Symbol> Scope::resolve(string name){
+    std::shared_ptr<Symbol> ret;
+    int success = resolve(name, ret);
+    if (success == SUCCESS) {
+        return ret;
+    } else {
+        return nullptr;
+    }
 }
 
 int Scope::cur_resolve(string name){
