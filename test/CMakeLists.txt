@@ -1,5 +1,5 @@
 add_subdirectory(Common)
-# add_subdirectory(TCG)
+add_subdirectory(TCG)
 
 add_executable(icg_test icg.cpp)
 target_link_libraries(icg_test common icg tcg)
