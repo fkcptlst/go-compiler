@@ -19,7 +19,6 @@ REG SymbolManager::get_reg(std::string dst, std::string src1, std::string src2) 
 		return reg;
 	}
 
-	/* crTODO: 替换寄存器 */
 	return REG::None;
 }
 
