@@ -23,6 +23,11 @@ REG SymbolManager::get_reg(std::string dst, std::string src1, std::string src2) 
 	return REG::None;
 }
 
+REG SymbolManager::get_reg() {
+	// todo 先这么写着
+	return REG::ESI;
+}
+
 
 /* 计算一个代码块中, 变量的待用信息和活跃信息 */
 void SymbolManager::cal_use_info() {
