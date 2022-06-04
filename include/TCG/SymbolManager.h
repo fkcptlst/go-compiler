@@ -42,7 +42,7 @@ private:
 	std::unordered_map<std::string, int> 	avalue_mem_;  // 存与ebp的偏移
 	std::unordered_map<std::string, UseInfo> 	use_info_;
 	Scope &scope;
-
+	TACBlock block;
 	/* 函数堆栈模拟 */
 	int stack_esp;
 };
