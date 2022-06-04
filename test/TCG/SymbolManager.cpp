@@ -8,10 +8,10 @@
 void test_init(Scope& scope, SymbolManager& symbol_manager) {
 	TACBlock &block = scope.block;
 	/* TAC 文件 */
-	block.emplace_back(TACLine(1, TACOP::ADD, Operand("A"), Operand("B"), Operand("T")));
-	block.emplace_back(TACLine(2, TACOP::SUB, Operand("A"), Operand("C"), Operand("U")));
-	block.emplace_back(TACLine(3, TACOP::ADD, Operand("T"), Operand("U"), Operand("V")));
-	block.emplace_back(TACLine(4, TACOP::ADD, Operand("V"), Operand("U"), Operand("W")));
+	block.emplace_back(1, TACOP::ADD, Operand("A"), Operand("B"), Operand("T"), std::shared_ptr<Scope>(&scope));
+	block.emplace_back(2, TACOP::SUB, Operand("A"), Operand("C"), Operand("U"), std::shared_ptr<Scope>(&scope));
+	block.emplace_back(3, TACOP::ADD, Operand("T"), Operand("U"), Operand("V"), std::shared_ptr<Scope>(&scope));
+	block.emplace_back(4, TACOP::ADD, Operand("V"), Operand("U"), Operand("W"), std::shared_ptr<Scope>(&scope));
 
 	std::cout << "TAC文件内容: " << std::endl;
 	for (auto& line : block) {

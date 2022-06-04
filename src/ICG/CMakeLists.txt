@@ -6,9 +6,9 @@ file(GLOB grammar_g4
 )
 
 set(ANTLR4_FLAGS -Dlanguage=Cpp)
-# execute_process(
-#     COMMAND java -jar "${ANTLR4CPP_JAR_LOCATION}" ${ANTLR4_FLAGS} ${grammar_g4} -o ${CMAKE_SOURCE_DIR}/grammar/gen
-# )
+execute_process(
+    COMMAND java -jar "${ANTLR4CPP_JAR_LOCATION}" ${ANTLR4_FLAGS} ${grammar_g4} -o ${CMAKE_SOURCE_DIR}/grammar/gen
+)
 
 
 # cmake
