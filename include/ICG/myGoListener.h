@@ -9,18 +9,24 @@
 #include "GoParserListener.h"
 #include "GoParserBaseListener.h"
 
-using namespace std;
+namespace std
+{
 
 class myGoListener : public GoParserListener
 {
+
 public:
     int LineIndex = 0;
     int LocalIndex = 0;
-    TACBlock *test = new TACBlock;
+    // TACBlock *test = new TACBlock;
+    map<string,std::shared_ptr<TACBlock>> TACBlocks;
+    
     antlr4::tree::ParseTreeProperty<string> *values = new antlr4::tree::ParseTreeProperty<string> ;
     // antlr4::tree::ParseTreeProperty<Scope*> scopes;
-    Scope* currentScope;
-    vector<Scope*> deleteScopeList;
+    std::shared_ptr<Scope> currentScope;
+    vector<std::shared_ptr<Scope>> allScopes;
+    // todo:给函数的开始，更新curFUn
+    string curFun;
     // vector<Symbol*> deleteSymbolList;
 
     Symbol::Type defineTmpType() {return Symbol::Type::INT;}
@@ -31,11 +37,11 @@ public:
 
     string ToString(TACOP num);
 
-    void myPrint(Scope* currentScope);
+    void myPrint(std::shared_ptr<Scope> currentScope);
     void addScope();
     void popScope();
 
-    void push_line(TACBlock *block, TACOP op, Operand src1, Operand src2, Operand dst);
+    void push_line(TACOP op, Operand src1, Operand src2, Operand dst);
     void exitPackageClause(GoParser::PackageClauseContext *ctx);
     void enterPackageClause(GoParser::PackageClauseContext *ctx);
 
@@ -364,4 +370,5 @@ public:
 private:
 };
 
+}// namespace std end
 #endif

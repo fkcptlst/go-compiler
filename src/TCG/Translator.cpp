@@ -1,8 +1,9 @@
 #include "Common/Common.h"
 #include "TCG/Translator.h"
 
-Translator::Translator(Scope& Scopes_, TACFile& TACFile_) : TACFile_(TACFile_), SymbolManager_(SymbolManager(Scopes_)) {
+Translator::Translator(std::shared_ptr<Scope> Scope_, std::shared_ptr<TACFile> TACFile_) : TACFile_(TACFile_), Scope_(Scope_), SymbolManager_(Scope_) {
      // todo 关于如何输入TAC待定
+     ASMFile_ = std::shared_ptr<ASMFile>(new ASMFile);
 }
 
 
@@ -26,7 +27,7 @@ void Translator::dataTranslate() {
     }
 
     ASMSection_.asmblocks.push_back(ASMBlock_);
-    ASMFile_.push_back(ASMSection_);
+    ASMFile_->push_back(ASMSection_);
 }
 
 void Translator::textTranslate() {
@@ -37,15 +38,15 @@ void Translator::textTranslate() {
 
     // todo 如何遍历TACblock待定
     // todo 以函数为单位
-    for(int i = 0; i < TACFile_.size(); i++) {
+    for(int i = 0; i < TACFile_->size(); i++) {
         /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? ljh 不用 */
         // todo 根据函数名到block的map初始化
-        SymbolManager_.init_block(name_block["name"]);
+        SymbolManager_.init_block((*TACFile_)["name"]);
         // ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(this->SymbolManager_, TACFile_[i]);
         // ASMSection_.asmblocks.push_back(ASMBlock_);
     }
 
-    ASMFile_.push_back(ASMSection_);
+    ASMFile_->push_back(ASMSection_);
 }
 
 void Translator::OutputFile(std::string filename) {

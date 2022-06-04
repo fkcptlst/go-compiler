@@ -8,9 +8,14 @@
 #define FAIL 0
 
 
+
 struct Scope;
+struct TACLine;
+
+using TACBlock = std::vector<TACLine>;
 
 struct Symbol{
+    
     enum class SymbolType{
         VAR,
         FUN,
@@ -32,16 +37,22 @@ struct Symbol{
     };
 
     std::string         name;
-    Scope*              scope;
+    std::shared_ptr<Scope>   scope;
+    // TODO:delete
     SymbolType          symobl_type;
+    // 变量有，函数无
     Type                type;
-    std::vector<Type>   fun_ret_type_list;
+    // 函数的return列表
+    std::shared_ptr<std::vector<Type>>   fun_ret_type_list;
+    // 函数的parameter列表
+    std::shared_ptr<std::vector<Type>>   fun_para_type_list;
+
 
     Symbol() = default;
-    Symbol(std::string name, Scope* scope, SymbolType symobl_type, Type type)
+    Symbol(std::string name, std::shared_ptr<Scope> scope, SymbolType symobl_type, Type type)
     : name(name),scope(scope), symobl_type(symobl_type), type(type) {}
-    Symbol(std::string name, Scope* scope, SymbolType symobl_type, std::vector<Type> fun_ret_type_list)
-    : name(name),scope(scope), symobl_type(symobl_type), fun_ret_type_list(fun_ret_type_list) {}
+    Symbol(std::string name, std::shared_ptr<Scope> scope, std::shared_ptr<std::vector<Type>> fun_ret_type_list, std::shared_ptr<std::vector<Type>>  fun_para_type_list)
+    : name(name),scope(scope), fun_ret_type_list(fun_ret_type_list), fun_para_type_list(fun_para_type_list) {}
 
     bool isVar();
     bool isFun();
@@ -55,15 +66,18 @@ struct Symbol{
 
 
 struct Scope{
-    Scope*                          enclosing_scope;
-    std::map<std::string, Symbol>   symbols;
-    TACBlock                        block;
+    std::shared_ptr<Scope>                          enclosing_scope;
+    std::unordered_map<std::string, std::shared_ptr<Symbol> >   fun_symbols;
+    std::unordered_map<std::string, std::shared_ptr<Symbol> >   para_symbols;
+    TACBlock                       block;
 
-    Scope() : enclosing_scope(nullptr), symbols() {}
-    Scope(Scope* enclosing_scope) : enclosing_scope(enclosing_scope), symbols() {}
+    Scope() : enclosing_scope(nullptr), fun_symbols(),para_symbols() {}
+    Scope(std::shared_ptr<Scope> enclosing_scope) : enclosing_scope(enclosing_scope), fun_symbols(),para_symbols() {}
 
-    void define(Symbol* sym);
-    int resolve(std::string name, Symbol* ret);
+    void fun_define(std::shared_ptr<Symbol> sym);
+    void para_define(std::shared_ptr<Symbol> sym);
+    int resolve(std::string name, std::shared_ptr<Symbol> &ret);
+    int cur_resolve(std::string name);
 };
 
 
@@ -75,5 +89,6 @@ inline bool Symbol::isVar() {
 inline bool Symbol::isFun() {
     return symobl_type == SymbolType::FUN;
 }
+
 
 #endif

@@ -4,7 +4,7 @@
 #include "Common/TAC.h"
 #include "TCG/SymbolManager.h"
 
-
+// 西内
 void test_init(Scope& scope, SymbolManager& symbol_manager) {
 	TACBlock &block = scope.block;
 	/* TAC 文件 */
@@ -19,13 +19,13 @@ void test_init(Scope& scope, SymbolManager& symbol_manager) {
 	}
 
 	/* 建立符号表 */
-	scope.symbols.emplace("A", Symbol("A", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
-	scope.symbols.emplace("B", Symbol("B", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
-	scope.symbols.emplace("C", Symbol("C", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
-	scope.symbols.emplace("T", Symbol("T", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
-	scope.symbols.emplace("U", Symbol("U", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
-	scope.symbols.emplace("V", Symbol("V", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
-	scope.symbols.emplace("W", Symbol("W", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.para_symbols.emplace("A", Symbol("A", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.para_symbols.emplace("B", Symbol("B", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.para_symbols.emplace("C", Symbol("C", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.para_symbols.emplace("T", Symbol("T", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.para_symbols.emplace("U", Symbol("U", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.para_symbols.emplace("V", Symbol("V", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
+	scope.para_symbols.emplace("W", Symbol("W", &scope, Symbol::SymbolType::VAR, Symbol::Type::INT));
 }
 
 

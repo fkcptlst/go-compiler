@@ -15,4 +15,8 @@
 #include <memory>
 
 
+
+#define SUCCESS 1
+#define FAIL 0
+#define DELIMITER '#'
 #endif // INCLUDE_COMMON_COMMON_H_
