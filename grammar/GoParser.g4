@@ -37,8 +37,8 @@ options {
 }
 
 sourceFile:
-	packageClause eoss (importDecl eoss)* (
-		(functionDecl | methodDecl | declaration) eoss
+	packageClause eoss* (importDecl eoss*)* (
+		(functionDecl | methodDecl | declaration) eoss*
 	)* EOF;
 
 packageClause: PACKAGE packageName = IDENTIFIER;
@@ -381,7 +381,6 @@ eoss:
 	| EOSSS
 	| HUANHANG
 	| HUANHANGG
-	| EOF
 	// | {closingBracket()}?
 	;
 

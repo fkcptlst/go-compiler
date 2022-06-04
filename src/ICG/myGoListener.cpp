@@ -17,7 +17,13 @@ string myGoListener::CreateLocalVar(){
 	{
 		Local = "T" + to_string(myGoListener::LocalIndex);
 		myGoListener::LocalIndex ++;
-		
+		shared_ptr<Symbol> tmp;
+		if(currentScope->resolve(Local,tmp)==SUCCESS){
+			CheckResult=1; // 临时变量与已经定义的变量重名
+		}
+		else{
+			CheckResult=0;
+		}
 	}
 	while(CheckResult);
 	/* TODO: 判断tmp类型 */
@@ -36,11 +42,11 @@ string myGoListener::ToString(TACOP num){
 		case TACOP::DIV:    return "DIV";
 		case TACOP::MUL:    return "MUL";
 		case TACOP::ASSIGN: return "ASSIGN";
-		case TACOP::DEF:    return "DEF";
 		case TACOP::CALL:    return "CALL";
 		case TACOP::PARA:    return "PARA";
 		case TACOP::RET:    return "RET";
 		case TACOP::ENDCALL:    return "ENDCALL";
+		case TACOP::FUN_RET:    return "FUN_RET";
 		default:  return "";
 	}
 }
@@ -55,8 +61,10 @@ void myGoListener::Go23file(string filename){
 	{
 		auto block=p.second;
 		for(auto it: *block){
-			outfile << it.line << " " << ToString(it.op) << " " << it.src1.value << " " << it.src2.value << " " << it.dst.value << endl;
+
+			outfile << setw(4) <<it.line << " Operater: " << setw(10) <<ToString(it.op) << " src1: " << setw(10) <<it.src1.value << "      src2:" << setw(10) << it.src2.value << "      dst: " <<setw(10) << it.dst.value << endl;
 		}
+		outfile<<"----------------------\n";
 		
 	}
 	outfile.close();
@@ -169,10 +177,10 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 
 		/*函数调用*/
 		string blank="";
-		push_line (TACOP::CALL, identity, blank, blank);
 		for(auto para: *arguments_values){
 			push_line (TACOP::PARA, para, blank, blank);
 		}
+		push_line (TACOP::CALL, identity, blank, blank);
 		for(auto ret: *fun_symbol->fun_ret_type_list){
 			// TODO:CreateLocalVar应当传入不同变量的type
 			string tmp=CreateLocalVar();
@@ -274,10 +282,10 @@ void myGoListener::exitLogicalAndOperation(GoParser::LogicalAndOperationContext 
 
 
 void myGoListener::enterSourceFile(GoParser::SourceFileContext *ctx){
-	std::shared_ptr<Scope> globalScope=make_shared<Scope>();
+	globalScope=make_shared<Scope>();
 	currentScope = globalScope;
-	// scopes.put(ctx,currentScope);
-	// deleteScopeList.push_back(globalScope);
+	std::shared_ptr<TACBlock> currentBlock=make_shared<TACBlock>();
+	TACBlocks[curFun]=currentBlock;
 }
 
 void myGoListener::exitSourceFile(GoParser::SourceFileContext *ctx){}
@@ -375,7 +383,7 @@ void myGoListener::enterFunctionDecl(GoParser::FunctionDeclContext *ctx){
 	
 }
 void myGoListener::exitFunctionDecl(GoParser::FunctionDeclContext *ctx){
-	
+	curFun="global";
 	popScope();
 }
 
@@ -428,7 +436,7 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 		}
 		/*赋值*/
 		for(int i=0;i<n;++i){
-			push_line(TACOP::DEF, (*right_values)[i],Operand(""),ctx->identifierList()->IDENTIFIER(i)->getText());
+			push_line(TACOP::ASSIGN, (*right_values)[i],Operand(""),ctx->identifierList()->IDENTIFIER(i)->getText());
 		}
 	}
 
@@ -505,7 +513,22 @@ void myGoListener::enterLabeledStmt(GoParser::LabeledStmtContext *ctx){}
 void myGoListener::exitLabeledStmt(GoParser::LabeledStmtContext *ctx){}
 
 void myGoListener::enterReturnStmt(GoParser::ReturnStmtContext *ctx){}
-void myGoListener::exitReturnStmt(GoParser::ReturnStmtContext *ctx){}
+void myGoListener::exitReturnStmt(GoParser::ReturnStmtContext *ctx){
+	std::shared_ptr<vector<string>> return_values;
+	return_values=ctx_decoder(values->get(ctx->expressionList()));
+	/*是否声明*/
+	for(auto i:(*return_values)){
+		shared_ptr<Symbol> tmp;
+		if(currentScope->resolve(i,tmp)==FAIL){
+			cout<<"Undefined : "<<i<<endl;
+			exit(-1);
+		}
+	}
+	/*生成TAC*/
+	for(auto i:(*return_values)){
+		push_line (TACOP::FUN_RET, i, Operand(""), Operand(""));
+	}
+}
 
 void myGoListener::enterBreakStmt(GoParser::BreakStmtContext *ctx){}
 void myGoListener::exitBreakStmt(GoParser::BreakStmtContext *ctx){}

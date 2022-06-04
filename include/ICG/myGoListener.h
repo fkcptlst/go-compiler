@@ -19,14 +19,16 @@ public:
     int LineIndex = 0;
     int LocalIndex = 0;
     // TACBlock *test = new TACBlock;
-    map<string,std::shared_ptr<TACBlock>> TACBlocks;
+    // 全局的key是global，其他的为函数名字
+    map<std::string,std::shared_ptr<TACBlock>> TACBlocks;
     
     antlr4::tree::ParseTreeProperty<string> *values = new antlr4::tree::ParseTreeProperty<string> ;
     // antlr4::tree::ParseTreeProperty<Scope*> scopes;
     std::shared_ptr<Scope> currentScope;
+    std::shared_ptr<Scope> globalScope;
     vector<std::shared_ptr<Scope>> allScopes;
     // todo:给函数的开始，更新curFUn
-    string curFun;
+    string curFun="global";
     // vector<Symbol*> deleteSymbolList;
 
     Symbol::Type defineTmpType() {return Symbol::Type::INT;}
