@@ -9,7 +9,7 @@
 class BlockTranslator {
 public:
     // 翻译一个三地址代码快
-    ASMBlock BlockTranslate(SymbolManager&, TACBlock&);
+    ASMBlock BlockTranslate(SymbolManager&, std::shared_ptr<TACBlock>);
 };
 
 

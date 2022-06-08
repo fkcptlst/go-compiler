@@ -29,7 +29,8 @@ struct ASMLine {
     : op(op), oprands(oprands) {}
 };
 
-using ASMLines = std::vector<ASMLine>;
+// using ASMLines = std::vector<ASMLine>;
+using ASMLines = std::vector<std::string>;
 
 struct ASMBlock {
     std::string name;
@@ -51,50 +52,50 @@ struct ASMSection {
 
 using ASMFile = std::vector<ASMSection>;
 
-inline std::string to_string(REG reg) {
-    switch (reg) {
-        case REG::EAX : return "eax";
-        case REG::EBX : return "ebx";
-        case REG::ECX : return "ecx";
-        case REG::EDX : return "edx";
-        case REG::ESI : return "esi";
-        case REG::EDI : return "edi";
-        case REG::ESP : return "esp";
-        case REG::EBP : return "ebp";
-        case REG::EIP : return "eip";
-        default: return "None";
-    }
-}
+// inline std::string to_string(REG reg) {
+//     switch (reg) {
+//         case REG::EAX : return "eax";
+//         case REG::EBX : return "ebx";
+//         case REG::ECX : return "ecx";
+//         case REG::EDX : return "edx";
+//         case REG::ESI : return "esi";
+//         case REG::EDI : return "edi";
+//         case REG::ESP : return "esp";
+//         case REG::EBP : return "ebp";
+//         case REG::EIP : return "eip";
+//         default: return "None";
+//     }
+// }
 
-inline std::string to_string(ASMOprand ASMOprand_) {
-    std::stringstream ss;
-    std::string hex_s;
-    ss << std::hex << ASMOprand_.value;
-    ss >> hex_s;
-    switch (ASMOprand_.type) {
-        case OprandType::t_IMM : return "0x" + hex_s;
-        case OprandType::t_REG : return to_string(REG(ASMOprand_.value));
-        case OprandType::t_MEM : return "[" + hex_s + "]";
-        case OprandType::t_NULL : return "";
-        default: return "None";
-    }
-}
+// inline std::string to_string(ASMOprand ASMOprand_) {
+//     std::stringstream ss;
+//     std::string hex_s;
+//     ss << std::hex << ASMOprand_.value;
+//     ss >> hex_s;
+//     switch (ASMOprand_.type) {
+//         case OprandType::t_IMM : return "0x" + hex_s;
+//         case OprandType::t_REG : return to_string(REG(ASMOprand_.value));
+//         case OprandType::t_MEM : return "[" + hex_s + "]";
+//         case OprandType::t_NULL : return "";
+//         default: return "None";
+//     }
+// }
 
-inline std::string to_string(ASMLine ASMLine_) {
-    std::string asmop;
-    switch (ASMLine_.op) {
-        case ASMOP::MOV : asmop = "mov";
-        default: asmop = "?";
-    }
-    std::string asmline = asmop;
-    for (int i = 0; i < ASMLine_.oprands.size(); i++) {
-        if (i != 0) {
-            asmline = asmline + ",";
-        }
-        asmline = asmline + to_string(ASMLine_.oprands[i]);
-    }
-    return asmline;
-}
+// inline std::string to_string(ASMLine ASMLine_) {
+//     std::string asmop;
+//     switch (ASMLine_.op) {
+//         case ASMOP::MOV : asmop = "mov";
+//         default: asmop = "?";
+//     }
+//     std::string asmline = asmop;
+//     for (int i = 0; i < ASMLine_.oprands.size(); i++) {
+//         if (i != 0) {
+//             asmline = asmline + ",";
+//         }
+//         asmline = asmline + to_string(ASMLine_.oprands[i]);
+//     }
+//     return asmline;
+// }
 
 
 #endif // INCLUDE_TCG_ASM_H_

@@ -16,14 +16,26 @@ void Translator::dataTranslate() {
     ASMSection ASMSection_;
     ASMSection_.name = ".data";
 
-    // todo 根据符号表的静态变量，生成数据段
+    // todo 根据符号表的静态, SymbolManager_(Scope_) 变量，生成数据段
     // todo 需要提供global的scope
     // todo 在global的scope里面找全局变量
     ASMBlock ASMBlock_;
     ASMBlock_.name = "";
-    for (;;) {
-        ASMLine ASMLine_;
-        ASMBlock_.asmlines.push_back(ASMLine_);
+    std::shared_ptr<TACBlock> global = (*TACFile_)["global"];
+    for (int i = 0; i < global->size(); i++) {
+        std::string ASMLine_;
+        switch ((*global)[i].op)
+        {
+            case TACOP::ASSIGN: {
+                ASMLine_ = (*global)[i].dst.value + "   equ " + (*global)[i].src1.value;
+                ASMBlock_.asmlines.push_back(ASMLine_);
+            }
+            default: {
+                std::cout << "global op error" << std::endl;
+                break;
+            }
+        }
+
     }
 
     ASMSection_.asmblocks.push_back(ASMBlock_);
@@ -35,15 +47,22 @@ void Translator::textTranslate() {
     ASMSection_.name = ".text";
 
     // todo 加入global start语句
+    ASMBlock ASMBlock_;
+    ASMBlock_.name = "";
+    std::string head = "global _start";
+    ASMBlock_.asmlines.push_back(head);
 
     // todo 如何遍历TACblock待定
     // todo 以函数为单位
-    for(int i = 0; i < TACFile_->size(); i++) {
+    TACFile::iterator i;
+    for(i = TACFile_->begin(); i != TACFile_->end(); i++) {
         /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? ljh 不用 */
         // todo 根据函数名到block的map初始化
-        // SymbolManager_.init_block((*TACFile_)["name"]);
-        // ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(this->SymbolManager_, TACFile_[i]);
-        // ASMSection_.asmblocks.push_back(ASMBlock_);
+        if (i->first == "global") continue;
+        ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(this->SymbolManager_, i->second);
+        if (i->first == "main") ASMBlock_.name = "_start";
+        else ASMBlock_.name = i->first;
+        ASMSection_.asmblocks.push_back(ASMBlock_);
     }
 
     ASMFile_->push_back(ASMSection_);
