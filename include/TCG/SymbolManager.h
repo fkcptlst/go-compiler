@@ -9,8 +9,7 @@
 
 class SymbolManager {
 public:
-	SymbolManager() = delete;
-	SymbolManager(std::shared_ptr<Scope> Scope_) : Global_Scope(Scope_), Local_Scope(Scope_), stack_esp(0) {}
+	SymbolManager() : Local_Scope(nullptr), stack_esp(0) {}
 
 	/* get and set */
 	std::string rvalue(REG reg);
@@ -45,7 +44,6 @@ private:
 	std::unordered_map<std::string, UseInfo> 	use_info_;
 	// Scope &scope;
 	// TACBlock block;
-	std::shared_ptr<Scope> 						Global_Scope;
 	std::shared_ptr<Scope> 						Local_Scope;
 
 	/* 函数堆栈模拟 */

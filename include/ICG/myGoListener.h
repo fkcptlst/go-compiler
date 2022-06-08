@@ -20,7 +20,7 @@ public:
     int LocalIndex = 0;
     // TACBlock *test = new TACBlock;
     // 全局的key是global，其他的为函数名字
-    map<std::string,std::shared_ptr<TACBlock>> TACBlocks;
+    TACFile TACBlocks;
     
     antlr4::tree::ParseTreeProperty<string> *values = new antlr4::tree::ParseTreeProperty<string> ;
     // antlr4::tree::ParseTreeProperty<Scope*> scopes;
