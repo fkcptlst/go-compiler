@@ -177,17 +177,16 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 
 		/*函数调用*/
 		string blank="";
-		for(auto para: *arguments_values){
-			push_line (TACOP::PARA, para, blank, blank);
-		}
-		push_line (TACOP::CALL, identity, blank, blank);
 		for(auto ret: *fun_symbol->fun_ret_type_list){
 			// TODO:CreateLocalVar应当传入不同变量的type
 			string tmp=CreateLocalVar();
 			push_line (TACOP::RET, tmp, blank, blank);
 			primaryExpr_value.push_back(tmp);
 		}
-		push_line (TACOP::ENDCALL, identity, blank, blank);
+		for(auto para: *arguments_values){
+			push_line (TACOP::PARA, para, blank, blank);
+		}
+		push_line (TACOP::CALL, identity, blank, blank);
 		values->put(ctx, ctx_encoder(primaryExpr_value));
 		
 	}
