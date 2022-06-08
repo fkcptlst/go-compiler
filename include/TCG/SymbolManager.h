@@ -9,7 +9,7 @@
 
 class SymbolManager {
 public:
-	SymbolManager() : Local_Scope(nullptr), stack_esp(0) {}
+	SymbolManager(std::shared_ptr<Scope> Global_Scope, std::string name);
 
 	/* get and set */
 	std::string rvalue(REG reg);
@@ -28,6 +28,7 @@ public:
 	void push_reg(REG reg);  // 模拟堆栈 push指令 把reg里面的变量放到mem里 并且让reg空
 	void pop_reg(REG reg);  // 模拟堆栈 pop指令 把栈顶的变量pop到reg里
 	void set_esp_bias(int bias);  // 直接操作esp
+	int get_esp();
 
 	/* 当接受一个函数的三地址代码块时，重新初始化 */
 	// todo 重新计算待用信息 重置堆栈和寄存器
@@ -45,9 +46,13 @@ private:
 	// Scope &scope;
 	// TACBlock block;
 	std::shared_ptr<Scope> 						Local_Scope;
+	std::shared_ptr<Scope> 						Global_Scope;
 
 	/* 函数堆栈模拟 */
 	int stack_esp;
+	int para_num;
+	int ret_num;
+	std::string name;
 };
 
 inline void SymbolManager::set_scope(std::shared_ptr<Scope> local_scope) {
@@ -130,6 +135,14 @@ inline void SymbolManager::pop_reg(REG reg) {
 
 inline void SymbolManager::set_esp_bias(int bias) {
 	stack_esp += bias;
+	int num = bias / 4;
+	for (int i = 0; i < num; i++) {
+		svalue_.push_back("null");
+	}
+}
+
+inline int SymbolManager::get_esp() {
+	return stack_esp;
 }
 
 

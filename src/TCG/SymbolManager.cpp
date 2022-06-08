@@ -1,6 +1,14 @@
 #include "TCG/SymbolManager.h"
 #include "Common/Scope.h"
 
+SymbolManager::SymbolManager(std::shared_ptr<Scope> Global_Scope, std::string name) {
+	this->Global_Scope = Global_Scope;
+	this->Local_Scope = nullptr;
+	std::shared_ptr<Symbol> fun = Global_Scope->resolve(name);
+	this->ret_num = fun->fun_ret_type_list->size();
+	this->para_num = fun->fun_para_type_list->size();
+	this->stack_esp = 0;
+}
 
 /* 给 dst 变量分配一个寄存器 */
 REG SymbolManager::get_reg(std::string dst, std::string src1, std::string src2) {

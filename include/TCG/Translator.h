@@ -9,8 +9,8 @@
 
 class Translator {
 private:
-    SymbolManager SymbolManager_;        /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? ljh: 不用吧 */
     BlockTranslator BlockTranslator_;
+    std::shared_ptr<Scope> Global_Scope;
     std::shared_ptr<TACFile> TACFile_;
     std::shared_ptr<ASMFile> ASMFile_;
 
@@ -21,7 +21,7 @@ private:
     void textTranslate();
 public:
     // 构造函数，接受输入
-    Translator(std::shared_ptr<TACFile>);
+    Translator(std::shared_ptr<TACFile>, std::shared_ptr<Scope>);
     
     // 完成三地址到汇编的翻译
     void Translate();

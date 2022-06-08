@@ -1,7 +1,7 @@
 #include "Common/Common.h"
 #include "TCG/Translator.h"
 
-Translator::Translator(std::shared_ptr<TACFile> TACFile_) : TACFile_(TACFile_) {
+Translator::Translator(std::shared_ptr<TACFile> TACFile_, std::shared_ptr<Scope> Global_Scpoe_) : TACFile_(TACFile_), Global_Scope(Global_Scpoe_) {
      // todo 关于如何输入TAC待定
      ASMFile_ = std::shared_ptr<ASMFile>(new ASMFile);
 }
@@ -59,7 +59,8 @@ void Translator::textTranslate() {
         /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? ljh 不用 */
         // todo 根据函数名到block的map初始化
         if (i->first == "global") continue;
-        ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(this->SymbolManager_, i->second);
+        SymbolManager SymbolManager_(Global_Scope, i->first);
+        ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(SymbolManager_, i->second);
         if (i->first == "main") ASMBlock_.name = "_start";
         else ASMBlock_.name = i->first;
         ASMSection_.asmblocks.push_back(ASMBlock_);
