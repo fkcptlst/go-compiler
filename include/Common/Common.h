@@ -14,6 +14,7 @@
 #include <fstream>
 #include <memory>
 #include <iomanip>
+#include <sstream>
 
 
 #define SUCCESS 1

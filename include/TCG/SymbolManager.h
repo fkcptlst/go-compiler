@@ -6,6 +6,10 @@
 #include "Common/TAC.h"
 #include "TCG/ASM.h"
 
+enum class POSTYPE {
+	GLOBAL, FUNPARA, REG, MEM
+};
+
 
 class SymbolManager {
 public:
@@ -29,6 +33,7 @@ public:
 	void pop_reg(REG reg);  // 模拟堆栈 pop指令 把栈顶的变量pop到reg里
 	void set_esp_bias(int bias);  // 直接操作esp
 	int get_esp();
+	POSTYPE position(std::string variable);
 
 	/* 当接受一个函数的三地址代码块时，重新初始化 */
 	// todo 重新计算待用信息 重置堆栈和寄存器
@@ -53,6 +58,7 @@ private:
 	int para_num;
 	int ret_num;
 	std::string name;
+	std::shared_ptr<Symbol> func;
 };
 
 inline void SymbolManager::set_scope(std::shared_ptr<Scope> local_scope) {
@@ -128,6 +134,23 @@ inline void SymbolManager::set_avalue_mem(const std::string& variable, int mem) 
 	svalue_[mem / 4] = variable;
 }
 
+inline POSTYPE SymbolManager::position(std::string variable) {
+	int pos = variable.find(":");
+	std::string scope_str = variable.substr(0, pos);
+	std::string ture_name = variable.substr(pos + 1, variable.size());
+	std::stringstream ss;
+	ss << scope_str;
+	uint64_t scope_p_t;
+	ss >> scope_p_t;
+	std::shared_ptr<Scope> scope_p = std::shared_ptr<Scope>((Scope*)(scope_p_t));
+	if (scope_p == Global_Scope) {
+		return POSTYPE::GLOBAL;
+	} else {
+		// 没写完
+		// return POSTYPE::REG
+	}
+}
+
 inline void SymbolManager::push_reg(REG reg) {
 	std::string var = rvalue_[static_cast<int>(reg)];
 	svalue_.push_back(var);
@@ -144,10 +167,22 @@ inline void SymbolManager::pop_reg(REG reg) {
 }
 
 inline void SymbolManager::set_esp_bias(int bias) {
-	stack_esp += bias;
-	int num = bias / 4;
-	for (int i = 0; i < num; i++) {
-		svalue_.push_back("Null");
+	if (bias > 0) {
+		stack_esp += bias;
+		int num = bias / 4;
+		for (int i = 0; i < num; i++) {
+			svalue_.push_back("Null");
+		}
+	} else {
+		stack_esp += bias;
+		int num = (-bias) / 4;
+		for (int i = 0; i < num; i++) {
+			std::string old = svalue_.back();
+			if (avalue_mem_.end() != avalue_mem_.find(old)) {
+				avalue_mem_.erase(old);
+			}
+			svalue_.pop_back();
+		}
 	}
 }
 

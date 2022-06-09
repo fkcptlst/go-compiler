@@ -7,6 +7,7 @@ ASMLines ParaTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLi
     ASMLines asmlines;
     std::string str_src1 = SymbolManager_.encode_var(TACLine_.src1.value);
     REG reg_src1 = SymbolManager_.avalue_reg(str_src1);
+    if (reg_src1 == REG::None)
     asmlines.push_back(construct_asm("push", reg_src1));
     SymbolManager_.push_reg(reg_src1);
     return asmlines;

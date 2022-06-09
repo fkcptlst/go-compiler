@@ -5,6 +5,7 @@ SymbolManager::SymbolManager(std::shared_ptr<Scope> Global_Scope, std::string na
 	this->Global_Scope = Global_Scope;
 	this->Local_Scope = nullptr;
 	std::shared_ptr<Symbol> fun = Global_Scope->resolve(name);
+	this->func = fun;
 	this->ret_num = fun->fun_ret_type_list->size();
 	this->para_num = fun->fun_para_type_list->size();
 	this->stack_esp = 0;
