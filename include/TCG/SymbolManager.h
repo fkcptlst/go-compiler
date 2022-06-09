@@ -77,7 +77,7 @@ inline void SymbolManager::set_use_info(const std::string& vairable, UseInfo use
 /* 获得一个空闲寄存器 */
 inline REG SymbolManager::get_free_reg() {
 	for (int i(0); i < static_cast<int>(REG::None); i++) {
-		if (rvalue_[i] != "") {
+		if (rvalue_[i] == "") {
 			return static_cast<REG>(i);
 		}
 	}
@@ -110,12 +110,20 @@ inline int SymbolManager::avalue_mem(const std::string& vairable) const {
 
 
 inline void SymbolManager::set_avalue_reg(const std::string& vairable, REG reg) {
+	std::string old = rvalue_[static_cast<int>(reg)];
+	if (avalue_reg_.end() != avalue_reg_.find(old)) {
+		avalue_reg_.erase(old);
+	}
 	avalue_reg_[vairable] = reg;
 	rvalue_[static_cast<int>(reg)] = vairable;
 }
 
 
 inline void SymbolManager::set_avalue_mem(const std::string& variable, int mem) {
+	std::string old = svalue_[mem / 4];
+	if (avalue_mem_.end() != avalue_mem_.find(old)) {
+		avalue_mem_.erase(old);
+	}
 	avalue_mem_[variable] = mem;
 	svalue_[mem / 4] = variable;
 }
@@ -139,7 +147,7 @@ inline void SymbolManager::set_esp_bias(int bias) {
 	stack_esp += bias;
 	int num = bias / 4;
 	for (int i = 0; i < num; i++) {
-		svalue_.push_back("null");
+		svalue_.push_back("Null");
 	}
 }
 
