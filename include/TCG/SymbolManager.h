@@ -111,26 +111,28 @@ inline int SymbolManager::avalue_mem(const std::string& vairable) const {
 
 inline void SymbolManager::set_avalue_reg(const std::string& vairable, REG reg) {
 	avalue_reg_[vairable] = reg;
+	rvalue_[static_cast<int>(reg)] = vairable;
 }
 
 
 inline void SymbolManager::set_avalue_mem(const std::string& variable, int mem) {
 	avalue_mem_[variable] = mem;
+	svalue_[mem / 4] = variable;
 }
 
 inline void SymbolManager::push_reg(REG reg) {
 	std::string var = rvalue_[static_cast<int>(reg)];
 	svalue_.push_back(var);
-	set_avalue_mem(var, stack_esp);
-	stack_esp++;
+	avalue_mem_[var] = stack_esp;
+	stack_esp += 4;
 }
 
 inline void SymbolManager::pop_reg(REG reg) {
 	std::string var = svalue_.back();
 	svalue_.pop_back();
-	set_avalue_reg(var, reg);
+	avalue_reg_[var] = reg;
 	rvalue_[static_cast<int>(reg)] = var;
-	stack_esp--;  //todo 还要考虑栈空的情况
+	stack_esp -= 4;  //todo 还要考虑栈空的情况
 }
 
 inline void SymbolManager::set_esp_bias(int bias) {
