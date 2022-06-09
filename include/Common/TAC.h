@@ -9,7 +9,7 @@ struct Scope;
 
 
 enum class TACOP {
-	ADD, SUB, MUL, DIV, ASSIGN, CALL, PARA, RET, ENDCALL, FUN_RET, 
+	ADD, SUB, MUL, DIV, ASSIGN, CALL, PARA, RET, ENDCALL, FUN_RET, FUN_PARA
 };
 
 

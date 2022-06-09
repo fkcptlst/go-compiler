@@ -47,6 +47,7 @@ string myGoListener::ToString(TACOP num){
 		case TACOP::RET:    return "RET";
 		case TACOP::ENDCALL:    return "ENDCALL";
 		case TACOP::FUN_RET:    return "FUN_RET";
+		case TACOP::FUN_PARA:    return "FUN_PARA";
 		default:  return "";
 	}
 }
@@ -330,6 +331,7 @@ void myGoListener::enterTypeSpec(GoParser::TypeSpecContext *ctx){}
 void myGoListener::exitTypeSpec(GoParser::TypeSpecContext *ctx){}
 
 void myGoListener::enterFunctionDecl(GoParser::FunctionDeclContext *ctx){
+	
 	string identifier=ctx->IDENTIFIER()->getText();
 	/*判断是否函数名字重复*/
 	if(currentScope->cur_resolve(identifier)==SUCCESS){
@@ -371,14 +373,22 @@ void myGoListener::enterFunctionDecl(GoParser::FunctionDeclContext *ctx){
 			for(int j=0;j<ctx->signature()->parameters()->parameterDecl(i)->identifierList()->IDENTIFIER().size();++j){
 				funParaList->push_back(eachSType);	
 			}
-		}	
+		}
 	}
-	
 	
 	std::shared_ptr<Symbol> symbol= make_shared<Symbol>(identifier,currentScope,funRetTypeList, funParaList);
 	std::shared_ptr<Scope> scope=make_shared<Scope>(currentScope);
 	myGoListener::currentScope->fun_define(symbol); 
 	currentScope=scope;
+	
+	/*打印 FUN_PARA*/
+	for(int i=0;i<ctx->signature()->parameters()->parameterDecl().size();++i){
+		// int n=ctx->signature()->parameters()->parameterDecl()->identifierList()->IDENTIFIER().size();
+		int para_number=ctx->signature()->parameters()->parameterDecl(i)->identifierList()->IDENTIFIER().size();
+		for(int j=0;j<para_number;++j){
+			push_line (TACOP::FUN_PARA, ctx->signature()->parameters()->parameterDecl(i)->identifierList()->IDENTIFIER(j)->getText(), Operand(""), Operand(""));
+		}
+	}
 	
 }
 void myGoListener::exitFunctionDecl(GoParser::FunctionDeclContext *ctx){

@@ -8,10 +8,6 @@ func add1(x,y int) (int, int) {
 	return x,y
 }
 
-
-
-
-
 func main() {
 	var a int;
 	var b int = (2+4-4)*3/2;
