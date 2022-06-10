@@ -116,9 +116,10 @@ void myGoListener::exitInteger(GoParser::IntegerContext *ctx){
 void myGoListener::enterBasicLit(GoParser::BasicLitContext *ctx){}
 void myGoListener::exitBasicLit(GoParser::BasicLitContext *ctx){
 	if (ctx->integer()){
-	
+		string dst = CreateLocalVar();
 		string BasicLitValue = values->get(ctx->integer());
-		values->put(ctx, BasicLitValue);
+		push_line(TACOP::ASSIGN, BasicLitValue,Operand(""), dst);
+		values->put(ctx, dst);
 	}
 }
 
