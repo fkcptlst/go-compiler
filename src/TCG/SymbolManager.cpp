@@ -8,6 +8,8 @@ SymbolManager::SymbolManager(std::shared_ptr<Scope> Global_Scope, std::string na
 	this->func = fun;
 	this->ret_num = fun->fun_ret_type_list->size();
 	this->para_num = fun->fun_para_type_list->size();
+	this->ret_now = 0;
+	this->para_now = 0;
 	this->stack_esp = 0;
 }
 

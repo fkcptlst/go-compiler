@@ -29,6 +29,7 @@ void Translator::dataTranslate() {
             case TACOP::ASSIGN: {
                 ASMLine_ = (*global)[i].dst.value + "   equ " + (*global)[i].src1.value;
                 ASMBlock_.asmlines.push_back(ASMLine_);
+                break;
             }
             default: {
                 std::cout << "global op error" << std::endl;
@@ -72,6 +73,16 @@ void Translator::textTranslate() {
 void Translator::OutputFile(std::string filename) {
     std::ofstream outfile;
     outfile.open(filename);
+
+    for (int i = 0; i < ASMFile_->size(); i++) {
+        outfile << (*ASMFile_)[i].name << ":" << std::endl;
+        for (int j = 0; j < (*ASMFile_)[i].asmblocks.size(); j++) {
+            outfile << (*ASMFile_)[i].asmblocks[j].name << ":" << std::endl;
+            for (int k = 0; j < (*ASMFile_)[i].asmblocks[j].asmlines.size(); k++) {
+                outfile << (*ASMFile_)[i].asmblocks[j].asmlines[i] << std::endl;
+            }
+        }
+    }
 
     outfile.close();
 }

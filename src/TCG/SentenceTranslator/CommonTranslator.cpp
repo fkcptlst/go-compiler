@@ -4,7 +4,7 @@
 #include "TCG/SymbolManager.h"
 
 ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLine& TACLine_) {
-    ASMLines ASMLines_;
+    ASMLines asmlines;
     std::string str_dst = SymbolManager_.encode_var(TACLine_.dst.value);
     std::string str_src1 = SymbolManager_.encode_var(TACLine_.src1.value);
     std::string str_src2 = SymbolManager_.encode_var(TACLine_.src2.value);
@@ -12,8 +12,9 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
     REG reg_src1 = SymbolManager_.avalue_reg(str_src1);
     REG reg_src2 = SymbolManager_.avalue_reg(str_src2);
     // todo ljh
-    // if (reg_dst != reg_src1) {
-    //     construct_asm("mov", reg_dst, reg_src1);
-    // }
-    // construct_asm("op", reg_dst, reg_src2);
+    if (reg_dst != reg_src1) {
+        asmlines.push_back(construct_asm("mov", reg_dst, reg_src1));
+    }
+    asmlines.push_back(construct_asm("op", reg_dst, reg_src2));
+    return asmlines;
 }

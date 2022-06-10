@@ -25,5 +25,33 @@ inline ASMLines BaseTranslator::SentenceTranslate(SymbolManager& SymbolManager_,
     return this->SentenceTranslate_(SymbolManager_, TACLine_);
 }
 
+inline std::string BaseTranslator::construct_asm(std::string op, REG dst, REG src) {
+    return op + "   " + tostring(dst) + " , " + tostring(src);
+}
+
+inline std::string BaseTranslator::construct_asm(std::string op, REG dst, int src) {
+    return op + "   " + tostring(dst) + " , " + std::to_string(src);
+}
+
+inline std::string BaseTranslator::construct_asm(std::string op, REG dst, std::string src) {
+    return op + "   " + tostring(dst) + " , " + src;
+}
+
+inline std::string BaseTranslator::construct_asm(std::string op, std::string src) {
+    return op + "   " + src;
+}
+
+inline std::string BaseTranslator::construct_asm(std::string op, REG src) {
+    return op + "   " + tostring(src);
+}
+
+inline std::string BaseTranslator::construct_asm(std::string op, int src) {
+    return op + "   " + std::to_string(src);
+}
+
+inline std::string BaseTranslator::construct_asm(std::string op) {
+    return op;
+}
+
 
 #endif // INCLUDE_TCG_SENTENCETRANSLATOR_BASETRANSLATOR_H_

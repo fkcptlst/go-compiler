@@ -7,7 +7,7 @@
 #include "TCG/ASM.h"
 
 enum class POSTYPE {
-	GLOBAL, FUNPARA, REG, MEM
+	GLOBAL, FUNPARA, REG, MEM, NONE
 };
 
 
@@ -25,6 +25,7 @@ public:
 	void		set_use_info(const std::string& vairable, UseInfo use_info);
 
 	REG get_reg(std::string dst, std::string src1, std::string src2);  // 解决a = b op c 以及 a = 3 stat存放状态，如果没有，返回none
+	REG get_free_reg();
 	REG get_reg();  // 当寄存器满的时候，找到一个将要替换的reg，要有替换策略
 	void cal_use_info();
 	std::string encode_var(std::string);
@@ -34,6 +35,8 @@ public:
 	void set_esp_bias(int bias);  // 直接操作esp
 	int get_esp();
 	POSTYPE position(std::string variable);
+	void para(std::string var);
+	void ret(std::string var);
 
 	/* 当接受一个函数的三地址代码块时，重新初始化 */
 	// todo 重新计算待用信息 重置堆栈和寄存器
@@ -41,12 +44,12 @@ public:
 	void set_scope(std::shared_ptr<Scope> local_scope);
 
 private:
-	REG get_free_reg();
 
 	std::string                                 rvalue_[static_cast<int>(REG::None)];
 	std::vector<std::string>					svalue_;
 	std::unordered_map<std::string, REG> 		avalue_reg_;
 	std::unordered_map<std::string, int> 		avalue_mem_;  // 存与ebp的偏移
+	std::unordered_map<std::string, int> 		avalue_para_;
 	std::unordered_map<std::string, UseInfo> 	use_info_;
 	// Scope &scope;
 	// TACBlock block;
@@ -56,7 +59,9 @@ private:
 	/* 函数堆栈模拟 */
 	int stack_esp;
 	int para_num;
+	int para_now;
 	int ret_num;
+	int ret_now;
 	std::string name;
 	std::shared_ptr<Symbol> func;
 };
@@ -114,6 +119,15 @@ inline int SymbolManager::avalue_mem(const std::string& vairable) const {
 	}
 }
 
+inline void SymbolManager::para(std::string var) {
+	avalue_para_[var] = para_now;
+	para_now++;
+}
+
+inline void SymbolManager::ret(std::string var) {
+	ret_now++;
+}
+
 
 inline void SymbolManager::set_avalue_reg(const std::string& vairable, REG reg) {
 	std::string old = rvalue_[static_cast<int>(reg)];
@@ -145,9 +159,14 @@ inline POSTYPE SymbolManager::position(std::string variable) {
 	std::shared_ptr<Scope> scope_p = std::shared_ptr<Scope>((Scope*)(scope_p_t));
 	if (scope_p == Global_Scope) {
 		return POSTYPE::GLOBAL;
+	} else if (avalue_para_.end() != avalue_para_.find(variable)) {
+		return POSTYPE::FUNPARA;
+	} else if (avalue_reg_.end() != avalue_reg_.find(variable)) {
+		return POSTYPE::REG;
+	} else if (avalue_mem_.end() != avalue_mem_.find(variable)) {
+		return POSTYPE::MEM;
 	} else {
-		// 没写完
-		// return POSTYPE::REG
+		return POSTYPE::NONE;
 	}
 }
 
@@ -161,6 +180,10 @@ inline void SymbolManager::push_reg(REG reg) {
 inline void SymbolManager::pop_reg(REG reg) {
 	std::string var = svalue_.back();
 	svalue_.pop_back();
+	std::string old = rvalue_[static_cast<int>(reg)];
+	if (avalue_reg_.end() != avalue_reg_.find(old)) {
+		avalue_reg_.erase(old);
+	}
 	avalue_reg_[var] = reg;
 	rvalue_[static_cast<int>(reg)] = var;
 	stack_esp -= 4;  //todo 还要考虑栈空的情况

@@ -5,6 +5,7 @@
 #include "GoLexer.h"
 #include "GoParserListener.h"
 #include "GoParserBaseListener.h"
+#include "TCG/Translator.h"
 
 using namespace std;
 
@@ -24,8 +25,12 @@ int main(int argc, char * argv[]){
     myGoListener listener;
     antlr4::tree::ParseTreeWalker::DEFAULT.walk( &listener, parser.sourceFile());
     listener.Go23file("3code.txt");
-	listener.TACBlocks;
-
+    
+    Translator translator(std::shared_ptr<TACFile>(&listener.TACBlocks), listener.globalScope);
+    std::cout << "---" << std::endl;
+    translator.Translate();
+    std::cout << "---" << std::endl;
+    translator.OutputFile("./output");
     return 0;
     //std::cout << ret.as<LabeledExprVisitor*>()-> << std::endl;
 }
