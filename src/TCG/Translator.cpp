@@ -60,9 +60,7 @@ void Translator::textTranslate() {
         // todo 根据函数名到block的map初始化
         if (i->first == "global") continue;
         SymbolManager SymbolManager_(Global_Scope, i->first);
-        std::cout << "Qwq1" << std::endl;
         ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(SymbolManager_, i->second);
-        std::cout << "Qwq2" << std::endl;
         if (i->first == "main") ASMBlock_.name = "_start";
         else ASMBlock_.name = i->first;
         ASMSection_.asmblocks.push_back(ASMBlock_);
@@ -83,7 +81,7 @@ void Translator::OutputFile(std::string filename) {
         for (int j = 0; j < (*ASMFile_)[i].asmblocks.size(); j++) {
             if ((*ASMFile_)[i].asmblocks[j].name != "") {
                 outfile << (*ASMFile_)[i].asmblocks[j].name << ":" << std::endl;
-            } 
+            }
             for (int k = 0; k < (*ASMFile_)[i].asmblocks[j].asmlines.size(); k++) {
                 outfile << (*ASMFile_)[i].asmblocks[j].asmlines[k] << std::endl;
             }

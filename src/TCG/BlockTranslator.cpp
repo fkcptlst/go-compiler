@@ -18,7 +18,7 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
 
     // todo 完成对每个语句的翻译
     for (int i = 0; i < TACBlock_->size(); i++) {
-        std::cout << (*TACBlock_)[i].to_string() << std::endl;
+        LOG(INFO) << (*TACBlock_)[i].to_string();
         std::shared_ptr<BaseTranslator> trans;
         switch ((*TACBlock_)[i].op) {
             case TACOP::ASSIGN:   trans = std::shared_ptr<AssignTranslator>(new AssignTranslator()); break;
@@ -33,7 +33,6 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         ASMBlock_.asmlines.insert(ASMBlock_.asmlines.end(), tmp_res.begin(), tmp_res.end());
         LOG(INFO) << (*TACBlock_)[i].to_string();
     }
-    std::cout << "qwqqqqqqqqqqqqqqqqqqqqqqqqq" << std::endl;
 
     return ASMBlock_;
 }

@@ -4,7 +4,6 @@
 #include "TCG/SymbolManager.h"
 
 ASMLines CallTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLine& TACLine_) {
-    std::cout << "CallTranslator::SentenceTranslate_" << std::endl;
     ASMLines asmlines;
     asmlines.push_back(construct_asm("call", TACLine_.src1.value));
     return asmlines;

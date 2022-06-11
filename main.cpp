@@ -34,7 +34,7 @@ int main(int argc, char * argv[]){
     std::shared_ptr<TACFile> tac_file = std::make_shared<TACFile>(std::move(listener.TACBlocks));
     Translator translator(std::shared_ptr<TACFile>(tac_file), listener.globalScope);
     translator.Translate();
-    std::cout << "---" << std::endl;
+    LOG(INFO) << "---";
     translator.OutputFile("../output/3code.asm");
     return 0;
 }

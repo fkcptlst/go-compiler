@@ -19,7 +19,7 @@ int Scope::resolve(string name, std::shared_ptr<Symbol>& ret){
         int ret_code=enclosing_scope->resolve(name, ret);
         return ret_code;
     }
-    assert(0);
+    // assert(0);
     return FAIL; // not found
 }
 
