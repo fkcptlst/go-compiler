@@ -4,7 +4,9 @@
 #include "TCG/SymbolManager.h"
 
 ASMLines RetTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLine& TACLine_) {
+    std::cout << "RetTranslator::SentenceTranslate_" << std::endl;
     ASMLines asmlines;
+    std::cout << TACLine_.src1.value << std::endl;
     std::string str_src1 = SymbolManager_.encode_var(TACLine_.src1.value);
     SymbolManager_.set_esp_bias(4);
     SymbolManager_.set_avalue_mem(str_src1, SymbolManager_.get_esp() - 4);

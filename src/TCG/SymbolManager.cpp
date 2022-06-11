@@ -61,8 +61,8 @@ void SymbolManager::cal_use_info() {
 }
 
 std::string SymbolManager::encode_var(std::string name) {
+	std::cout << name << std::endl;
 	std::shared_ptr<Symbol> symbol = Local_Scope->resolve(name);
-    std::cout << name << std::endl;
+	std::cout << symbol.get() << std::endl;
 	return std::to_string(uint64_t(symbol->scope.get())) + ":" + name;
 }
-

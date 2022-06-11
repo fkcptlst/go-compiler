@@ -15,6 +15,7 @@
 #include <memory>
 #include <iomanip>
 #include <sstream>
+#include "glog/logging.h"
 
 
 #define SUCCESS 1

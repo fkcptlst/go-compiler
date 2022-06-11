@@ -4,6 +4,7 @@
 #include "TCG/SymbolManager.h"
 
 ASMLines AssignTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLine& TACLine_) {
+    std::cout << "AssignTranslator::SentenceTranslate_" << std::endl;
     ASMLines asmlines;
     std::string str_dst = SymbolManager_.encode_var(TACLine_.dst.value);
     std::string str_src1 = TACLine_.src1.value;

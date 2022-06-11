@@ -7,11 +7,11 @@ using namespace std;
 
 int Scope::resolve(string name, std::shared_ptr<Symbol>& ret){
     if (fun_symbols.count(name)==1){
-        ret = fun_symbols[name];
+        ret = fun_symbols.at(name);
         return SUCCESS;
     }
     else if (para_symbols.count(name)==1){
-        ret = para_symbols[name];
+        ret = para_symbols.at(name);
         return SUCCESS;
     }
     // if not here, check any enclosing scope
@@ -19,6 +19,7 @@ int Scope::resolve(string name, std::shared_ptr<Symbol>& ret){
         int ret_code=enclosing_scope->resolve(name, ret);
         return ret_code;
     }
+    assert(0);
     return FAIL; // not found
 }
 

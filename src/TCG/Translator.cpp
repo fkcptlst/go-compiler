@@ -21,7 +21,7 @@ void Translator::dataTranslate() {
     // todo 在global的scope里面找全局变量
     ASMBlock ASMBlock_;
     ASMBlock_.name = "";
-    std::shared_ptr<TACBlock> global = (*TACFile_)["global"];
+    std::shared_ptr<TACBlock> global = (*TACFile_).at("global");
     for (int i = 0; i < global->size(); i++) {
         std::string ASMLine_;
         switch ((*global)[i].op)
@@ -55,13 +55,14 @@ void Translator::textTranslate() {
 
     // todo 如何遍历TACblock待定
     // todo 以函数为单位
-    TACFile::iterator i;
-    for(i = TACFile_->begin(); i != TACFile_->end(); i++) {
+    for(auto i = TACFile_->begin(); i != TACFile_->end(); i++) {
         /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? ljh 不用 */
         // todo 根据函数名到block的map初始化
         if (i->first == "global") continue;
         SymbolManager SymbolManager_(Global_Scope, i->first);
+        std::cout << "Qwq1" << std::endl;
         ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(SymbolManager_, i->second);
+        std::cout << "Qwq2" << std::endl;
         if (i->first == "main") ASMBlock_.name = "_start";
         else ASMBlock_.name = i->first;
         ASMSection_.asmblocks.push_back(ASMBlock_);

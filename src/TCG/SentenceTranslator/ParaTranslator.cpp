@@ -4,6 +4,7 @@
 #include "TCG/SymbolManager.h"
 
 ASMLines ParaTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLine& TACLine_) {
+    std::cout << "ParaTranslator::SentenceTranslate_" << std::endl;
     ASMLines asmlines;
     std::string str_src1 = SymbolManager_.encode_var(TACLine_.src1.value);
 
@@ -27,7 +28,7 @@ ASMLines ParaTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLi
         //     SymbolManager_.set_avalue_reg(str_src1, free_reg);
         //     asmlines.push_back(construct_asm("mov", free_reg, mem_src1));
         //     SymbolManager_.set_avalue_mem(str_src1, )
-            
+
         // }
         std::cout << "error" << std::endl;
     }
