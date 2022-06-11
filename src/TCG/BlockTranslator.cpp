@@ -18,6 +18,7 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
 
     // todo 完成对每个语句的翻译
     for (int i = 0; i < TACBlock_->size(); i++) {
+        std::cout << (*TACBlock_)[i].to_string() << std::endl;
         std::shared_ptr<BaseTranslator> trans;
         switch ((*TACBlock_)[i].op) {
             case TACOP::ASSIGN:   trans = std::shared_ptr<AssignTranslator>(new AssignTranslator()); break;
@@ -28,9 +29,10 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
             case TACOP::RET:      trans = std::shared_ptr<RetTranslator>(new RetTranslator()); break;
             default: trans = std::shared_ptr<CommonTranslator>(new CommonTranslator()); break;
         }
+        
         ASMLines tmp_res = trans->SentenceTranslate(SymbolManager_, (*TACBlock_)[i]);
+        trans = nullptr;
         ASMBlock_.asmlines.insert(ASMBlock_.asmlines.end(), tmp_res.begin(), tmp_res.end());
-        std::cout << (*TACBlock_)[i].to_string() << std::endl;
     }
 
     return ASMBlock_;

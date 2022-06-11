@@ -4,5 +4,6 @@
 #include "TCG/SymbolManager.h"
 
 ASMLines FunparaTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLine& TACLine_) {
-    
+    ASMLines asmlines;
+    return asmlines;
 }

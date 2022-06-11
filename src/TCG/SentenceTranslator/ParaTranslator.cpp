@@ -30,12 +30,15 @@ ASMLines ParaTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLi
             
         // }
         std::cout << "error" << std::endl;
+        break;
     }
     case POSTYPE::FUNPARA: {
         std::cout << "error" << std::endl;
+        break;
     }
     case POSTYPE::GLOBAL: {
         std::cout << "error" << std::endl;
+        break;
     }
     default: {
         std::cout << "error" << std::endl;

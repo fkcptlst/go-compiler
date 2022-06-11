@@ -27,10 +27,11 @@ int main(int argc, char * argv[]){
     listener.Go23file("3code.txt");
     
     Translator translator(std::shared_ptr<TACFile>(&listener.TACBlocks), listener.globalScope);
-    std::cout << "---" << std::endl;
+    std::cout << "----trans----" << std::endl;
     translator.Translate();
-    std::cout << "---" << std::endl;
+    std::cout << "----output----" << std::endl;
     translator.OutputFile("./output");
+    std::cout << "----finish----" << std::endl;
     return 0;
     //std::cout << ret.as<LabeledExprVisitor*>()-> << std::endl;
 }
