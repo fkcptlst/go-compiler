@@ -156,8 +156,8 @@ inline POSTYPE SymbolManager::position(std::string variable) {
 	ss << scope_str;
 	uint64_t scope_p_t;
 	ss >> scope_p_t;
-	std::shared_ptr<Scope> scope_p = std::shared_ptr<Scope>((Scope*)(scope_p_t));
-	if (scope_p == Global_Scope) {
+	Scope* scope_p = (Scope*)(scope_p_t);
+	if (scope_p == Global_Scope.get()) {
 		return POSTYPE::GLOBAL;
 	} else if (avalue_para_.end() != avalue_para_.find(variable)) {
 		return POSTYPE::FUNPARA;

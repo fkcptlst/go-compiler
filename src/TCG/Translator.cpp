@@ -75,14 +75,21 @@ void Translator::OutputFile(std::string filename) {
     std::ofstream outfile;
     outfile.open(filename);
 
+
     for (int i = 0; i < ASMFile_->size(); i++) {
-        outfile << (*ASMFile_)[i].name << ":" << std::endl;
-        for (int j = 0; j < (*ASMFile_)[i].asmblocks.size(); j++) {
-            outfile << (*ASMFile_)[i].asmblocks[j].name << ":" << std::endl;
-            for (int k = 0; j < (*ASMFile_)[i].asmblocks[j].asmlines.size(); k++) {
-                outfile << (*ASMFile_)[i].asmblocks[j].asmlines[i] << std::endl;
-            }
+        if ((*ASMFile_)[i].name != "") {
+            outfile << (*ASMFile_)[i].name << ":" << std::endl;
         }
+        for (int j = 0; j < (*ASMFile_)[i].asmblocks.size(); j++) {
+            if ((*ASMFile_)[i].asmblocks[j].name != "") {
+                outfile << (*ASMFile_)[i].asmblocks[j].name << ":" << std::endl;
+            } 
+            for (int k = 0; k < (*ASMFile_)[i].asmblocks[j].asmlines.size(); k++) {
+                outfile << (*ASMFile_)[i].asmblocks[j].asmlines[k] << std::endl;
+            }
+            outfile << std::endl;
+        }
+        outfile << std::endl;
     }
 
     outfile.close();
