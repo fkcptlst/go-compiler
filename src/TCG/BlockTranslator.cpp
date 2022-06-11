@@ -30,6 +30,7 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         }
         ASMLines tmp_res = trans->SentenceTranslate(SymbolManager_, (*TACBlock_)[i]);
         ASMBlock_.asmlines.insert(ASMBlock_.asmlines.end(), tmp_res.begin(), tmp_res.end());
+        std::cout << (*TACBlock_)[i].to_string() << std::endl;
     }
 
     return ASMBlock_;
