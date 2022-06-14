@@ -9,6 +9,6 @@ ASMLines RetTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLin
     std::string str_src1 = SymbolManager_.encode_var(TACLine_.src1.value);
     SymbolManager_.set_esp_bias(4);
     SymbolManager_.set_avalue_mem(str_src1, SymbolManager_.get_esp() - 4);
-    asmlines.push_back(construct_asm("sub", REG::ESP, 4));
+    asmlines.push_back(construct_asm("sub", REG::ESP, "4"));
     return asmlines;
 }

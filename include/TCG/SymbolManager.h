@@ -24,7 +24,7 @@ public:
 	void		set_avalue_mem(const std::string& variable, int mem);  // 让一个变量存在堆栈里，用跟ebp的偏移
 	void		set_use_info(const std::string& vairable, UseInfo use_info);
 
-	REG get_reg(std::string dst, std::string src1, std::string src2);  // 解决a = b op c 以及 a = 3 stat存放状态，如果没有，返回none
+	REG get_reg(std::string dst, std::string src1);  // 解决a = b op c 以及 a = 3 stat存放状态，如果没有，返回none
 	REG get_free_reg();
 	REG get_reg();  // 当寄存器满的时候，找到一个将要替换的reg，要有替换策略
 	void cal_use_info();

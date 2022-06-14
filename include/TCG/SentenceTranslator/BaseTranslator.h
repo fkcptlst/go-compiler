@@ -30,7 +30,7 @@ inline std::string BaseTranslator::construct_asm(std::string op, REG dst, REG sr
 }
 
 inline std::string BaseTranslator::construct_asm(std::string op, REG dst, int src) {
-    return op + " \t " + tostring(dst) + " \t , \t " + std::to_string(src);
+    return op + " \t " + tostring(dst) + " \t , \t " + "[ ebp" + (src > 0 ? " - " : " + ") + std::to_string(src) + " ]";
 }
 
 inline std::string BaseTranslator::construct_asm(std::string op, REG dst, std::string src) {
@@ -46,7 +46,7 @@ inline std::string BaseTranslator::construct_asm(std::string op, REG src) {
 }
 
 inline std::string BaseTranslator::construct_asm(std::string op, int src) {
-    return op + " \t " + std::to_string(src);
+    return op + " \t " + "[ ebp" + (src > 0 ? " - " : " + ") + std::to_string(src) + " ]";
 }
 
 inline std::string BaseTranslator::construct_asm(std::string op) {

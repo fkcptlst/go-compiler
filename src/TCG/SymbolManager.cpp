@@ -14,19 +14,17 @@ SymbolManager::SymbolManager(std::shared_ptr<Scope> Global_Scope, std::string na
 }
 
 /* 给 dst 变量分配一个寄存器 */
-REG SymbolManager::get_reg(std::string dst, std::string src1, std::string src2) {
+REG SymbolManager::get_reg(std::string dst, std::string src1="") {
 	/* crTODO: 在 translator 中, 也存在修改 两个数组的情况!!! */
 	/* crTODO: 目前默认认为如果变量移除寄存器, 可以保证该变量以后不会使用 或 该变量内存中有位置 */
-	if (avalue_reg(src1) != REG::None) {
+	if (src1 != "" && avalue_reg(src1) != REG::None) {
 		/* 使用 src1 的 寄存器 */
-		avalue_reg_[dst] = avalue_reg(src1);
 		return avalue_reg(dst);
 	}
 
 	/* 用空闲寄存器 */
 	REG reg = get_free_reg();
 	if (reg != REG::None) {
-		avalue_reg_[dst] = reg;
 		return reg;
 	}
 

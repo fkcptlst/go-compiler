@@ -18,6 +18,7 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
 
     // todo 完成对每个语句的翻译
     for (int i = 0; i < TACBlock_->size(); i++) {
+        std::cout << (*TACBlock_)[i].to_string() << std::endl;
         LOG(INFO) << (*TACBlock_)[i].to_string();
         std::shared_ptr<BaseTranslator> trans;
         switch ((*TACBlock_)[i].op) {
