@@ -30,7 +30,7 @@ public:
 	void cal_use_info();
 	std::string encode_var(std::string);
 
-	void push_reg(REG reg);  // 模拟堆栈 push指令 把reg里面的变量放到mem里 并且让reg空
+	void push_reg(REG reg, int overwrite);  // 模拟堆栈 push指令 把reg里面的变量放到mem里 并且让reg空
 	void pop_reg(REG reg);  // 模拟堆栈 pop指令 把栈顶的变量pop到reg里
 	void set_esp_bias(int bias);  // 直接操作esp
 	int get_esp();
@@ -170,10 +170,14 @@ inline POSTYPE SymbolManager::position(std::string variable) {
 	}
 }
 
-inline void SymbolManager::push_reg(REG reg) {
-	std::string var = rvalue_[static_cast<int>(reg)];
-	svalue_.push_back(var);
-	avalue_mem_[var] = stack_esp;
+inline void SymbolManager::push_reg(REG reg, int overwrite = 1) {
+	if (overwrite == 1) {
+		std::string var = rvalue_[static_cast<int>(reg)];
+		svalue_.push_back(var);
+		avalue_mem_[var] = stack_esp;
+	} else {
+		svalue_.push_back("Null");
+	}
 	stack_esp += 4;
 }
 
