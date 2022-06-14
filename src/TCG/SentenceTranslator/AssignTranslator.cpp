@@ -2,40 +2,41 @@
 #include "TCG/SentenceTranslator/AssignTranslator.h"
 #include "TCG/ASM.h"
 #include "TCG/SymbolManager.h"
+#include "TCG/ConstructASM.h"
 
 ASMLines AssignTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLine& TACLine_) {
     ASMLines asmlines;
-    std::string str_dst = SymbolManager_.encode_var(TACLine_.dst.value);
-    REG freereg = SymbolManager_.get_free_reg();
-    if (freereg == REG::None) {
-        freereg = SymbolManager_.get_reg();
-        SymbolManager_.push_reg(freereg);
-        asmlines.push_back(construct_asm("push", freereg));
+    std::string str_dst_encode = SymbolManager_.encode_var(TACLine_.dst.value);
+    REG dst_reg = SymbolManager_.get_reg(str_dst_encode, "");
+    if (dst_reg == REG::None) {
+        dst_reg = SymbolManager_.get_reg();
+        SymbolManager_.push_reg(dst_reg);
+        asmlines.push_back(construct_asm("push", dst_reg));
     }
-    SymbolManager_.set_avalue_reg(str_dst, freereg);
     std::string str_src1 = TACLine_.src1.value;
     if (TACLine_.src1.OperType == TACOPERANDTYPE::IMM) {
-        asmlines.push_back(construct_asm("mov", freereg, str_src1));
+        asmlines.push_back(construct_asm("mov", dst_reg, str_src1));
     } else if (TACLine_.src1.OperType == TACOPERANDTYPE::VAR) {
-        std::string encode_str = SymbolManager_.encode_var(str_src1);
-        POSTYPE pos = SymbolManager_.position(encode_str);
+        std::string encode_str_src1 = SymbolManager_.encode_var(str_src1);
+        POSTYPE pos = SymbolManager_.position(encode_str_src1);
         switch (pos) {
             case POSTYPE::REG: {
-                REG src_reg = SymbolManager_.avalue_reg(encode_str);
-                asmlines.push_back(construct_asm("mov", freereg, src_reg));
+                REG src_reg = SymbolManager_.avalue_reg(encode_str_src1);
+                if (dst_reg == src_reg) {
+                    SymbolManager_.push_reg(src_reg);
+                    asmlines.push_back(construct_asm("push", src_reg));
+                } else {
+                    asmlines.push_back(construct_asm("mov", dst_reg, src_reg));
+                }
                 break;
             }
             case POSTYPE::MEM: {
-                int src_mem = SymbolManager_.avalue_mem(encode_str);
-                asmlines.push_back(construct_asm("mov", freereg, src_mem));
+                int src_mem = SymbolManager_.avalue_mem(encode_str_src1);
+                asmlines.push_back(construct_asm("mov", dst_reg, src_mem));
                 break;
             }
             case POSTYPE::GLOBAL: {
-                asmlines.push_back(construct_asm("mov", freereg, str_src1));
-                break;
-            }
-            case POSTYPE::FUNPARA: {
-                std::cout << "assign funpara error" << std::endl;
+                asmlines.push_back(construct_asm("mov", dst_reg, str_src1));
                 break;
             }
             default: {
@@ -43,6 +44,11 @@ ASMLines AssignTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
                 break;
             }
         }
+    }
+    SymbolManager_.set_avalue_reg(str_dst_encode, dst_reg);
+    if (SymbolManager_.avalue_mem(str_dst_encode) != -1) {
+        int dst_mem = SymbolManager_.avalue_mem(str_dst_encode);
+        asmlines.push_back(construct_asm("mov", dst_mem, dst_reg));
     }
     return asmlines;
 }

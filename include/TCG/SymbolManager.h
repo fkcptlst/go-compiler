@@ -7,7 +7,7 @@
 #include "TCG/ASM.h"
 
 enum class POSTYPE {
-	GLOBAL, FUNPARA, REG, MEM, NONE
+	GLOBAL, REG, MEM, NONE
 };
 
 
@@ -35,8 +35,12 @@ public:
 	void set_esp_bias(int bias);  // 直接操作esp
 	int get_esp();
 	POSTYPE position(std::string variable);
-	void para(std::string var);
-	void ret(std::string var);
+	int para();
+	int ret();
+	std::shared_ptr<Symbol> resolve_fun(std::string name);
+	std::string get_name();
+	void set_zero_len();
+	int get_stack_len();
 
 	/* 当接受一个函数的三地址代码块时，重新初始化 */
 	// todo 重新计算待用信息 重置堆栈和寄存器
@@ -49,7 +53,6 @@ private:
 	std::vector<std::string>					svalue_;
 	std::unordered_map<std::string, REG> 		avalue_reg_;
 	std::unordered_map<std::string, int> 		avalue_mem_;  // 存与ebp的偏移
-	std::unordered_map<std::string, int> 		avalue_para_;
 	std::unordered_map<std::string, UseInfo> 	use_info_;
 	// Scope &scope;
 	// TACBlock block;
@@ -62,9 +65,22 @@ private:
 	int para_now;
 	int ret_num;
 	int ret_now;
+	int len;
 	std::string name;
 	std::shared_ptr<Symbol> func;
 };
+
+inline void SymbolManager::set_zero_len() {
+	len = 0;
+}
+
+inline int SymbolManager::get_stack_len() {
+	return len;
+}
+
+inline std::string SymbolManager::get_name() {
+	return name;
+}
 
 inline void SymbolManager::set_scope(std::shared_ptr<Scope> local_scope) {
 	Local_Scope = local_scope;
@@ -119,19 +135,32 @@ inline int SymbolManager::avalue_mem(const std::string& vairable) const {
 	}
 }
 
-inline void SymbolManager::para(std::string var) {
-	avalue_para_[var] = para_now;
+
+inline int SymbolManager::para() {
+	int bias = -4 * (para_num - para_now);
 	para_now++;
+	return bias;
 }
 
-inline void SymbolManager::ret(std::string var) {
+inline int SymbolManager::ret() {
+	int bias = -4 * (ret_num + para_num - ret_now);
 	ret_now++;
+	return bias;
+}
+
+inline std::shared_ptr<Symbol> SymbolManager::resolve_fun(std::string name) {
+	std::shared_ptr<Symbol> p = Local_Scope->resolve(name);
+	if (p->isFun()) {
+		return p;
+	} else {
+		return nullptr;
+	}
 }
 
 
 inline void SymbolManager::set_avalue_reg(const std::string& vairable, REG reg) {
 	std::string old = rvalue_[static_cast<int>(reg)];
-	if (avalue_reg_.end() != avalue_reg_.find(old)) {
+	if (avalue_reg_.end() != avalue_reg_.find(old) && avalue_reg_[old] == reg) {
 		avalue_reg_.erase(old);
 	}
 	avalue_reg_[vairable] = reg;
@@ -141,7 +170,7 @@ inline void SymbolManager::set_avalue_reg(const std::string& vairable, REG reg) 
 
 inline void SymbolManager::set_avalue_mem(const std::string& variable, int mem) {
 	std::string old = svalue_[mem / 4];
-	if (avalue_mem_.end() != avalue_mem_.find(old)) {
+	if (avalue_mem_.end() != avalue_mem_.find(old) && avalue_mem_[old] == mem) {
 		avalue_mem_.erase(old);
 	}
 	avalue_mem_[variable] = mem;
@@ -159,8 +188,6 @@ inline POSTYPE SymbolManager::position(std::string variable) {
 	Scope* scope_p = (Scope*)(scope_p_t);
 	if (scope_p == Global_Scope.get()) {
 		return POSTYPE::GLOBAL;
-	} else if (avalue_para_.end() != avalue_para_.find(variable)) {
-		return POSTYPE::FUNPARA;
 	} else if (avalue_reg_.end() != avalue_reg_.find(variable)) {
 		return POSTYPE::REG;
 	} else if (avalue_mem_.end() != avalue_mem_.find(variable)) {
@@ -179,38 +206,43 @@ inline void SymbolManager::push_reg(REG reg, int overwrite = 1) {
 		svalue_.push_back("Null");
 	}
 	stack_esp += 4;
+	len++;
 }
 
 inline void SymbolManager::pop_reg(REG reg) {
 	std::string var = svalue_.back();
 	svalue_.pop_back();
 	std::string old = rvalue_[static_cast<int>(reg)];
-	if (avalue_reg_.end() != avalue_reg_.find(old)) {
+	if (avalue_reg_.end() != avalue_reg_.find(old) && avalue_reg_[old] == reg) {
 		avalue_reg_.erase(old);
 	}
-	avalue_reg_[var] = reg;
-	rvalue_[static_cast<int>(reg)] = var;
+	if (var != "Null") {
+		avalue_reg_[var] = reg;
+		rvalue_[static_cast<int>(reg)] = var;
+	}
 	stack_esp -= 4;  //todo 还要考虑栈空的情况
+	len--;
 }
 
 inline void SymbolManager::set_esp_bias(int bias) {
 	if (bias > 0) {
-		stack_esp += bias;
 		int num = bias / 4;
 		for (int i = 0; i < num; i++) {
 			svalue_.push_back("Null");
 		}
+		len += num;
 	} else {
-		stack_esp += bias;
 		int num = (-bias) / 4;
 		for (int i = 0; i < num; i++) {
 			std::string old = svalue_.back();
-			if (avalue_mem_.end() != avalue_mem_.find(old)) {
+			if (avalue_mem_.end() != avalue_mem_.find(old) && avalue_mem_[old] == stack_esp - (i + 1) * 4) {
 				avalue_mem_.erase(old);
 			}
 			svalue_.pop_back();
 		}
+		len -= num;
 	}
+	stack_esp += bias;
 }
 
 inline int SymbolManager::get_esp() {

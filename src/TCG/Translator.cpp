@@ -61,8 +61,6 @@ void Translator::textTranslate() {
         if (i->first == "global") continue;
         SymbolManager SymbolManager_(Global_Scope, i->first);
         ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(SymbolManager_, i->second);
-        if (i->first == "main") ASMBlock_.name = "_start";
-        else ASMBlock_.name = i->first;
         ASMSection_.asmblocks.push_back(ASMBlock_);
     }
 

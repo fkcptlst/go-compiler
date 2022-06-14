@@ -393,7 +393,7 @@ void myGoListener::enterFunctionDecl(GoParser::FunctionDeclContext *ctx){
 		}
 	}
 
-	std::shared_ptr<Symbol> symbol= make_shared<Symbol>(identifier,currentScope,funRetTypeList, funParaList);
+	std::shared_ptr<Symbol> symbol= make_shared<Symbol>(identifier,currentScope,Symbol::SymbolType::FUN,funRetTypeList, funParaList);
 	std::shared_ptr<Scope> scope=make_shared<Scope>(currentScope);
 	myGoListener::currentScope->fun_define(symbol);
 	currentScope=scope;

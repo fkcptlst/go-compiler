@@ -2,6 +2,7 @@
 #include "TCG/SentenceTranslator/CommonTranslator.h"
 #include "TCG/ASM.h"
 #include "TCG/SymbolManager.h"
+#include "TCG/ConstructASM.h"
 
 ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLine& TACLine_) {
     ASMLines asmlines;
@@ -48,10 +49,6 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
                 asmlines.push_back(construct_asm("mov", reg_dst, str_src1));
                 break;
             }
-            case POSTYPE::FUNPARA: {
-                std::cout << "common funpara error" << std::endl;
-                break;
-            }
             default: {
                 std::cout << "common default error" << std::endl;
                 break;
@@ -81,10 +78,6 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
                 asmlines.push_back(construct_asm("oopp", reg_dst, str_src2));
                 break;
             }
-            case POSTYPE::FUNPARA: {
-                std::cout << "common funpara error" << std::endl;
-                break;
-            }
             default: {
                 std::cout << "common default error" << std::endl;
                 break;
@@ -92,5 +85,9 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
         }
     }
     SymbolManager_.set_avalue_reg(str_dst_encode, reg_dst);
+    if (SymbolManager_.avalue_mem(str_dst_encode) != -1) {
+        int dst_mem = SymbolManager_.avalue_mem(str_dst_encode);
+        asmlines.push_back(construct_asm("mov", dst_mem, reg_dst));
+    }
     return asmlines;
 }

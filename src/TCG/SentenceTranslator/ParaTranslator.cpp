@@ -2,6 +2,7 @@
 #include "TCG/SentenceTranslator/ParaTranslator.h"
 #include "TCG/ASM.h"
 #include "TCG/SymbolManager.h"
+#include "TCG/ConstructASM.h"
 
 ASMLines ParaTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLine& TACLine_) {
     ASMLines asmlines;
@@ -26,10 +27,6 @@ ASMLines ParaTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLi
                 asmlines.push_back(construct_asm("mov", REG::EDI, mem_src1));
                 SymbolManager_.push_reg(REG::EDI, 0);
                 asmlines.push_back(construct_asm("push", REG::EDI));
-                break;
-            }
-            case POSTYPE::FUNPARA: {
-                std::cout << "para funpara error" << std::endl;
                 break;
             }
             case POSTYPE::GLOBAL: {

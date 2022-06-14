@@ -4,6 +4,7 @@
 SymbolManager::SymbolManager(std::shared_ptr<Scope> Global_Scope, std::string name) {
 	this->Global_Scope = Global_Scope;
 	this->Local_Scope = nullptr;
+	this->name = name;
 	std::shared_ptr<Symbol> fun = Global_Scope->resolve(name);
 	this->func = fun;
 	this->ret_num = fun->fun_ret_type_list->size();
@@ -11,6 +12,7 @@ SymbolManager::SymbolManager(std::shared_ptr<Scope> Global_Scope, std::string na
 	this->ret_now = 0;
 	this->para_now = 0;
 	this->stack_esp = 0;
+	this->len = 0;
 }
 
 /* 给 dst 变量分配一个寄存器 */
@@ -19,16 +21,14 @@ REG SymbolManager::get_reg(std::string dst, std::string src1="") {
 	/* crTODO: 目前默认认为如果变量移除寄存器, 可以保证该变量以后不会使用 或 该变量内存中有位置 */
 	if (src1 != "" && avalue_reg(src1) != REG::None) {
 		/* 使用 src1 的 寄存器 */
+		return avalue_reg(src1);
+	}
+
+	if (avalue_reg(dst) != REG::None) {
 		return avalue_reg(dst);
 	}
 
-	/* 用空闲寄存器 */
-	REG reg = get_free_reg();
-	if (reg != REG::None) {
-		return reg;
-	}
-
-	return REG::None;
+	return get_free_reg();
 }
 
 REG SymbolManager::get_reg() {

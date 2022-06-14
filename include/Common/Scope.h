@@ -51,8 +51,8 @@ struct Symbol{
     Symbol() = default;
     Symbol(std::string name, std::shared_ptr<Scope> scope, SymbolType symobl_type, Type type)
     : name(name),scope(scope), symobl_type(symobl_type), type(type) {}
-    Symbol(std::string name, std::shared_ptr<Scope> scope, std::shared_ptr<std::vector<Type>> fun_ret_type_list, std::shared_ptr<std::vector<Type>>  fun_para_type_list)
-    : name(name),scope(scope), fun_ret_type_list(fun_ret_type_list), fun_para_type_list(fun_para_type_list) {}
+    Symbol(std::string name, std::shared_ptr<Scope> scope, SymbolType symobl_type, std::shared_ptr<std::vector<Type>> fun_ret_type_list, std::shared_ptr<std::vector<Type>>  fun_para_type_list)
+    : name(name),scope(scope), fun_ret_type_list(fun_ret_type_list), fun_para_type_list(fun_para_type_list), symobl_type(symobl_type){}
 
     bool isVar();
     bool isFun();

@@ -1,5 +1,6 @@
 #include "Common/Common.h"
 #include "TCG/BlockTranslator.h"
+#include "TCG/ConstructASM.h"
 #include "TCG/SentenceTranslator/BaseTranslator.h"
 #include "TCG/SentenceTranslator/CommonTranslator.h"
 #include "TCG/SentenceTranslator/AssignTranslator.h"
@@ -13,9 +14,29 @@
 ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::shared_ptr<TACBlock> TACBlock_) {
     ASMBlock ASMBlock_;
 
-    // todo 本函数的名字 退出函数以后再弄
-    ASMBlock_.name = "";
+    if (SymbolManager_.get_name() == "main") {
+        ASMBlock_.name = "_start";
+    } else {
+        ASMBlock_.name = SymbolManager_.get_name();
+    }
 
+
+    if (SymbolManager_.get_name() != "main") {
+        SymbolManager_.push_reg(REG::EBP, 0);
+        ASMBlock_.asmlines.push_back(construct_asm("push", REG::EBP));
+        ASMBlock_.asmlines.push_back(construct_asm("mov", REG::EBP, REG::ESP));
+        SymbolManager_.push_reg(REG::EAX, 0);
+        SymbolManager_.push_reg(REG::EBX, 0);
+        SymbolManager_.push_reg(REG::ECX, 0);
+        SymbolManager_.push_reg(REG::EDX, 0);
+        SymbolManager_.push_reg(REG::ESI, 0);
+        ASMBlock_.asmlines.push_back(construct_asm("push", REG::EAX));
+        ASMBlock_.asmlines.push_back(construct_asm("push", REG::EBX));
+        ASMBlock_.asmlines.push_back(construct_asm("push", REG::ECX));
+        ASMBlock_.asmlines.push_back(construct_asm("push", REG::EDX));
+        ASMBlock_.asmlines.push_back(construct_asm("push", REG::ESI));
+    }
+    SymbolManager_.set_zero_len();
     // todo 完成对每个语句的翻译
     for (int i = 0; i < TACBlock_->size(); i++) {
         std::cout << (*TACBlock_)[i].to_string() << std::endl;
@@ -34,6 +55,31 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         ASMBlock_.asmlines.insert(ASMBlock_.asmlines.end(), tmp_res.begin(), tmp_res.end());
         LOG(INFO) << (*TACBlock_)[i].to_string();
     }
+
+
+
+    if (SymbolManager_.get_name() != "main") {
+        int stack_len = SymbolManager_.get_stack_len();
+        if (stack_len > 0) {
+            ASMBlock_.asmlines.push_back(construct_asm("add", REG::ESP, std::to_string(stack_len)));
+        } else {
+            LOG(INFO) << "stack overflow";
+        }
+        SymbolManager_.pop_reg(REG::ESI);
+        SymbolManager_.pop_reg(REG::EDX);
+        SymbolManager_.pop_reg(REG::ECX);
+        SymbolManager_.pop_reg(REG::EBX);
+        SymbolManager_.pop_reg(REG::EAX);
+        ASMBlock_.asmlines.push_back(construct_asm("pop", REG::ESI));
+        ASMBlock_.asmlines.push_back(construct_asm("pop", REG::EDX));
+        ASMBlock_.asmlines.push_back(construct_asm("pop", REG::ECX));
+        ASMBlock_.asmlines.push_back(construct_asm("pop", REG::EBX));
+        ASMBlock_.asmlines.push_back(construct_asm("pop", REG::EAX));
+        SymbolManager_.pop_reg(REG::EBP);
+        ASMBlock_.asmlines.push_back(construct_asm("pop", REG::EBP));
+    }
+
+    ASMBlock_.asmlines.push_back(construct_asm("ret"));
 
     return ASMBlock_;
 }
