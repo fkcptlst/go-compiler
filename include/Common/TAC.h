@@ -13,7 +13,7 @@ enum class TACOP {
 };
 
 enum class TACOPERANDTYPE {
-	IMM, VAR
+	IMM, VAR, NULL_,
 };
 
 struct Operand {

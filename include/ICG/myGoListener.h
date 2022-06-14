@@ -39,6 +39,8 @@ public:
 
     string ToString(TACOP num);
 
+    string ToString(TACOPERANDTYPE num);
+
     void myPrint(std::shared_ptr<Scope> currentScope);
     void addScope();
     void popScope();
