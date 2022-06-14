@@ -26,27 +26,27 @@ inline ASMLines BaseTranslator::SentenceTranslate(SymbolManager& SymbolManager_,
 }
 
 inline std::string BaseTranslator::construct_asm(std::string op, REG dst, REG src) {
-    return op + "   " + tostring(dst) + " , " + tostring(src);
+    return op + " \t " + tostring(dst) + " \t , \t " + tostring(src);
 }
 
 inline std::string BaseTranslator::construct_asm(std::string op, REG dst, int src) {
-    return op + "   " + tostring(dst) + " , " + std::to_string(src);
+    return op + " \t " + tostring(dst) + " \t , \t " + std::to_string(src);
 }
 
 inline std::string BaseTranslator::construct_asm(std::string op, REG dst, std::string src) {
-    return op + "   " + tostring(dst) + " , " + src;
+    return op + " \t " + tostring(dst) + " \t , \t " + src;
 }
 
 inline std::string BaseTranslator::construct_asm(std::string op, std::string src) {
-    return op + "   " + src;
+    return op + " \t " + src;
 }
 
 inline std::string BaseTranslator::construct_asm(std::string op, REG src) {
-    return op + "   " + tostring(src);
+    return op + " \t " + tostring(src);
 }
 
 inline std::string BaseTranslator::construct_asm(std::string op, int src) {
-    return op + "   " + std::to_string(src);
+    return op + " \t " + std::to_string(src);
 }
 
 inline std::string BaseTranslator::construct_asm(std::string op) {

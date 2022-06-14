@@ -15,6 +15,6 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
     if (reg_dst != reg_src1) {
         asmlines.push_back(construct_asm("mov", reg_dst, reg_src1));
     }
-    asmlines.push_back(construct_asm("op", reg_dst, reg_src2));
+    asmlines.push_back(construct_asm("oopp", reg_dst, reg_src2));
     return asmlines;
 }

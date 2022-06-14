@@ -29,19 +29,19 @@ ASMLines ParaTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLi
         //     SymbolManager_.set_avalue_mem(str_src1, )
 
         // }
-        std::cout << "error" << std::endl;
+        std::cout << "para mem error" << std::endl;
         break;
     }
     case POSTYPE::FUNPARA: {
-        std::cout << "error" << std::endl;
+        std::cout << "para funpara error" << std::endl;
         break;
     }
     case POSTYPE::GLOBAL: {
-        std::cout << "error" << std::endl;
+        std::cout << "para global error" << std::endl;
         break;
     }
     default: {
-        std::cout << "error" << std::endl;
+        std::cout << "para default error" << std::endl;
         break;
     }
     }
