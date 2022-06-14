@@ -12,13 +12,18 @@ enum class TACOP {
 	ADD, SUB, MUL, DIV, ASSIGN, CALL, PARA, RET, ENDCALL, FUN_RET, FUN_PARA
 };
 
+enum class TACOPERANDTYPE {
+	IMM, VAR
+};
 
 struct Operand {
 	std::string 		value;
 	UseInfo 			use_info;
+	TACOPERANDTYPE		OperType;
 
-	Operand(std::string value)
-	: value(value), use_info() {}
+
+	Operand(std::string value, TACOPERANDTYPE type)
+	: value(value), use_info(), OperType(type) {}
 };
 
 
