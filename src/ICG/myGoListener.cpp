@@ -62,6 +62,13 @@ string myGoListener::ToString(TACOPERANDTYPE num){
 	}
 }
 
+TACOPERANDTYPE myGoListener::OperandTypereslove(string name){
+	if(name[0] >= '0' && name[0] <= '9')
+	{
+		return TACOPERANDTYPE::IMM;
+	}
+	return TACOPERANDTYPE::VAR;
+}
 
 void myGoListener::Go23file(string filename){
 	ofstream outfile;
@@ -126,8 +133,9 @@ void myGoListener::exitBasicLit(GoParser::BasicLitContext *ctx){
 	if (ctx->integer()){
 		string dst = CreateLocalVar();
 		string BasicLitValue = values->get(ctx->integer());
-		push_line(TACOP::ASSIGN, Operand(BasicLitValue,TACOPERANDTYPE::IMM),Operand("",TACOPERANDTYPE::NULL_), Operand(dst,TACOPERANDTYPE::VAR));
-		values->put(ctx, dst);
+		// push_line(TACOP::ASSIGN, Operand(BasicLitValue,TACOPERANDTYPE::IMM),Operand("",TACOPERANDTYPE::NULL_), Operand(dst,TACOPERANDTYPE::VAR));
+		// values->put(ctx, dst);
+		values->put(ctx, BasicLitValue);
 	}
 }
 
@@ -190,13 +198,13 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 		for(auto ret: *fun_symbol->fun_ret_type_list){
 			// TODO:CreateLocalVar应当传入不同变量的type
 			string tmp=CreateLocalVar();
-			push_line (TACOP::RET, Operand(tmp, TACOPERANDTYPE::VAR), Operand(blank, TACOPERANDTYPE::NULL_), Operand(blank, TACOPERANDTYPE::NULL_));
+			push_line (TACOP::RET, Operand(tmp, OperandTypereslove(tmp)), Operand(blank, TACOPERANDTYPE::NULL_), Operand(blank, TACOPERANDTYPE::NULL_));
 			primaryExpr_value.push_back(tmp);
 		}
 		for(auto para: *arguments_values){
-			push_line (TACOP::PARA, Operand(para, TACOPERANDTYPE::VAR), Operand(blank, TACOPERANDTYPE::NULL_), Operand(blank, TACOPERANDTYPE::NULL_));
+			push_line (TACOP::PARA, Operand(para, OperandTypereslove(para)), Operand(blank, TACOPERANDTYPE::NULL_), Operand(blank, TACOPERANDTYPE::NULL_));
 		}
-		push_line (TACOP::CALL, Operand(identity, TACOPERANDTYPE::VAR), Operand(blank, TACOPERANDTYPE::NULL_), Operand(blank, TACOPERANDTYPE::NULL_));
+		push_line (TACOP::CALL, Operand(identity, OperandTypereslove(identity)), Operand(blank, TACOPERANDTYPE::NULL_), Operand(blank, TACOPERANDTYPE::NULL_));
 		values->put(ctx, ctx_encoder(primaryExpr_value));
 
 	}
@@ -238,11 +246,11 @@ void myGoListener::exitPlusMinusOperation(GoParser::PlusMinusOperationContext *c
 
 	if(ctx->PLUS())
 	{
-		push_line (TACOP::ADD, Operand((*left)[0], TACOPERANDTYPE::VAR),  Operand((*right)[0], TACOPERANDTYPE::VAR), Operand(dst, TACOPERANDTYPE::VAR));
+		push_line (TACOP::ADD, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 	}
 	else if(ctx->MINUS())
 	{
-		push_line (TACOP::SUB, Operand((*left)[0], TACOPERANDTYPE::VAR),  Operand((*right)[0], TACOPERANDTYPE::VAR), Operand(dst, TACOPERANDTYPE::VAR));
+		push_line (TACOP::SUB, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 	}
 	values->put(ctx, ctx_encoder(plusMinusOperation_values));
 }
@@ -268,11 +276,11 @@ void myGoListener::exitMulDivOperation(GoParser::MulDivOperationContext *ctx){
 
 	if(ctx->STAR())
 	{
-		push_line (TACOP::MUL, Operand((*left)[0], TACOPERANDTYPE::VAR),  Operand((*right)[0], TACOPERANDTYPE::VAR), Operand(dst, TACOPERANDTYPE::VAR));
+		push_line (TACOP::MUL, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 	}
 	else if(ctx->DIV())
 	{
-		push_line (TACOP::DIV, Operand((*left)[0], TACOPERANDTYPE::VAR),  Operand((*right)[0], TACOPERANDTYPE::VAR), Operand(dst, TACOPERANDTYPE::VAR));
+		push_line (TACOP::DIV, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 	}
 	values->put(ctx, ctx_encoder(mulDivOperation_values));
 
@@ -395,7 +403,8 @@ void myGoListener::enterFunctionDecl(GoParser::FunctionDeclContext *ctx){
 		// int n=ctx->signature()->parameters()->parameterDecl()->identifierList()->IDENTIFIER().size();
 		int para_number=ctx->signature()->parameters()->parameterDecl(i)->identifierList()->IDENTIFIER().size();
 		for(int j=0;j<para_number;++j){
-			push_line (TACOP::FUN_PARA, Operand(ctx->signature()->parameters()->parameterDecl(i)->identifierList()->IDENTIFIER(j)->getText(), TACOPERANDTYPE::VAR), Operand("", TACOPERANDTYPE::NULL_), Operand("", TACOPERANDTYPE::NULL_));
+			std::string fun_para = ctx->signature()->parameters()->parameterDecl(i)->identifierList()->IDENTIFIER(j)->getText();
+			push_line (TACOP::FUN_PARA, Operand(fun_para, OperandTypereslove(fun_para)), Operand("", TACOPERANDTYPE::NULL_), Operand("", TACOPERANDTYPE::NULL_));
 		}
 	}
 
@@ -454,7 +463,7 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 		}
 		/*赋值*/
 		for(int i=0;i<n;++i){
-			push_line(TACOP::ASSIGN, Operand((*right_values)[i], TACOPERANDTYPE::VAR),Operand("", TACOPERANDTYPE::NULL_),Operand(ctx->identifierList()->IDENTIFIER(i)->getText(), TACOPERANDTYPE::VAR));
+			push_line(TACOP::ASSIGN, Operand((*right_values)[i], OperandTypereslove((*right_values)[i])),Operand("", TACOPERANDTYPE::NULL_),Operand(ctx->identifierList()->IDENTIFIER(i)->getText(), OperandTypereslove(ctx->identifierList()->IDENTIFIER(i)->getText())));
 		}
 	}
 
@@ -513,7 +522,7 @@ void myGoListener::exitAssignment(GoParser::AssignmentContext *ctx){
 		{
 			string varname = (*left_values)[i];
 			string varvalue = (*right_values)[i];
-			push_line (TACOP::ASSIGN, Operand(varvalue, TACOPERANDTYPE::VAR), Operand("", TACOPERANDTYPE::NULL_), Operand(varname, TACOPERANDTYPE::VAR));
+			push_line (TACOP::ASSIGN, Operand(varvalue, OperandTypereslove(varvalue)), Operand("", TACOPERANDTYPE::NULL_), Operand(varname, OperandTypereslove(varname)));
 		}
 	}
 }
@@ -544,7 +553,7 @@ void myGoListener::exitReturnStmt(GoParser::ReturnStmtContext *ctx){
 	}
 	/*生成TAC*/
 	for(auto i:(*return_values)){
-		push_line (TACOP::FUN_RET, Operand(i, TACOPERANDTYPE::VAR), Operand("", TACOPERANDTYPE::NULL_), Operand("", TACOPERANDTYPE::NULL_));
+		push_line (TACOP::FUN_RET, Operand(i, OperandTypereslove(i)), Operand("", TACOPERANDTYPE::NULL_), Operand("", TACOPERANDTYPE::NULL_));
 	}
 }
 

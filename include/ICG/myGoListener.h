@@ -41,6 +41,8 @@ public:
 
     string ToString(TACOPERANDTYPE num);
 
+    TACOPERANDTYPE OperandTypereslove(string name);
+
     void myPrint(std::shared_ptr<Scope> currentScope);
     void addScope();
     void popScope();
