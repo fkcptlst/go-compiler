@@ -9,6 +9,7 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
     std::string str_dst_encode = SymbolManager_.encode_var(TACLine_.dst.value);
     std::string str_src1 = TACLine_.src1.value;
     std::string str_src2 = TACLine_.src2.value;
+    std::string op_string = commonop2string(TACLine_.op);
 
     REG reg_dst = REG::None;
     if (TACLine_.src1.OperType == TACOPERANDTYPE::IMM) {
@@ -22,7 +23,7 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
 
     } else {
         std::string str_src1_encode = SymbolManager_.encode_var(str_src1);
-        reg_dst = SymbolManager_.get_reg(str_dst_encode, str_src1);
+        reg_dst = SymbolManager_.get_reg(str_dst_encode, str_src1_encode);
         if (reg_dst == REG::None) {
             reg_dst = SymbolManager_.get_reg();
             SymbolManager_.push_reg(reg_dst);
@@ -58,7 +59,7 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
 
 
     if (TACLine_.src2.OperType == TACOPERANDTYPE::IMM) {
-        asmlines.push_back(construct_asm("oopp", reg_dst, str_src2));
+        asmlines.push_back(construct_asm(op_string, reg_dst, str_src2));
     } else if (TACLine_.src2.OperType == TACOPERANDTYPE::VAR) {
         std::string str_src2_encode = SymbolManager_.encode_var(str_src2);
         
@@ -66,16 +67,16 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
         switch (pos) {
             case POSTYPE::REG: {
                 REG reg_src2 = SymbolManager_.avalue_reg(str_src2_encode);
-                asmlines.push_back(construct_asm("oopp", reg_dst, reg_src2));
+                asmlines.push_back(construct_asm(op_string, reg_dst, reg_src2));
                 break;
             }
             case POSTYPE::MEM: {
                 int mem_src2 = SymbolManager_.avalue_mem(str_src2_encode);
-                asmlines.push_back(construct_asm("oopp", reg_dst, mem_src2));
+                asmlines.push_back(construct_asm(op_string, reg_dst, mem_src2));
                 break;
             }
             case POSTYPE::GLOBAL: {
-                asmlines.push_back(construct_asm("oopp", reg_dst, str_src2));
+                asmlines.push_back(construct_asm(op_string, reg_dst, str_src2));
                 break;
             }
             default: {

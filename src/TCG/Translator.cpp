@@ -52,6 +52,7 @@ void Translator::textTranslate() {
     ASMBlock_.name = "";
     std::string head = "global _start";
     ASMBlock_.asmlines.push_back(head);
+    ASMSection_.asmblocks.push_back(ASMBlock_);
 
     // todo 如何遍历TACblock待定
     // todo 以函数为单位

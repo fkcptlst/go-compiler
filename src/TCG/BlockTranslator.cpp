@@ -61,7 +61,7 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
     if (SymbolManager_.get_name() != "main") {
         int stack_len = SymbolManager_.get_stack_len();
         if (stack_len > 0) {
-            ASMBlock_.asmlines.push_back(construct_asm("add", REG::ESP, std::to_string(stack_len)));
+            ASMBlock_.asmlines.push_back(construct_asm("add", REG::ESP, std::to_string(4 * stack_len)));
         } else {
             LOG(INFO) << "stack overflow";
         }
