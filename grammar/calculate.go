@@ -10,9 +10,9 @@ func add1(x,y int) (int, int) {
 
 func main() {
 	var a int;
-	var b int = (2+4-4)*3/2;
+	var b int = 4-(2+4-4)+3;
 	a=0;
-	a,b=add1(1,2)
 	a,b=add1(a,b)
+	a,b=add1(1,2)
 	// var
 }

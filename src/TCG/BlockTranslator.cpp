@@ -58,13 +58,13 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
 
 
 
+    int stack_len = SymbolManager_.get_stack_len();
+    if (stack_len > 0) {
+        ASMBlock_.asmlines.push_back(construct_asm("add", REG::ESP, std::to_string(4 * stack_len)));
+    } else {
+        LOG(INFO) << "stack overflow";
+    }
     if (SymbolManager_.get_name() != "main") {
-        int stack_len = SymbolManager_.get_stack_len();
-        if (stack_len > 0) {
-            ASMBlock_.asmlines.push_back(construct_asm("add", REG::ESP, std::to_string(4 * stack_len)));
-        } else {
-            LOG(INFO) << "stack overflow";
-        }
         SymbolManager_.pop_reg(REG::ESI);
         SymbolManager_.pop_reg(REG::EDX);
         SymbolManager_.pop_reg(REG::ECX);
@@ -79,6 +79,15 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         ASMBlock_.asmlines.push_back(construct_asm("pop", REG::EBP));
     }
 
+    // mov eax,1
+	// mov ebx,0
+	// int 80h
+    // ret
+
+
+    ASMBlock_.asmlines.push_back(construct_asm("mov", REG::EAX, std::to_string(1)));
+    ASMBlock_.asmlines.push_back(construct_asm("mov", REG::EBX, std::to_string(0)));
+    ASMBlock_.asmlines.push_back(construct_asm("int", "80h"));
     ASMBlock_.asmlines.push_back(construct_asm("ret"));
 
     return ASMBlock_;
