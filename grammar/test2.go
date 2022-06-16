@@ -1,9 +1,7 @@
 package main
-
-var a int=1;
+import myprint
 
 func main() {
-	var a int = 7 + 7;
-	var b int = 4-(2+4-4)+3;
+	myprint(5678);
 	// var
 }

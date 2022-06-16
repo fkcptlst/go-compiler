@@ -18,13 +18,11 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         ASMBlock_.name = "_start";
     } else {
         ASMBlock_.name = SymbolManager_.get_name();
-    }
 
-
-    if (SymbolManager_.get_name() != "main") {
         SymbolManager_.push_reg(REG::EBP, 0);
         ASMBlock_.asmlines.push_back(construct_asm("push", REG::EBP));
         ASMBlock_.asmlines.push_back(construct_asm("mov", REG::EBP, REG::ESP));
+
         SymbolManager_.push_reg(REG::EAX, 0);
         SymbolManager_.push_reg(REG::EBX, 0);
         SymbolManager_.push_reg(REG::ECX, 0);
@@ -64,7 +62,15 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
     } else {
         LOG(INFO) << "stack overflow";
     }
-    if (SymbolManager_.get_name() != "main") {
+
+    if (SymbolManager_.get_name() == "main") {
+        // mov eax,1
+        // mov ebx,0
+        // int 80h
+        ASMBlock_.asmlines.push_back(construct_asm("mov", REG::EAX, std::to_string(1)));
+        ASMBlock_.asmlines.push_back(construct_asm("mov", REG::EBX, std::to_string(0)));
+        ASMBlock_.asmlines.push_back(construct_asm("int", "80h"));
+    } else {
         SymbolManager_.pop_reg(REG::ESI);
         SymbolManager_.pop_reg(REG::EDX);
         SymbolManager_.pop_reg(REG::ECX);
@@ -79,15 +85,7 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         ASMBlock_.asmlines.push_back(construct_asm("pop", REG::EBP));
     }
 
-    // mov eax,1
-	// mov ebx,0
-	// int 80h
     // ret
-
-
-    ASMBlock_.asmlines.push_back(construct_asm("mov", REG::EAX, std::to_string(1)));
-    ASMBlock_.asmlines.push_back(construct_asm("mov", REG::EBX, std::to_string(0)));
-    ASMBlock_.asmlines.push_back(construct_asm("int", "80h"));
     ASMBlock_.asmlines.push_back(construct_asm("ret"));
 
     return ASMBlock_;

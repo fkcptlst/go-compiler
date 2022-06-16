@@ -15,7 +15,8 @@ int main(int argc, char * argv[]){
     system("mkdir -p ../output");
     google::InitGoogleLogging((const char *)argv[0]);
     google::SetLogDestination(google::GLOG_INFO, "../log/");
-    string filename="calculate.go";
+    // string filename = "calculate.go";
+    string filename = argv[1];
     LOG(INFO) << "start 翻译文件: " << filename;
 
     antlr4::ANTLRFileStream file;
@@ -35,6 +36,6 @@ int main(int argc, char * argv[]){
     Translator translator(std::shared_ptr<TACFile>(tac_file), listener.globalScope);
     translator.Translate();
     LOG(INFO) << "---";
-    translator.OutputFile("../output/3code.asm");
+    translator.OutputFile("../output/output.asm");
     return 0;
 }

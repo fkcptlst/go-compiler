@@ -137,13 +137,13 @@ inline int SymbolManager::avalue_mem(const std::string& vairable) const {
 
 
 inline int SymbolManager::para() {
-	int bias = -4 * (para_num - para_now);
+	int bias = -4 * (para_num - para_now + 1); // 栈底之前还有一个ret地址
 	para_now++;
 	return bias;
 }
 
 inline int SymbolManager::ret() {
-	int bias = -4 * (ret_num + para_num - ret_now);
+	int bias = -4 * (ret_num + para_num - ret_now + 1);
 	ret_now++;
 	return bias;
 }

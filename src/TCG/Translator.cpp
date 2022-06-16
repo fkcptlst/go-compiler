@@ -50,8 +50,8 @@ void Translator::textTranslate() {
     // todo 加入global start语句
     ASMBlock ASMBlock_;
     ASMBlock_.name = "";
-    std::string head = "global _start";
-    ASMBlock_.asmlines.push_back(head);
+    ASMBlock_.asmlines.push_back("global _start");
+    ASMBlock_.asmlines.push_back("extern myprint");
     ASMSection_.asmblocks.push_back(ASMBlock_);
 
     // todo 如何遍历TACblock待定
@@ -59,7 +59,7 @@ void Translator::textTranslate() {
     for(auto i = TACFile_->begin(); i != TACFile_->end(); i++) {
         /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? ljh 不用 */
         // todo 根据函数名到block的map初始化
-        if (i->first == "global") continue;
+        if (i->first == "global" || i->second->size() == 0) continue;
         SymbolManager SymbolManager_(Global_Scope, i->first);
         ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(SymbolManager_, i->second);
         ASMSection_.asmblocks.push_back(ASMBlock_);
