@@ -12,6 +12,15 @@ func main() {
 	var a int;
 	var b int = 4-(2+4-4)+3;
 	a=0;
+	if a < 20 {
+	a = 2;
+	} else {
+	if a < 10 {
+	a = 1;
+	} else {
+	a = 3;
+	}
+	}
 	a,b=add1(a,b)
 	a,b=add1(1,2)
 	// var

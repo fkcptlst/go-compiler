@@ -18,15 +18,18 @@ class myGoListener : public GoParserListener
 public:
     int LineIndex = 0;
     int LocalIndex = 0;
+    int IFIndex = 0;
     // TACBlock *test = new TACBlock;
     // 全局的key是global，其他的为函数名字
     TACFile TACBlocks;
     
-    antlr4::tree::ParseTreeProperty<string> *values = new antlr4::tree::ParseTreeProperty<string> ;
+    antlr4::tree::ParseTreeProperty<string> *values = new antlr4::tree::ParseTreeProperty<string>;
+    antlr4::tree::ParseTreeProperty<string> *ifvalues = new antlr4::tree::ParseTreeProperty<string>;
     // antlr4::tree::ParseTreeProperty<Scope*> scopes;
     std::shared_ptr<Scope> currentScope;
     std::shared_ptr<Scope> globalScope;
     vector<std::shared_ptr<Scope>> allScopes;
+
     // todo:给函数的开始，更新curFUn
     string curFun="global";
     // vector<Symbol*> deleteSymbolList;
@@ -35,6 +38,8 @@ public:
 
     string CreateLocalVar(); // check the local_varname is illgal
     
+    string CreateElseLabel();
+
     void Go23file(string filename);
 
     string ToString(TACOP num);

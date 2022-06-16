@@ -16,7 +16,7 @@ string myGoListener::CreateLocalVar(){
 	do
 	{
 		Local = "T" + to_string(myGoListener::LocalIndex);
-		myGoListener::LocalIndex ++;
+		myGoListener::LocalIndex++;
 		shared_ptr<Symbol> tmp;
 		if(currentScope->resolve(Local,tmp)==SUCCESS){
 			CheckResult=1; // 临时变量与已经定义的变量重名
@@ -32,38 +32,57 @@ string myGoListener::CreateLocalVar(){
 	return Local;
 }
 
+string myGoListener::CreateElseLabel(){
+	string Local;
+	bool CheckResult = 0;
+	Local = to_string(myGoListener::IFIndex);
+	myGoListener::IFIndex++;
+	return Local;
+}
 
 
 string myGoListener::ToString(TACOP num){
 	switch (num)
 	{
-		case TACOP::ADD:    return "ADD";
-		case TACOP::SUB:    return "SUB";
-		case TACOP::DIV:    return "DIV";
-		case TACOP::MUL:    return "MUL";
-		case TACOP::ASSIGN: return "ASSIGN";
-		case TACOP::CALL:    return "CALL";
-		case TACOP::PARA:    return "PARA";
-		case TACOP::RET:    return "RET";
-		case TACOP::ENDCALL:    return "ENDCALL";
-		case TACOP::FUN_RET:    return "FUN_RET";
-		case TACOP::FUN_PARA:    return "FUN_PARA";
-		default:  return "";
+		case TACOP::ADD:    	return "ADD";
+		case TACOP::SUB:    	return "SUB";
+		case TACOP::DIV:    	return "DIV";
+		case TACOP::MUL:   		return "MUL";
+		case TACOP::ASSIGN: 	return "ASSIGN";
+		case TACOP::CALL:    	return "CALL";
+		case TACOP::PARA:    	return "PARA";
+		case TACOP::RET:    	return "RET";
+		case TACOP::ENDCALL:	return "ENDCALL";
+		case TACOP::FUN_RET:	return "FUN_RET";
+		case TACOP::FUN_PARA:	return "FUN_PARA";
+		case TACOP::IF: 		return "IF";
+		case TACOP::IFEXP:		return "IFEXP";
+		case TACOP::ENDIF: 		return "ENDIF";
+		case TACOP::GE:			return "GE";
+		case TACOP::LE:			return "LE";
+		case TACOP::GT:			return "GT";
+		case TACOP::LT:			return "LT";
+		case TACOP::EQ:			return "EQ";
+		case TACOP::NEQ:		return "NEQ";
+		case TACOP::GOTO:		return "GOTO";
+		case TACOP::ELSE:		return "ELSE";
+		case TACOP::LABEL: 		return "LABEL";
+		default: 				return "";
 	}
 }
 
 string myGoListener::ToString(TACOPERANDTYPE num){
 	switch (num)
 	{
-		case TACOPERANDTYPE::VAR:    return "VAR";
-		case TACOPERANDTYPE::NULL_:    return "NULL_";
-		case TACOPERANDTYPE::IMM: 	 return "IMM";
-		default:  return "";
+		case TACOPERANDTYPE::VAR:      	return "VAR";
+		case TACOPERANDTYPE::NULL_:    	return "NULL_";
+		case TACOPERANDTYPE::IMM: 	   	return "IMM";
+		default:  						return "";
 	}
 }
 
 TACOPERANDTYPE myGoListener::OperandTypereslove(string name){
-	if(name[0] >= '0' && name[0] <= '9')
+	if((name[0] >= '0' && name[0] <= '9') || name[0] == '-')
 	{
 		return TACOPERANDTYPE::IMM;
 	}
@@ -257,6 +276,56 @@ void myGoListener::exitPlusMinusOperation(GoParser::PlusMinusOperationContext *c
 
 void myGoListener::enterRelationOperation(GoParser::RelationOperationContext *ctx){}
 void myGoListener::exitRelationOperation(GoParser::RelationOperationContext *ctx){
+	std::shared_ptr<vector<string>> left=ctx_decoder(values->get(ctx->expression(0)));
+	std::shared_ptr<vector<string>> right=ctx_decoder(values->get(ctx->expression(1)));
+	if(left->size()!=1 || right->size()!=1){
+		cout<<"wrong literal number1"<<endl;
+		exit(-1);
+	}
+	string dst = CreateLocalVar();
+	vector<string> plusMinusOperation_values;
+	plusMinusOperation_values.push_back(dst);
+
+	// expression 在if 下的情况，需要添加ifexp 并且反过来
+	if(ctx->parent->getText().find("if") == 0)
+	{
+		if(ctx->EQUALS())
+		{
+			push_line (TACOP::NEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+		}
+		else if(ctx->NOT_EQUALS())
+		{
+			push_line (TACOP::EQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+		}
+		else if(ctx->GREATER())
+		{
+			push_line (TACOP::LE, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+		}
+		else if(ctx->GREATER_OR_EQUALS())
+		{
+			push_line (TACOP::LT, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+		}
+		else if(ctx->LESS())
+		{
+			push_line (TACOP::GE, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+		}
+		else if(ctx->LESS_OR_EQUALS())
+		{
+			push_line (TACOP::GT, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+		}
+		values->put(ctx, ctx_encoder(plusMinusOperation_values));
+
+		push_line (TACOP::IFEXP, Operand(dst, OperandTypereslove(dst)), Operand("",TACOPERANDTYPE::NULL_), Operand("",TACOPERANDTYPE::NULL_));
+
+		if(ctx->parent->getText().find("else") != -1)//有else，就goto else
+		{
+			push_line(TACOP::GOTO, Operand("ELSE" + ifvalues->get(ctx->parent), TACOPERANDTYPE::NULL_), Operand("",TACOPERANDTYPE::NULL_), Operand("",TACOPERANDTYPE::NULL_));
+		}
+		else
+		{
+			push_line(TACOP::GOTO, Operand("ENDIF" + ifvalues->get(ctx->parent), TACOPERANDTYPE::NULL_), Operand("",TACOPERANDTYPE::NULL_), Operand("",TACOPERANDTYPE::NULL_));
+		}
+	}
 
 }
 
@@ -471,11 +540,16 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 }
 
 void myGoListener::enterBlock(GoParser::BlockContext *ctx){
-
+	if (ctx->parent->children[4] == ctx && ctx->parent->children[3]->getText() == "else"){
+		push_line(TACOP::LABEL,Operand("ELSE" + ifvalues->get(ctx->parent), TACOPERANDTYPE::NULL_),Operand("", TACOPERANDTYPE::NULL_),Operand("", TACOPERANDTYPE::NULL_));
+	}
 	addScope();
 
 }
 void myGoListener::exitBlock(GoParser::BlockContext *ctx){
+	if (ctx->parent->children[2] == ctx && ctx->parent->children[0]->getText() == "if"){
+		push_line(TACOP::GOTO,Operand("ENDIF" + ifvalues->get(ctx->parent), TACOPERANDTYPE::NULL_),Operand("", TACOPERANDTYPE::NULL_),Operand("", TACOPERANDTYPE::NULL_));
+	}
 	popScope();
 
 
@@ -572,8 +646,14 @@ void myGoListener::exitFallthroughStmt(GoParser::FallthroughStmtContext *ctx){}
 void myGoListener::enterDeferStmt(GoParser::DeferStmtContext *ctx){}
 void myGoListener::exitDeferStmt(GoParser::DeferStmtContext *ctx){}
 
-void myGoListener::enterIfStmt(GoParser::IfStmtContext *ctx){}
-void myGoListener::exitIfStmt(GoParser::IfStmtContext *ctx){}
+void myGoListener::enterIfStmt(GoParser::IfStmtContext *ctx){
+	push_line(TACOP::IF,Operand("",TACOPERANDTYPE::NULL_),Operand("",TACOPERANDTYPE::NULL_),Operand("",TACOPERANDTYPE::NULL_));
+	std::string iftmp = CreateElseLabel();
+	ifvalues->put(ctx, iftmp);
+}
+void myGoListener::exitIfStmt(GoParser::IfStmtContext *ctx){
+	push_line(TACOP::LABEL,Operand("ENDIF" + ifvalues->get(ctx),TACOPERANDTYPE::NULL_),Operand("",TACOPERANDTYPE::NULL_),Operand("",TACOPERANDTYPE::NULL_));
+}
 
 void myGoListener::enterSwitchStmt(GoParser::SwitchStmtContext *ctx){}
 void myGoListener::exitSwitchStmt(GoParser::SwitchStmtContext *ctx){}
