@@ -21,6 +21,9 @@ func main() {
 	a = 3;
 	}
 	}
+        for i := 0; i <= 10; i+=1 {
+                a = i;
+        }
 	a,b=add1(a,b)
 	a,b=add1(1,2)
 	// var

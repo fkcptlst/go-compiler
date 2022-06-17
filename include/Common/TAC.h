@@ -9,8 +9,8 @@ struct Scope;
 
 
 enum class TACOP {
-	ADD, SUB, MUL, DIV, ASSIGN, CALL, PARA, RET, ENDCALL, FUN_RET, FUN_PARA, IF, IFEXP, ENDIF, GOTO, ELSE,
-	GT, GE, LT, LE, EQ, NEQ, LABEL,
+	ADD, SUB, MUL, DIV, ASSIGN, CALL, PARA, RET, ENDCALL, FUN_RET, FUN_PARA, IFEXP, ENDIF, GOTO, ELSE,
+	IFGT, IFGE, IFLT, IFLE, IFEQ, IFNEQ, LABEL,
 };
 
 enum class TACOPERANDTYPE {
@@ -25,6 +25,8 @@ struct Operand {
 
 	Operand(std::string value, TACOPERANDTYPE type)
 	: value(value), use_info(), OperType(type) {}
+
+	Operand() {} 
 };
 
 
@@ -38,6 +40,8 @@ struct TACLine {
 	TACLine(int64_t line, TACOP op, Operand src1, Operand src2, Operand dst, std::shared_ptr<Scope> scope_)
 	: line(line), op(op), src1(src1), src2(src2), dst(dst), scope(scope_) {}
 
+	TACLine() {}
+	
 	std::string to_string() const;
 };
 

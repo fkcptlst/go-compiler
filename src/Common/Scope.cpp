@@ -50,3 +50,7 @@ void Scope::fun_define(std::shared_ptr<Symbol> sym){
 void Scope::para_define(std::shared_ptr<Symbol> sym){
     para_symbols[sym->name] = sym;
 }
+
+void Scope::para_delete(std::string str){
+    para_symbols.erase(str);
+}

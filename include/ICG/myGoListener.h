@@ -8,6 +8,7 @@
 #include "GoLexer.h"
 #include "GoParserListener.h"
 #include "GoParserBaseListener.h"
+#include "ICG/StmtICG/ForStmt.h"
 
 namespace std
 {
@@ -19,12 +20,15 @@ public:
     int LineIndex = 0;
     int LocalIndex = 0;
     int IFIndex = 0;
+    int ForIndex = 0;
     // TACBlock *test = new TACBlock;
     // 全局的key是global，其他的为函数名字
     TACFile TACBlocks;
     
     antlr4::tree::ParseTreeProperty<string> *values = new antlr4::tree::ParseTreeProperty<string>;
     antlr4::tree::ParseTreeProperty<string> *ifvalues = new antlr4::tree::ParseTreeProperty<string>;
+    antlr4::tree::ParseTreeProperty<ForStmt> *forvalues = new antlr4::tree::ParseTreeProperty<ForStmt>;
+    
     // antlr4::tree::ParseTreeProperty<Scope*> scopes;
     std::shared_ptr<Scope> currentScope;
     std::shared_ptr<Scope> globalScope;
@@ -39,6 +43,8 @@ public:
     string CreateLocalVar(); // check the local_varname is illgal
     
     string CreateElseLabel();
+
+    string CreateForLabel();
 
     void Go23file(string filename);
 

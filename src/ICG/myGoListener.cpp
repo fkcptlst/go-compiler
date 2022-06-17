@@ -7,6 +7,7 @@
 #include "GoParserBaseListener.h"
 #include "ICG/myGoListener.h"
 #include "ICG/Utils.h"
+#include "ICG/StmtICG/ForStmt.h"
 
 using namespace std;
 
@@ -40,6 +41,13 @@ string myGoListener::CreateElseLabel(){
 	return Local;
 }
 
+string myGoListener::CreateForLabel(){
+	string Local;
+	bool CheckResult = 0;
+	Local = to_string(myGoListener::ForIndex);
+	myGoListener::ForIndex++;
+	return Local;
+}
 
 string myGoListener::ToString(TACOP num){
 	switch (num)
@@ -55,15 +63,14 @@ string myGoListener::ToString(TACOP num){
 		case TACOP::ENDCALL:	return "ENDCALL";
 		case TACOP::FUN_RET:	return "FUN_RET";
 		case TACOP::FUN_PARA:	return "FUN_PARA";
-		case TACOP::IF: 		return "IF";
 		case TACOP::IFEXP:		return "IFEXP";
 		case TACOP::ENDIF: 		return "ENDIF";
-		case TACOP::GE:			return "GE";
-		case TACOP::LE:			return "LE";
-		case TACOP::GT:			return "GT";
-		case TACOP::LT:			return "LT";
-		case TACOP::EQ:			return "EQ";
-		case TACOP::NEQ:		return "NEQ";
+		case TACOP::IFGE:		return "IFGE";
+		case TACOP::IFLE:		return "IFLE";
+		case TACOP::IFGT:		return "IFGT";
+		case TACOP::IFLT:		return "IFLT";
+		case TACOP::IFEQ:		return "IFEQ";
+		case TACOP::IFNEQ:		return "IFNEQ";
 		case TACOP::GOTO:		return "GOTO";
 		case TACOP::ELSE:		return "ELSE";
 		case TACOP::LABEL: 		return "LABEL";
@@ -282,49 +289,99 @@ void myGoListener::exitRelationOperation(GoParser::RelationOperationContext *ctx
 		cout<<"wrong literal number1"<<endl;
 		exit(-1);
 	}
-	string dst = CreateLocalVar();
-	vector<string> plusMinusOperation_values;
-	plusMinusOperation_values.push_back(dst);
+	// vector<string> plusMinusOperation_values;
+	// plusMinusOperation_values.push_back(dst);
 
-	// expression 在if 下的情况，需要添加ifexp 并且反过来
-	if(ctx->parent->getText().find("if") == 0)
+	// expression 在for 下的情况，需要添加ifexp 并且反过来 将condition_loop信息写入forstatement里面
+	if(ctx->parent->parent->children[0]->getText() == "for" && ctx->parent->parent->children[1] == ctx->parent)
 	{
+		std::string dst,dst_;
+		ForStmt tmp = forvalues->get(ctx->parent->parent);
+		dst = "ENDFOR" + tmp.CurIndex;
+		dst_ = "FORLOOP" + tmp.CurIndex;
+		TACLine tmpline;
 		if(ctx->EQUALS())
 		{
-			push_line (TACOP::NEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFEQ, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, OperandTypereslove(dst_)), currentScope);
+			
+			push_line (TACOP::IFNEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 		}
 		else if(ctx->NOT_EQUALS())
 		{
-			push_line (TACOP::EQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFNEQ, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, OperandTypereslove(dst_)), currentScope);
+			
+			push_line (TACOP::IFEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 		}
 		else if(ctx->GREATER())
 		{
-			push_line (TACOP::LE, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFGT, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, OperandTypereslove(dst_)), currentScope);
+
+			push_line (TACOP::IFLE, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 		}
 		else if(ctx->GREATER_OR_EQUALS())
 		{
-			push_line (TACOP::LT, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFGE, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, OperandTypereslove(dst_)), currentScope);
+
+			push_line (TACOP::IFLT, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 		}
 		else if(ctx->LESS())
 		{
-			push_line (TACOP::GE, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFLT, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, OperandTypereslove(dst_)), currentScope);
+
+			push_line (TACOP::IFGE, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 		}
 		else if(ctx->LESS_OR_EQUALS())
 		{
-			push_line (TACOP::GT, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFLE, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, OperandTypereslove(dst_)), currentScope);
+
+			push_line (TACOP::IFGT, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 		}
-		values->put(ctx, ctx_encoder(plusMinusOperation_values));
+		tmp.LoopCon = tmpline;
+		forvalues->put(ctx->parent->parent, tmp);
+	} 
 
-		push_line (TACOP::IFEXP, Operand(dst, OperandTypereslove(dst)), Operand("",TACOPERANDTYPE::NULL_), Operand("",TACOPERANDTYPE::NULL_));
-
+	// expression 在if 下的情况，需要添加ifexp 并且反过来
+	if(ctx->parent->getText().find("if") == 0 && ctx == ctx->parent->children[1])
+	{
+		std::string dst;
 		if(ctx->parent->getText().find("else") != -1)//有else，就goto else
 		{
-			push_line(TACOP::GOTO, Operand("ELSE" + ifvalues->get(ctx->parent), TACOPERANDTYPE::NULL_), Operand("",TACOPERANDTYPE::NULL_), Operand("",TACOPERANDTYPE::NULL_));
+			dst = "ELSE" + ifvalues->get(ctx->parent);
 		}
 		else
 		{
-			push_line(TACOP::GOTO, Operand("ENDIF" + ifvalues->get(ctx->parent), TACOPERANDTYPE::NULL_), Operand("",TACOPERANDTYPE::NULL_), Operand("",TACOPERANDTYPE::NULL_));
+			dst = "ENDIF" + ifvalues->get(ctx->parent);
 		}
+
+		if(ctx->EQUALS())
+		{
+			push_line (TACOP::IFNEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+		}
+		else if(ctx->NOT_EQUALS())
+		{
+			push_line (TACOP::IFEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+		}
+		else if(ctx->GREATER())
+		{
+			push_line (TACOP::IFLE, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+		}
+		else if(ctx->GREATER_OR_EQUALS())
+		{
+			push_line (TACOP::IFLT, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+		}
+		else if(ctx->LESS())
+		{
+			push_line (TACOP::IFGE, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+		}
+		else if(ctx->LESS_OR_EQUALS())
+		{
+			push_line (TACOP::IFGT, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+		}
+		// values->put(ctx, ctx_encoder(plusMinusOperation_values));
+
+		// push_line (TACOP::IFEXP, Operand(dst, OperandTypereslove(dst)), Operand("",TACOPERANDTYPE::NULL_), Operand("",TACOPERANDTYPE::NULL_));
+
+
 	}
 
 }
@@ -540,6 +597,12 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 }
 
 void myGoListener::enterBlock(GoParser::BlockContext *ctx){
+	//for 情况
+	if(ctx->parent->children[0]->getText() == "for")
+	{
+		push_line(TACOP::LABEL,Operand("FORLOOP" + forvalues->get(ctx->parent).CurIndex, TACOPERANDTYPE::NULL_),Operand("", TACOPERANDTYPE::NULL_),Operand("", TACOPERANDTYPE::NULL_));
+	}
+	//if else 情况
 	if (ctx->parent->children[4] == ctx && ctx->parent->children[3]->getText() == "else"){
 		push_line(TACOP::LABEL,Operand("ELSE" + ifvalues->get(ctx->parent), TACOPERANDTYPE::NULL_),Operand("", TACOPERANDTYPE::NULL_),Operand("", TACOPERANDTYPE::NULL_));
 	}
@@ -547,6 +610,18 @@ void myGoListener::enterBlock(GoParser::BlockContext *ctx){
 
 }
 void myGoListener::exitBlock(GoParser::BlockContext *ctx){
+	//for 情况
+	if(ctx->parent->children[0]->getText() == "for")
+	{
+		ForStmt fortmp = forvalues->get(ctx->parent);
+		TACLine updateCondition = fortmp.UpdateCon;
+		TACLine loopCondition = fortmp.LoopCon;
+		push_line(updateCondition.op, updateCondition.src1, updateCondition.src2, updateCondition.dst);
+		push_line(loopCondition.op, loopCondition.src1, loopCondition.src2, loopCondition.dst);
+		
+	}
+
+	//if 情况
 	if (ctx->parent->children[2] == ctx && ctx->parent->children[0]->getText() == "if"){
 		push_line(TACOP::GOTO,Operand("ENDIF" + ifvalues->get(ctx->parent), TACOPERANDTYPE::NULL_),Operand("", TACOPERANDTYPE::NULL_),Operand("", TACOPERANDTYPE::NULL_));
 	}
@@ -573,7 +648,9 @@ void myGoListener::enterSendStmt(GoParser::SendStmtContext *ctx){}
 void myGoListener::exitSendStmt(GoParser::SendStmtContext *ctx){}
 
 void myGoListener::enterIncDecStmt(GoParser::IncDecStmtContext *ctx){}
-void myGoListener::exitIncDecStmt(GoParser::IncDecStmtContext *ctx){}
+void myGoListener::exitIncDecStmt(GoParser::IncDecStmtContext *ctx){
+
+}
 
 void myGoListener::enterAssignment(GoParser::AssignmentContext *ctx){}
 void myGoListener::exitAssignment(GoParser::AssignmentContext *ctx){
@@ -599,13 +676,89 @@ void myGoListener::exitAssignment(GoParser::AssignmentContext *ctx){
 			push_line (TACOP::ASSIGN, Operand(varvalue, OperandTypereslove(varvalue)), Operand("", TACOPERANDTYPE::NULL_), Operand(varname, OperandTypereslove(varname)));
 		}
 	}
+
+	if(ctx->assign_op()->getText() == "+=")
+	{
+		std::shared_ptr<vector<string>> left_values;
+		std::shared_ptr<vector<string>> right_values;
+		left_values=ctx_decoder(values->get(ctx->expressionList(0)));
+		right_values=ctx_decoder(values->get(ctx->expressionList(1)));
+		/*左右参数量是否相等*/
+		if(left_values->size()!=1 || right_values->size() != 1){
+			cout<<"too many parameter for assign \"+=\""<<endl;
+			exit(-1);
+		}
+
+		//for statement 的情况，不写入3code，但是要记录在forstmt里面，作为update的条件
+		if(ctx->parent->parent->parent->children[0]->getText() == "for" && ctx->parent->parent == ctx->parent->parent->parent->children[1])
+		{
+			string varname = (*left_values)[0];
+			string varvalue = (*right_values)[0];
+			ForStmt fortmp =  forvalues->get(ctx->parent->parent->parent);
+			TACLine tmpline = TACLine(myGoListener::LineIndex, TACOP::ADD, Operand(varname, OperandTypereslove(varname)), Operand(varvalue, OperandTypereslove(varvalue)), Operand(varname, OperandTypereslove(varname)), currentScope);
+			fortmp.UpdateCon = tmpline;
+			forvalues->put(ctx->parent->parent->parent, fortmp);
+		}
+		//普通情况，block里面，写入3code
+		else
+		{
+			string varname = (*left_values)[0];
+			string varvalue = (*right_values)[0];
+			push_line (TACOP::ADD, Operand(varname, OperandTypereslove(varname)), Operand(varvalue, OperandTypereslove(varvalue)), Operand(varname, OperandTypereslove(varname)));
+
+		}
+	}
 }
 
 void myGoListener::enterAssign_op(GoParser::Assign_opContext *ctx){}
 void myGoListener::exitAssign_op(GoParser::Assign_opContext *ctx){}
 
 void myGoListener::enterShortVarDecl(GoParser::ShortVarDeclContext *ctx){}
-void myGoListener::exitShortVarDecl(GoParser::ShortVarDeclContext *ctx){}
+void myGoListener::exitShortVarDecl(GoParser::ShortVarDeclContext *ctx){
+	int n = ctx->identifierList()->IDENTIFIER().size();
+
+	for(int i=0;i<n;++i){
+		string varname = ctx->identifierList()->IDENTIFIER(i)->getText();
+		Symbol::Type type;
+		type=defineTmpType();
+		/*如果已经定义了，报错*/
+		if(currentScope->cur_resolve(varname)==SUCCESS){
+			cout<<"Redeclaration of parameter:"<<varname<<endl;
+			exit(-1);
+		}
+		/*不重复，新建*/
+		std::shared_ptr<Symbol> symbol=make_shared<Symbol>(varname,currentScope,Symbol::SymbolType::VAR,type);
+		myGoListener::currentScope->para_define(symbol);
+	}
+
+
+
+
+	/* TODO:如果是函数调用怎么办？？ */
+	if(ctx->expressionList()){
+		shared_ptr<vector<string>> right_values;
+		right_values=ctx_decoder(values->get(ctx->expressionList()));
+		/*数量是否匹配*/
+		if(n!=right_values->size()){
+			cout<<"wrong number"<<endl;
+			exit(-1);
+		}
+		/*赋值*/
+		for(int i=0;i<n;++i){
+			push_line(TACOP::ASSIGN, Operand((*right_values)[i], OperandTypereslove((*right_values)[i])),Operand("", TACOPERANDTYPE::NULL_),Operand(ctx->identifierList()->IDENTIFIER(i)->getText(), OperandTypereslove(ctx->identifierList()->IDENTIFIER(i)->getText())));
+		}
+	}
+	if (ctx->parent->parent->parent->children[0]->getText() == "for" && ctx->parent->parent->parent->children[1] == ctx->parent->parent)
+	{
+		//init 变量添加进forstmt结构体，方便在forstmt结束后销毁变量
+		ForStmt tmp = forvalues->get(ctx->parent->parent->parent);
+		for(int i=0;i<n;++i){
+		string varname = ctx->identifierList()->IDENTIFIER(i)->getText();
+		tmp.newParas.push_back(varname);
+		}
+		forvalues->put(ctx->parent->parent->parent, tmp);
+	}
+}
 
 void myGoListener::enterEmptyStmt(GoParser::EmptyStmtContext *ctx){}
 void myGoListener::exitEmptyStmt(GoParser::EmptyStmtContext *ctx){}
@@ -647,7 +800,6 @@ void myGoListener::enterDeferStmt(GoParser::DeferStmtContext *ctx){}
 void myGoListener::exitDeferStmt(GoParser::DeferStmtContext *ctx){}
 
 void myGoListener::enterIfStmt(GoParser::IfStmtContext *ctx){
-	push_line(TACOP::IF,Operand("",TACOPERANDTYPE::NULL_),Operand("",TACOPERANDTYPE::NULL_),Operand("",TACOPERANDTYPE::NULL_));
 	std::string iftmp = CreateElseLabel();
 	ifvalues->put(ctx, iftmp);
 }
@@ -694,8 +846,21 @@ void myGoListener::exitCommCase(GoParser::CommCaseContext *ctx){}
 void myGoListener::enterRecvStmt(GoParser::RecvStmtContext *ctx){}
 void myGoListener::exitRecvStmt(GoParser::RecvStmtContext *ctx){}
 
-void myGoListener::enterForStmt(GoParser::ForStmtContext *ctx){}
-void myGoListener::exitForStmt(GoParser::ForStmtContext *ctx){}
+void myGoListener::enterForStmt(GoParser::ForStmtContext *ctx){
+	std::string tmp = CreateForLabel();
+	ForStmt newfor = ForStmt(tmp);
+	cout << newfor.CurIndex<<endl;
+	forvalues->put(ctx, newfor);
+	
+}
+void myGoListener::exitForStmt(GoParser::ForStmtContext *ctx){
+	ForStmt tmp = forvalues->get(ctx);
+	for (auto para : tmp.newParas)
+	{
+		currentScope->para_delete(para);
+	}
+	push_line(TACOP::LABEL,Operand("ENDFOR" + forvalues->get(ctx).CurIndex,TACOPERANDTYPE::NULL_),Operand("",TACOPERANDTYPE::NULL_),Operand("",TACOPERANDTYPE::NULL_));
+}
 
 void myGoListener::enterForClause(GoParser::ForClauseContext *ctx){}
 void myGoListener::exitForClause(GoParser::ForClauseContext *ctx){}
@@ -859,60 +1024,3 @@ void myGoListener::visitTerminal(antlr4::tree::TerminalNode *node){}
 void myGoListener::visitErrorNode(antlr4::tree::ErrorNode *node){}
 void myGoListener::enterEveryRule(antlr4::ParserRuleContext *ctx){}
 void myGoListener::exitEveryRule(antlr4::ParserRuleContext *ctx){}
-// void myGoListener::myGoListener::exitString(GoParser::StringContext* ctx){
-
-//     currentRowValues.push_back(ctx->STRING()->getText()){}
-
-// }
-
-// void myGoListener::myGoListener::exitText(GoParser::TextContext* ctx){
-
-//     currentRowValues.push_back(ctx->TEXT()->getText()){}
-
-// }
-
-// void myGoListener::myGoListener::exitEmpty(GoParser::EmptyContext* ctx){
-
-//     currentRowValues.push_back(""){}
-
-// }
-
-
-// void myGoListener::myGoListener::exitHdr(GoParser::HdrContext *ctx){
-//     for (auto rowvalue : currentRowValues)
-//     {
-//         header.push_back(rowvalue){}
-//     }
-//     currentRowValues.clear(){}
-// }
-
-// void myGoListener::myGoListener::exitRow(GoParser::RowContext* ctx)
-// {
-//     if(hdr)
-//     {   hdr = false{}
-//         return{}
-//     }
-//     unordered_map<string, string> map{}
-//     int i{}
-//     for (auto v : currentRowValues) {
-//         map.insert({header[i], v}){}
-//         i++{}
-//     }
-//     currentRowValues.clear(){}
-//     rows.push_back(map){}
-// }
-
-// vector<unordered_map<string, string>> myGoListener::getRows()
-// {
-//     return rows{}
-// }
-
-// vector<string> myGoListener::getHeader()
-// {
-//     return header{}
-// }
-
-// vector<string> myGoListener::getCurrentRowValues()
-// {
-//     return currentRowValues{}
-// }

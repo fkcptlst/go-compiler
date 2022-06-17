@@ -67,14 +67,15 @@ struct Symbol{
 
 struct Scope{
     std::shared_ptr<Scope>                                      enclosing_scope;
-    std::unordered_map<std::string, std::shared_ptr<Symbol> >   fun_symbols;
-    std::unordered_map<std::string, std::shared_ptr<Symbol> >   para_symbols;
+    std::unordered_map<std::string, std::shared_ptr<Symbol>>   fun_symbols;
+    std::unordered_map<std::string, std::shared_ptr<Symbol>>   para_symbols;
 
     Scope() : enclosing_scope(nullptr), fun_symbols(),para_symbols() {}
     Scope(std::shared_ptr<Scope> enclosing_scope) : enclosing_scope(enclosing_scope), fun_symbols(),para_symbols() {}
 
     void fun_define(std::shared_ptr<Symbol> sym);
     void para_define(std::shared_ptr<Symbol> sym);
+    void para_delete(std::string str);
     int resolve(std::string name, std::shared_ptr<Symbol> &ret);
     std::shared_ptr<Symbol> resolve(std::string name);
     int cur_resolve(std::string name);
