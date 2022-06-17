@@ -32,7 +32,7 @@ void Translator::dataTranslate() {
                 break;
             }
             default: {
-                std::cout << "global op error" << std::endl;
+                LOG(ERROR) << "global op error: " << to_string((*global)[i].op);
                 break;
             }
         }

@@ -36,8 +36,8 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
     }
     SymbolManager_.set_zero_len();
     // todo 完成对每个语句的翻译
+    LOG(WARNING) << "逐行翻译 TAC block 到 ASM";
     for (int i = 0; i < TACBlock_->size(); i++) {
-        std::cout << (*TACBlock_)[i].to_string() << std::endl;
         LOG(INFO) << (*TACBlock_)[i].to_string();
         std::shared_ptr<BaseTranslator> trans;
         switch ((*TACBlock_)[i].op) {
@@ -51,7 +51,6 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         }
         ASMLines tmp_res = trans->SentenceTranslate(SymbolManager_, (*TACBlock_)[i]);
         ASMBlock_.asmlines.insert(ASMBlock_.asmlines.end(), tmp_res.begin(), tmp_res.end());
-        LOG(INFO) << (*TACBlock_)[i].to_string();
     }
 
 

@@ -303,13 +303,13 @@ void myGoListener::exitRelationOperation(GoParser::RelationOperationContext *ctx
 		if(ctx->EQUALS())
 		{
 			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFEQ, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, OperandTypereslove(dst_)), currentScope);
-			
+
 			push_line (TACOP::IFNEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 		}
 		else if(ctx->NOT_EQUALS())
 		{
 			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFNEQ, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, OperandTypereslove(dst_)), currentScope);
-			
+
 			push_line (TACOP::IFEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 		}
 		else if(ctx->GREATER())
@@ -338,7 +338,7 @@ void myGoListener::exitRelationOperation(GoParser::RelationOperationContext *ctx
 		}
 		tmp.LoopCon = tmpline;
 		forvalues->put(ctx->parent->parent, tmp);
-	} 
+	}
 
 	// expression 在if 下的情况，需要添加ifexp 并且反过来
 	if(ctx->parent->getText().find("if") == 0 && ctx == ctx->parent->children[1])
@@ -618,7 +618,7 @@ void myGoListener::exitBlock(GoParser::BlockContext *ctx){
 		TACLine loopCondition = fortmp.LoopCon;
 		push_line(updateCondition.op, updateCondition.src1, updateCondition.src2, updateCondition.dst);
 		push_line(loopCondition.op, loopCondition.src1, loopCondition.src2, loopCondition.dst);
-		
+
 	}
 
 	//if 情况
@@ -851,7 +851,7 @@ void myGoListener::enterForStmt(GoParser::ForStmtContext *ctx){
 	ForStmt newfor = ForStmt(tmp);
 	cout << newfor.CurIndex<<endl;
 	forvalues->put(ctx, newfor);
-	
+
 }
 void myGoListener::exitForStmt(GoParser::ForStmtContext *ctx){
 	ForStmt tmp = forvalues->get(ctx);
