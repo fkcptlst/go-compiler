@@ -649,7 +649,34 @@ void myGoListener::exitSendStmt(GoParser::SendStmtContext *ctx){}
 
 void myGoListener::enterIncDecStmt(GoParser::IncDecStmtContext *ctx){}
 void myGoListener::exitIncDecStmt(GoParser::IncDecStmtContext *ctx){
+	if (ctx->children[1]->getText() == "++")
+	{
+		std::shared_ptr<vector<string>> left_values;
+		left_values=ctx_decoder(values->get(ctx->expression()));
+		if(left_values->size()!=1){
+			cout<<"too many parameter for incdec \"++\""<<endl;
+			exit(-1);
+		}
 
+		//for statement 的情况，不写入3code，但是要记录在forstmt里面，作为update的条件
+		if(ctx->parent->parent->parent->children[0]->getText() == "for" && ctx->parent->parent == ctx->parent->parent->parent->children[1])
+		{
+			string varname = (*left_values)[0];
+			string varvalue = "1";
+			ForStmt fortmp =  forvalues->get(ctx->parent->parent->parent);
+			TACLine tmpline = TACLine(myGoListener::LineIndex, TACOP::ADD, Operand(varname, OperandTypereslove(varname)), Operand(varvalue, OperandTypereslove(varvalue)), Operand(varname, OperandTypereslove(varname)), currentScope);
+			fortmp.UpdateCon = tmpline;
+			forvalues->put(ctx->parent->parent->parent, fortmp);
+		}
+		//普通情况，block里面，写入3code
+		else
+		{
+			string varname = (*left_values)[0];
+			string varvalue = "1";
+			push_line (TACOP::ADD, Operand(varname, OperandTypereslove(varname)), Operand(varvalue, OperandTypereslove(varvalue)), Operand(varname, OperandTypereslove(varname)));
+
+		}
+	}
 }
 
 void myGoListener::enterAssignment(GoParser::AssignmentContext *ctx){}
