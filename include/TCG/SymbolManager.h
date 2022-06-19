@@ -18,22 +18,24 @@ public:
 	/* 当接受一个函数的三地址代码块时，重新初始化 */
 	// todo 重新计算待用信息 重置堆栈和寄存器
 	// todo 根据block_name找到对应的三地址代码
-	void set_scope(std::shared_ptr<Scope> local_scope);
+	void 		cal_use_info(std::shared_ptr<TACBlock> block);
+	void		set_scope(std::shared_ptr<Scope> local_scope);
 
 	std::string encode_var(std::string var);
 
 	std::string rvalue(REG reg);
 	REG 		avalue_reg(const std::string& vairable) const;
 	int 		avalue_mem(const std::string& vairable) const;
-	UseInfo		use_info(const std::string& vairable) const;
 	void		set_avalue_reg(const std::string& vairable, REG reg);
 	void		set_avalue_mem(const std::string& variable, int mem);
+
+	// 待用信息 和 活跃信息
+	UseInfo		use_info(const std::string& vairable) const;
 	void		set_use_info(const std::string& vairable, UseInfo use_info);
 
 	REG 		get_free_reg();
 	REG			get_reg();
 	REG 		get_reg(std::string dst, std::string src1 = "");
-	void 		cal_use_info();
 
 	void 		push_reg(REG reg, int overwrite = 1);
 	void 		pop_reg(REG reg);
@@ -61,6 +63,8 @@ private:
 	std::vector<std::string>					svalue_;
 	std::unordered_map<std::string, REG> 		avalue_reg_;
 	std::unordered_map<std::string, int> 		avalue_mem_;  // 存与ebp的偏移
+
+	// 符号表中的 待用信息 和 活跃信息 (只是中间使用, 最终每个 TAC_line 上的变量都会附带信息)
 	std::unordered_map<std::string, UseInfo> 	use_info_;
 
 	/* 函数堆栈模拟 */

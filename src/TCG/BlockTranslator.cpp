@@ -33,6 +33,8 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         ASMBlock_.asmlines.push_back(construct_asm("push", REG::EDX));
         ASMBlock_.asmlines.push_back(construct_asm("push", REG::ESI));
     }
+
+    SymbolManager_.cal_use_info(TACBlock_);
     SymbolManager_.set_zero_len();
     // todo 完成对每个语句的翻译
     for (int i = 0; i < TACBlock_->size(); i++) {

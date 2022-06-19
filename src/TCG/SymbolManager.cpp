@@ -47,24 +47,48 @@ REG SymbolManager::get_reg() {
 
 
 // 计算一个代码块中, 变量的待用信息和活跃信息
-void SymbolManager::cal_use_info() {
-	/* crTODO: 基本块之后???? */
+void SymbolManager::cal_use_info(std::shared_ptr<TACBlock> block) {
+	LOG(INFO) << "cal_use_info";
+	// 初始化符号表中所有变量的待用信息
+	use_info_.clear();
+	// 根据基本块出口来设置变量的活跃信息
+	for (auto it = block->rbegin(); it != block->rend(); it++) {
+		TACLine &line = *it;
+		if (line.op == TACOP::FUN_RET) {
+			use_info_[line.src1.value] = {0, true};
+		} else {
+			break;
+		}
+	}
+	// 从后往前遍历基本块，将 变量的待用信息和活跃信息 绑定在 TACline 上
+	for (auto it = block->rbegin(); it != block->rend(); it++) {
+		TACLine &line = *it;
+		if (line.dst.value != "") {
+			// 把符号表中 dst 的待用信息和活跃信息 附加到 中间代码上
+			line.dst.use_info = use_info_[line.dst.value];
+			// 重置符号表 dst 的待用信息和活跃信息
+			use_info_[line.dst.value] = {0, false};
+		}
+		if (line.src1.value != "") {
+			// 把符号表中 src1 的待用信息和活跃信息 附加到 中间代码上
+			line.src1.use_info = use_info_[line.src1.value];
+			// 置位符号表 src1 的待用信息和活跃信息
+			use_info_[line.src1.value] = {line.line, true};
+		}
+		if (line.src2.value != "") {
+			// 把符号表中 src2 的待用信息和活跃信息 附加到 中间代码上
+			line.src2.use_info = use_info_[line.src2.value];
+			// 置位符号表 src2 的待用信息和活跃信息
+			use_info_[line.src2.value] = {line.line, true};
+		}
+	}
 
-	/* 使用vector逆向迭代器 从后向前扫描三地址码 */
-	// 等scope写好再写
-	// for (auto it = scope.block.rbegin(); it != scope.block.rend(); it++) {
-	// 	TACLine &line = *it;
-	// 	/* 把符号表中 dst 的待用信息和活跃信息 附加到 中间代码上 */
-	// 	line.dst.use_info = use_info_[line.dst.value];
-	// 	/* 重置符号表 dst 的待用信息和活跃信息 */
-	// 	use_info_[line.dst.value] = {0, false};
-	// 	/* 把符号表中 src 的待用信息和活跃信息 附加到 中间代码上 */
-	// 	line.src1.use_info = use_info_[line.src1.value];
-	// 	line.src2.use_info = use_info_[line.src2.value];
-	// 	/* 置位符号表 src 的待用信息和活跃信息 */
-	// 	use_info_[line.src1.value] = {line.line, true};
-	// 	use_info_[line.src2.value] = {line.line, true};
-	// }
+	for (TACLine &line : *block) {
+		LOG(INFO) << line.to_string()
+				  << std::setw(8) << "(" << line.src1.use_info << ")"
+				  << std::setw(8) << "(" << line.src2.use_info << ")"
+				  << std::setw(8) << "(" << line.dst.use_info << ")";
+	}
 }
 
 
