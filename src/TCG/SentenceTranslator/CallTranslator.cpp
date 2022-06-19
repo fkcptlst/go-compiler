@@ -15,7 +15,7 @@ ASMLines CallTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLi
         SymbolManager_.set_esp_bias(-4 * para_num);
         asmlines.push_back(construct_asm("add", REG::ESP, std::to_string(4 * para_num)));
     } else {
-        std::cout << "not a fun" << std::endl;
+        LOG(ERROR) << "call func error: " << fun_name << std::endl;
     }
     return asmlines;
 }

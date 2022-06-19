@@ -10,7 +10,7 @@ enable_testing()
 
 add_subdirectory(3rd)
 add_subdirectory(src)
-add_subdirectory(test)
+# add_subdirectory(test)
 
 add_executable(tjugo main.cpp)
 target_include_directories(tjugo PUBLIC ${CMAKE_SOURCE_DIR}/include)

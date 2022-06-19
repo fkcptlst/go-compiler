@@ -30,7 +30,7 @@ ASMLines FunretTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
                 break;
             }
             default: {
-                std::cout << "funret default error" << std::endl;
+                LOG(ERROR) << "funret default error";
                 break;
             }
         }

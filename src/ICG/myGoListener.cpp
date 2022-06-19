@@ -207,8 +207,7 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 		string identity=(*fun_identity)[0];
 		std::shared_ptr<Symbol> fun_symbol;
 		if(currentScope->resolve(identity,fun_symbol)==FAIL){
-			cout<<"Undefined function: "<<identity<<endl;
-			exit(-1);
+			LOG(FATAL) << "Undefined function: " << identity;
 		}
 		/*找到了函数*/
 		std::shared_ptr<vector<string>> arguments_values=ctx_decoder(values->get(ctx->arguments()));
@@ -774,8 +773,7 @@ void myGoListener::exitReturnStmt(GoParser::ReturnStmtContext *ctx){
 	for(auto i:(*return_values)){
 		shared_ptr<Symbol> tmp;
 		if(currentScope->resolve(i,tmp)==FAIL){
-			cout<<"Undefined : "<<i<<endl;
-			exit(-1);
+			LOG(FATAL) << "Undefined: " << i;
 		}
 	}
 	/*生成TAC*/
@@ -950,8 +948,7 @@ void myGoListener::enterOperandName(GoParser::OperandNameContext *ctx){}
 void myGoListener::exitOperandName(GoParser::OperandNameContext *ctx){
 	shared_ptr<Symbol> tmp;
 	if(currentScope->resolve(ctx->IDENTIFIER()->getText(),tmp)==FAIL){
-		cout<<"Undefined : "<<ctx->IDENTIFIER()->getText()<<endl;
-		exit(-1);
+		LOG(FATAL) << "Undefined: " << ctx->IDENTIFIER()->getText();
 	}
 	values->put(ctx,ctx->IDENTIFIER()->getText()+DELIMITER);
 }
