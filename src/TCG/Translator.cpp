@@ -59,13 +59,11 @@ void Translator::textTranslate() {
     for(auto i = TACFile_->begin(); i != TACFile_->end(); i++) {
         /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? ljh 不用 */
         // todo 根据函数名到block的map初始化
+        if (i->first == "global" || i->first == "myprint" || i->second->size() == 0) continue;
         LOG(WARNING) << "start 翻译函数: " << i->first;
-        if (i->first == "global" || i->second->size() == 0) continue;
         SymbolManager SymbolManager_(Global_Scope, i->first);
         ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(SymbolManager_, i->second);
-        if (ASMBlock_.name != "myprint") {
-            ASMSection_.asmblocks.push_back(ASMBlock_);
-        }
+        ASMSection_.asmblocks.push_back(ASMBlock_);
     }
 
     ASMFile_->push_back(ASMSection_);

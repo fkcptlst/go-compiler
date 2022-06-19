@@ -17,7 +17,7 @@ void init_log(const char* log_file_name) {
     google::SetStderrLogging(google::INFO);
     google::InstallFailureSignalHandler();                  // 捕捉信号
     FLAGS_log_prefix = true;                                // 日志前缀
-    FLAGS_colorlogtostdout = FLAGS_colorlogtostderr = true; // 颜色
+    FLAGS_colorlogtostderr = true; // 颜色
     FLAGS_alsologtostderr = true;                           // 日志输出到屏幕
     FLAGS_logbufsecs = 0;                                   // 日志缓冲时间
 }

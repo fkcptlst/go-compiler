@@ -36,7 +36,6 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
     SymbolManager_.set_zero_len();
     // todo 完成对每个语句的翻译
     for (int i = 0; i < TACBlock_->size(); i++) {
-        LOG(INFO) << (*TACBlock_)[i].to_string();
         std::shared_ptr<BaseTranslator> trans;
         switch ((*TACBlock_)[i].op) {
             case TACOP::ASSIGN:   trans = std::make_shared<AssignTranslator>(); break;
@@ -49,18 +48,23 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         }
         ASMLines tmp_res = trans->SentenceTranslate(SymbolManager_, (*TACBlock_)[i]);
         ASMBlock_.asmlines.insert(ASMBlock_.asmlines.end(), tmp_res.begin(), tmp_res.end());
+        LOG(INFO) << (*TACBlock_)[i].to_string();
+        // std::cout << (*TACBlock_)[i].to_string() << std::endl;
     }
 
 
 
     int stack_len = SymbolManager_.get_stack_len();
     if (stack_len > 0) {
+        SymbolManager_.set_esp_bias(-4 * stack_len);
         ASMBlock_.asmlines.push_back(construct_asm("add", REG::ESP, std::to_string(4 * stack_len)));
-    } else {
-        LOG(ERROR) << "stack overflow";
+    } else if(stack_len < 0)  {
+        LOG(ERROR) << stack_len << "stack overflow";
     }
 
     if (SymbolManager_.get_name() == "main") {
+        SymbolManager_.pop_reg(REG::EBP);
+        ASMBlock_.asmlines.push_back(construct_asm("pop", REG::EBP));
         // mov eax,1
         // mov ebx,0
         // int 80h
@@ -80,10 +84,8 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         ASMBlock_.asmlines.push_back(construct_asm("pop", REG::EAX));
         SymbolManager_.pop_reg(REG::EBP);
         ASMBlock_.asmlines.push_back(construct_asm("pop", REG::EBP));
+        ASMBlock_.asmlines.push_back(construct_asm("ret"));
     }
-
-    // ret
-    ASMBlock_.asmlines.push_back(construct_asm("ret"));
 
     return ASMBlock_;
 }
