@@ -16,6 +16,9 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
 
     if (SymbolManager_.get_name() == "main") {
         ASMBlock_.name = "_start";
+        SymbolManager_.push_reg(REG::EBP, 0);
+        ASMBlock_.asmlines.push_back(construct_asm("push", REG::EBP));
+        ASMBlock_.asmlines.push_back(construct_asm("mov", REG::EBP, REG::ESP));
     } else {
         ASMBlock_.name = SymbolManager_.get_name();
 
@@ -37,7 +40,6 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
     SymbolManager_.set_zero_len();
     // todo 完成对每个语句的翻译
     for (int i = 0; i < TACBlock_->size(); i++) {
-        std::cout << (*TACBlock_)[i].to_string() << std::endl;
         LOG(INFO) << (*TACBlock_)[i].to_string();
         std::shared_ptr<BaseTranslator> trans;
         switch ((*TACBlock_)[i].op) {
@@ -52,12 +54,14 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         ASMLines tmp_res = trans->SentenceTranslate(SymbolManager_, (*TACBlock_)[i]);
         ASMBlock_.asmlines.insert(ASMBlock_.asmlines.end(), tmp_res.begin(), tmp_res.end());
         LOG(INFO) << (*TACBlock_)[i].to_string();
+        std::cout << (*TACBlock_)[i].to_string() << std::endl;
     }
 
 
 
     int stack_len = SymbolManager_.get_stack_len();
     if (stack_len > 0) {
+        SymbolManager_.set_esp_bias(-4 * stack_len);
         ASMBlock_.asmlines.push_back(construct_asm("add", REG::ESP, std::to_string(4 * stack_len)));
     } else {
         LOG(INFO) << "stack overflow";
@@ -67,6 +71,8 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         // mov eax,1
         // mov ebx,0
         // int 80h
+        SymbolManager_.pop_reg(REG::EBP);
+        ASMBlock_.asmlines.push_back(construct_asm("pop", REG::EBP));
         ASMBlock_.asmlines.push_back(construct_asm("mov", REG::EAX, std::to_string(1)));
         ASMBlock_.asmlines.push_back(construct_asm("mov", REG::EBX, std::to_string(0)));
         ASMBlock_.asmlines.push_back(construct_asm("int", "80h"));
