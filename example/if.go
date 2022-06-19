@@ -1,6 +1,9 @@
 package main
 
 
+func myprint(a int)
+
+
 func main() {
 	var a = 0;
 	var b int;

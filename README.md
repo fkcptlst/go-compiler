@@ -86,3 +86,15 @@ func main() {
 ----------------------
 ```
 
+生成汇编：
+
+```shell
+./tjugo ../example/<A>.go
+```
+
+运行汇编：
+
+```shell
+. ../scripts/run_asm.sh <A>
+```
+
