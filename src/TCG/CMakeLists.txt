@@ -5,3 +5,4 @@ add_library(tcg
 )
 
 target_include_directories(tcg PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(tcg common)

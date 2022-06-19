@@ -13,241 +13,63 @@ enum class POSTYPE {
 
 class SymbolManager {
 public:
-	SymbolManager(std::shared_ptr<Scope> Global_Scope, std::string name);
-
-	/* get and set */
-	std::string rvalue(REG reg);
-	REG 		avalue_reg(const std::string& vairable) const;
-	int 		avalue_mem(const std::string& vairable) const;
-	UseInfo		use_info(const std::string& vairable) const;
-	void		set_avalue_reg(const std::string& vairable, REG reg);  // 让一个变量存在reg里面
-	void		set_avalue_mem(const std::string& variable, int mem);  // 让一个变量存在堆栈里，用跟ebp的偏移
-	void		set_use_info(const std::string& vairable, UseInfo use_info);
-
-	REG get_reg(std::string dst, std::string src1);  // 解决a = b op c 以及 a = 3 stat存放状态，如果没有，返回none
-	REG get_free_reg();
-	REG get_reg();  // 当寄存器满的时候，找到一个将要替换的reg，要有替换策略
-	void cal_use_info();
-	std::string encode_var(std::string);
-
-	void push_reg(REG reg, int overwrite);  // 模拟堆栈 push指令 把reg里面的变量放到mem里 并且让reg空
-	void pop_reg(REG reg);  // 模拟堆栈 pop指令 把栈顶的变量pop到reg里
-	void set_esp_bias(int bias);  // 直接操作esp
-	int get_esp();
-	POSTYPE position(std::string variable);
-	int para();
-	int ret();
-	std::shared_ptr<Symbol> resolve_fun(std::string name);
-	std::string get_name();
-	void set_zero_len();
-	int get_stack_len();
+	SymbolManager(std::shared_ptr<Scope> global_scope, std::string name);
 
 	/* 当接受一个函数的三地址代码块时，重新初始化 */
 	// todo 重新计算待用信息 重置堆栈和寄存器
 	// todo 根据block_name找到对应的三地址代码
 	void set_scope(std::shared_ptr<Scope> local_scope);
 
-private:
+	std::string encode_var(std::string var);
 
+	std::string rvalue(REG reg);
+	REG 		avalue_reg(const std::string& vairable) const;
+	int 		avalue_mem(const std::string& vairable) const;
+	UseInfo		use_info(const std::string& vairable) const;
+	void		set_avalue_reg(const std::string& vairable, REG reg);
+	void		set_avalue_mem(const std::string& variable, int mem);
+	void		set_use_info(const std::string& vairable, UseInfo use_info);
+
+	REG 		get_free_reg();
+	REG			get_reg();
+	REG 		get_reg(std::string dst, std::string src1 = "");
+	void 		cal_use_info();
+
+	void 		push_reg(REG reg, int overwrite = 1);
+	void 		pop_reg(REG reg);
+	int 		get_esp();
+	void 		set_esp_bias(int bias);
+	POSTYPE 	position(std::string variable);
+	int 		para();
+	int 		ret();
+	std::shared_ptr<Symbol> resolve_fun(std::string name);
+	std::string get_name();
+	void 		set_zero_len();
+	int			get_stack_len();
+
+
+
+private:
+	// 符号表
+	std::string									name_;
+	std::shared_ptr<Scope> 						global_scope_;
+	std::shared_ptr<Scope> 						local_scope_;
+	std::shared_ptr<Symbol>						func_;
+
+	// 变量存储信息
 	std::string                                 rvalue_[static_cast<int>(REG::None)];
 	std::vector<std::string>					svalue_;
 	std::unordered_map<std::string, REG> 		avalue_reg_;
 	std::unordered_map<std::string, int> 		avalue_mem_;  // 存与ebp的偏移
 	std::unordered_map<std::string, UseInfo> 	use_info_;
-	// Scope &scope;
-	// TACBlock block;
-	std::shared_ptr<Scope> 						Local_Scope;
-	std::shared_ptr<Scope> 						Global_Scope;
 
 	/* 函数堆栈模拟 */
-	int stack_esp;
-	int para_num;
-	int para_now;
-	int ret_num;
-	int ret_now;
-	int len;
-	std::string name;
-	std::shared_ptr<Symbol> func;
+	int len_;		// 当前栈的长度 (4 字节)
+	int stack_esp_;	// 模拟堆栈的栈顶 (与当前函数栈底的相对值)
+	int para_num_;
+	int para_now_;
+	int ret_num_;
+	int ret_now_;
 };
-
-inline void SymbolManager::set_zero_len() {
-	len = 0;
-}
-
-inline int SymbolManager::get_stack_len() {
-	return len;
-}
-
-inline std::string SymbolManager::get_name() {
-	return name;
-}
-
-inline void SymbolManager::set_scope(std::shared_ptr<Scope> local_scope) {
-	Local_Scope = local_scope;
-}
-
-inline UseInfo SymbolManager::use_info(const std::string& vairable) const {
-	std::cout << "const" << std::endl;
-	try {
-		return use_info_.at(vairable);
-	} catch (std::out_of_range& e) {
-		return {0, false};
-	}
-}
-
-
-inline void SymbolManager::set_use_info(const std::string& vairable, UseInfo use_info) {
-	use_info_[vairable] = use_info;
-}
-
-
-/* 获得一个空闲寄存器 */
-inline REG SymbolManager::get_free_reg() {
-	for (int i(0); i < static_cast<int>(REG::None); i++) {
-		if (rvalue_[i] == "") {
-			return static_cast<REG>(i);
-		}
-	}
-	return REG::None;
-}
-
-
-inline std::string SymbolManager::rvalue(REG reg) {
-	return rvalue_[static_cast<int>(reg)];
-}
-
-
-inline REG SymbolManager::avalue_reg(const std::string& vairable) const {
-	try {
-		return avalue_reg_.at(vairable);
-	} catch (std::out_of_range& e) {
-		return REG::None;
-	}
-}
-
-
-/* 返回 变量 的内存地址, 如果没有返回 uint64(-1) */
-inline int SymbolManager::avalue_mem(const std::string& vairable) const {
-	try {
-		return avalue_mem_.at(vairable);
-	} catch (std::out_of_range& e) {
-		return int(-1);
-	}
-}
-
-
-inline int SymbolManager::para() {
-	int bias = -4 * (para_num - para_now + 1); // 栈底之前还有一个ret地址
-	para_now++;
-	return bias;
-}
-
-inline int SymbolManager::ret() {
-	int bias = -4 * (ret_num + para_num - ret_now + 1);
-	ret_now++;
-	return bias;
-}
-
-inline std::shared_ptr<Symbol> SymbolManager::resolve_fun(std::string name) {
-	std::shared_ptr<Symbol> p = Local_Scope->resolve(name);
-	if (p->isFun()) {
-		return p;
-	} else {
-		return nullptr;
-	}
-}
-
-
-inline void SymbolManager::set_avalue_reg(const std::string& vairable, REG reg) {
-	std::string old = rvalue_[static_cast<int>(reg)];
-	if (avalue_reg_.end() != avalue_reg_.find(old) && avalue_reg_[old] == reg) {
-		avalue_reg_.erase(old);
-	}
-	avalue_reg_[vairable] = reg;
-	rvalue_[static_cast<int>(reg)] = vairable;
-}
-
-
-inline void SymbolManager::set_avalue_mem(const std::string& variable, int mem) {
-	std::string old = svalue_[mem / 4];
-	if (avalue_mem_.end() != avalue_mem_.find(old) && avalue_mem_[old] == mem) {
-		avalue_mem_.erase(old);
-	}
-	avalue_mem_[variable] = mem;
-	svalue_[mem / 4] = variable;
-}
-
-inline POSTYPE SymbolManager::position(std::string variable) {
-	int pos = variable.find(":");
-	std::string scope_str = variable.substr(0, pos);
-	std::string ture_name = variable.substr(pos + 1, variable.size());
-	std::stringstream ss;
-	ss << scope_str;
-	uint64_t scope_p_t;
-	ss >> scope_p_t;
-	Scope* scope_p = (Scope*)(scope_p_t);
-	if (scope_p == Global_Scope.get()) {
-		return POSTYPE::GLOBAL;
-	} else if (avalue_reg_.end() != avalue_reg_.find(variable)) {
-		return POSTYPE::REG;
-	} else if (avalue_mem_.end() != avalue_mem_.find(variable)) {
-		return POSTYPE::MEM;
-	} else {
-		return POSTYPE::NONE;
-	}
-}
-
-inline void SymbolManager::push_reg(REG reg, int overwrite = 1) {
-	if (overwrite == 1) {
-		std::string var = rvalue_[static_cast<int>(reg)];
-		svalue_.push_back(var);
-		avalue_mem_[var] = stack_esp;
-	} else {
-		svalue_.push_back("Null");
-	}
-	stack_esp += 4;
-	len++;
-}
-
-inline void SymbolManager::pop_reg(REG reg) {
-	std::string var = svalue_.back();
-	svalue_.pop_back();
-	std::string old = rvalue_[static_cast<int>(reg)];
-	if (avalue_reg_.end() != avalue_reg_.find(old) && avalue_reg_[old] == reg) {
-		avalue_reg_.erase(old);
-	}
-	if (var != "Null") {
-		avalue_reg_[var] = reg;
-		rvalue_[static_cast<int>(reg)] = var;
-	}
-	stack_esp -= 4;  //todo 还要考虑栈空的情况
-	len--;
-}
-
-inline void SymbolManager::set_esp_bias(int bias) {
-	if (bias > 0) {
-		int num = bias / 4;
-		for (int i = 0; i < num; i++) {
-			svalue_.push_back("Null");
-		}
-		len += num;
-	} else {
-		int num = (-bias) / 4;
-		for (int i = 0; i < num; i++) {
-			std::string old = svalue_.back();
-			if (avalue_mem_.end() != avalue_mem_.find(old) && avalue_mem_[old] == stack_esp - (i + 1) * 4) {
-				avalue_mem_.erase(old);
-			}
-			svalue_.pop_back();
-		}
-		len -= num;
-	}
-	stack_esp += bias;
-}
-
-inline int SymbolManager::get_esp() {
-	return stack_esp;
-}
-
 
 #endif // INCLUDE_TCG_SYMBOLMANAGER_H_

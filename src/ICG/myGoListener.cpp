@@ -207,8 +207,7 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 		string identity=(*fun_identity)[0];
 		std::shared_ptr<Symbol> fun_symbol;
 		if(currentScope->resolve(identity,fun_symbol)==FAIL){
-			cout<<"Undefined function: "<<identity<<endl;
-			exit(-1);
+			LOG(FATAL) << "Undefined function: " << identity;
 		}
 		/*找到了函数*/
 		std::shared_ptr<vector<string>> arguments_values=ctx_decoder(values->get(ctx->arguments()));
@@ -303,13 +302,13 @@ void myGoListener::exitRelationOperation(GoParser::RelationOperationContext *ctx
 		if(ctx->EQUALS())
 		{
 			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFEQ, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, OperandTypereslove(dst_)), currentScope);
-			
+
 			push_line (TACOP::IFNEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 		}
 		else if(ctx->NOT_EQUALS())
 		{
 			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFNEQ, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, OperandTypereslove(dst_)), currentScope);
-			
+
 			push_line (TACOP::IFEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
 		}
 		else if(ctx->GREATER())
@@ -338,7 +337,7 @@ void myGoListener::exitRelationOperation(GoParser::RelationOperationContext *ctx
 		}
 		tmp.LoopCon = tmpline;
 		forvalues->put(ctx->parent->parent, tmp);
-	} 
+	}
 
 	// expression 在if 下的情况，需要添加ifexp 并且反过来
 	if(ctx->parent->getText().find("if") == 0 && ctx == ctx->parent->children[1])
@@ -618,7 +617,7 @@ void myGoListener::exitBlock(GoParser::BlockContext *ctx){
 		TACLine loopCondition = fortmp.LoopCon;
 		push_line(updateCondition.op, updateCondition.src1, updateCondition.src2, updateCondition.dst);
 		push_line(loopCondition.op, loopCondition.src1, loopCondition.src2, loopCondition.dst);
-		
+
 	}
 
 	//if 情况
@@ -801,8 +800,7 @@ void myGoListener::exitReturnStmt(GoParser::ReturnStmtContext *ctx){
 	for(auto i:(*return_values)){
 		shared_ptr<Symbol> tmp;
 		if(currentScope->resolve(i,tmp)==FAIL){
-			cout<<"Undefined : "<<i<<endl;
-			exit(-1);
+			LOG(FATAL) << "Undefined: " << i;
 		}
 	}
 	/*生成TAC*/
@@ -878,7 +876,7 @@ void myGoListener::enterForStmt(GoParser::ForStmtContext *ctx){
 	ForStmt newfor = ForStmt(tmp);
 	cout << newfor.CurIndex<<endl;
 	forvalues->put(ctx, newfor);
-	
+
 }
 void myGoListener::exitForStmt(GoParser::ForStmtContext *ctx){
 	ForStmt tmp = forvalues->get(ctx);
@@ -977,8 +975,7 @@ void myGoListener::enterOperandName(GoParser::OperandNameContext *ctx){}
 void myGoListener::exitOperandName(GoParser::OperandNameContext *ctx){
 	shared_ptr<Symbol> tmp;
 	if(currentScope->resolve(ctx->IDENTIFIER()->getText(),tmp)==FAIL){
-		cout<<"Undefined : "<<ctx->IDENTIFIER()->getText()<<endl;
-		exit(-1);
+		LOG(FATAL) << "Undefined: " << ctx->IDENTIFIER()->getText();
 	}
 	values->put(ctx,ctx->IDENTIFIER()->getText()+DELIMITER);
 }

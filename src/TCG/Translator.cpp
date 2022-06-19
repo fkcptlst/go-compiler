@@ -32,7 +32,7 @@ void Translator::dataTranslate() {
                 break;
             }
             default: {
-                std::cout << "global op error" << std::endl;
+                LOG(ERROR) << "global op error: " << to_string((*global)[i].op);
                 break;
             }
         }
@@ -60,6 +60,7 @@ void Translator::textTranslate() {
         /* crTODO: 将 SymbolManager_ 改为 一个快一个 ? ljh 不用 */
         // todo 根据函数名到block的map初始化
         if (i->first == "global" || i->first == "myprint" || i->second->size() == 0) continue;
+        LOG(WARNING) << "start 翻译函数: " << i->first;
         SymbolManager SymbolManager_(Global_Scope, i->first);
         ASMBlock ASMBlock_ = BlockTranslator_.BlockTranslate(SymbolManager_, i->second);
         ASMSection_.asmblocks.push_back(ASMBlock_);

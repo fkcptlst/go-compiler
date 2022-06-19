@@ -13,6 +13,9 @@ enum class TACOP {
 	IFGT, IFGE, IFLT, IFLE, IFEQ, IFNEQ, LABEL,
 };
 
+std::string to_string(const TACOP op);
+
+
 enum class TACOPERANDTYPE {
 	IMM, VAR, NULL_,
 };
@@ -26,7 +29,7 @@ struct Operand {
 	Operand(std::string value, TACOPERANDTYPE type)
 	: value(value), use_info(), OperType(type) {}
 
-	Operand() {} 
+	Operand() {}
 };
 
 
@@ -41,7 +44,7 @@ struct TACLine {
 	: line(line), op(op), src1(src1), src2(src2), dst(dst), scope(scope_) {}
 
 	TACLine() {}
-	
+
 	std::string to_string() const;
 };
 
@@ -52,26 +55,7 @@ using TACFile = std::unordered_map<std::string,std::shared_ptr<TACBlock>>;
 
 
 inline std::string TACLine::to_string() const {
-	std::string op_str;
-	switch (op) {
-		case TACOP::ADD: {
-			op_str = "+";
-			break;
-		} case TACOP::SUB: {
-			op_str = "-";
-			break;
-		} case TACOP::MUL: {
-			op_str = "*";
-			break;
-		} case TACOP::DIV: {
-			op_str = "/";
-			break;
-		} default: {
-			op_str = "?";
-			break;
-		}
-	}
-	return std::to_string(line) + ":(" + op_str + "," + src1.value + "," + src2.value + "," + dst.value + ")";
+	return std::to_string(line) + ":(" + ::to_string(op) + "," + src1.value + "," + src2.value + "," + dst.value + ")";
 }
 
 #endif	// INCLUDE_COMMON_TAC_H_
