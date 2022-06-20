@@ -748,10 +748,12 @@ void myGoListener::exitShortVarDecl(GoParser::ShortVarDeclContext *ctx){
 		Symbol::Type type;
 		type=defineTmpType();
 		/*如果已经定义了，报错*/
-		if(currentScope->cur_resolve(varname)==SUCCESS){
-			cout<<"Redeclaration of parameter:"<<varname<<endl;
-			exit(-1);
-		}
+		// 不报错
+		
+		// if(currentScope->cur_resolve(varname)==SUCCESS){
+		// 	cout<<"Redeclaration of parameter:"<<varname<<endl;
+		// 	exit(-1);
+		// }
 		/*不重复，新建*/
 		std::shared_ptr<Symbol> symbol=make_shared<Symbol>(varname,currentScope,Symbol::SymbolType::VAR,type);
 		myGoListener::currentScope->para_define(symbol);
@@ -876,14 +878,15 @@ void myGoListener::enterForStmt(GoParser::ForStmtContext *ctx){
 	ForStmt newfor = ForStmt(tmp);
 	cout << newfor.CurIndex<<endl;
 	forvalues->put(ctx, newfor);
-
+	addScope();
 }
 void myGoListener::exitForStmt(GoParser::ForStmtContext *ctx){
 	ForStmt tmp = forvalues->get(ctx);
-	for (auto para : tmp.newParas)
-	{
-		currentScope->para_delete(para);
-	}
+	popScope();
+	// for (auto para : tmp.newParas)
+	// {
+	// 	currentScope->para_delete(para);
+	// }
 	push_line(TACOP::LABEL,Operand("ENDFOR" + forvalues->get(ctx).CurIndex,TACOPERANDTYPE::NULL_),Operand("",TACOPERANDTYPE::NULL_),Operand("",TACOPERANDTYPE::NULL_));
 }
 

@@ -12,6 +12,7 @@ func main() {
 	var a int;
 	var b int = 4-(2+4-4)+3;
 	a=0;
+	a++;
 	if a < 20 {
 	a = 2;
 	} else {
