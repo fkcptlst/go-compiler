@@ -46,14 +46,19 @@ struct Symbol{
     std::shared_ptr<std::vector<Type>>   fun_ret_type_list;
     // 函数的parameter列表
     std::shared_ptr<std::vector<Type>>   fun_para_type_list;
-
+    // 是否是数组 0:否，1:是
+    bool is_array;
+    int array_length;
 
     Symbol() = default;
     Symbol(std::string name, std::shared_ptr<Scope> scope, SymbolType symobl_type, Type type)
     : name(name),scope(scope), symobl_type(symobl_type), type(type) {}
     Symbol(std::string name, std::shared_ptr<Scope> scope, SymbolType symobl_type, std::shared_ptr<std::vector<Type>> fun_ret_type_list, std::shared_ptr<std::vector<Type>>  fun_para_type_list)
     : name(name),scope(scope), fun_ret_type_list(fun_ret_type_list), fun_para_type_list(fun_para_type_list), symobl_type(symobl_type){}
-
+    // Symbol(std::string name, std::shared_ptr<Scope> scope, SymbolType symobl_type, std::shared_ptr<std::vector<Type>> fun_ret_type_list, std::shared_ptr<std::vector<Type>>  fun_para_type_list, bool is_array, int length)
+    // : name(name),scope(scope), fun_ret_type_list(fun_ret_type_list), fun_para_type_list(fun_para_type_list), symobl_type(symobl_type), is_array(is_array), array_length(length){}
+    Symbol(std::string name, std::shared_ptr<Scope> scope, SymbolType symobl_type, Type type, bool is_array, int length)
+    : name(name),scope(scope), symobl_type(symobl_type), type(type), is_array(is_array), array_length(length) {}
     bool isVar();
     bool isFun();
 

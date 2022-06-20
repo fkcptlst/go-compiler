@@ -74,6 +74,7 @@ string myGoListener::ToString(TACOP num){
 		case TACOP::GOTO:		return "GOTO";
 		case TACOP::ELSE:		return "ELSE";
 		case TACOP::LABEL: 		return "LABEL";
+		case TACOP::CREATLIST: 		return "CREATLIST";
 		default: 				return "";
 	}
 }
@@ -84,16 +85,29 @@ string myGoListener::ToString(TACOPERANDTYPE num){
 		case TACOPERANDTYPE::VAR:      	return "VAR";
 		case TACOPERANDTYPE::NULL_:    	return "NULL_";
 		case TACOPERANDTYPE::IMM: 	   	return "IMM";
-		default:  						return "";
+		case TACOPERANDTYPE::PTR: 	   	return "PTR";
+		default:  						return "----";
 	}
 }
 
 TACOPERANDTYPE myGoListener::OperandTypereslove(string name){
+	if(ptrs[name]==1){
+		return TACOPERANDTYPE::PTR;
+	}
 	if((name[0] >= '0' && name[0] <= '9') || name[0] == '-')
 	{
 		return TACOPERANDTYPE::IMM;
 	}
 	return TACOPERANDTYPE::VAR;
+}
+
+bool myGoListener::is_digit(string s){
+	if(s[0]=='-') s=s.substr(1,s.size()-1);
+	for(auto c:s){
+		if((c>= '0' && c<= '9')) continue;
+		else return false;
+	}
+	return true;
 }
 
 void myGoListener::Go23file(string filename){
@@ -196,9 +210,8 @@ void myGoListener::exitLiteral(GoParser::LiteralContext *ctx){
 void myGoListener::enterPrimaryExpr(GoParser::PrimaryExprContext *ctx){}
 void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 
+	/* 是函数调用 */
 	if(ctx->arguments()){
-
-
 		vector<string> primaryExpr_value;
 
 		/*看是否定义*/
@@ -208,6 +221,8 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 		std::shared_ptr<Symbol> fun_symbol;
 		if(currentScope->resolve(identity,fun_symbol)==FAIL){
 			LOG(FATAL) << "Undefined function: " << identity;
+			cout << "Undefined function: " << identity<<endl;
+			exit(-1);
 		}
 		/*找到了函数*/
 		std::shared_ptr<vector<string>> arguments_values=ctx_decoder(values->get(ctx->arguments()));
@@ -233,10 +248,65 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 		values->put(ctx, ctx_encoder(primaryExpr_value));
 
 	}
+	/*数*/
 	else if (ctx->operand()){
 
 		string PrimaryExprValue = values->get(ctx->operand());
 		values->put(ctx, PrimaryExprValue);
+	}
+	/* 数组 */
+	else if(ctx->index()){
+		shared_ptr<vector<string>> array_name;
+		array_name=ctx_decoder(values->get(ctx->primaryExpr()));
+		string identity=(*array_name)[0];
+
+		// 名字不是数组而是变量
+		std::shared_ptr<Symbol> array_symbol;
+		currentScope->resolve(identity,array_symbol);
+		cout<<"0000 "<<array_symbol->name<<endl;
+		cout<<"1111 "<<array_symbol->array_length<<endl;
+		cout<<"2222 "<<array_symbol->is_array<<endl;
+		if(!array_symbol->is_array){
+			cout << "Only array can be indexed: " << identity<<endl;
+			exit(-1);
+		}		
+
+		
+		shared_ptr<vector<string>> array_index;
+		array_index=ctx_decoder(values->get(ctx->index()->expression()));
+		string index_s=(*array_index)[0];
+		if( 1 !=array_index->size()){
+			cout<<"wrong number of array index input"<<endl;
+			exit(-1);
+		}
+
+		// 若编译时可判断数组越界
+		if(is_digit(index_s)){
+			int idx = std::stoi(index_s);
+			if(idx > array_symbol->array_length-1 || idx<0){
+				cout << "Array index out of bound: " << identity<<endl;
+				cout<<idx<<' '<<array_symbol->array_length<<endl;
+				exit(-1);
+			}
+		}
+
+		string tmp_ptr_offset = CreateLocalVar();
+		string int_size="4";
+		push_line (TACOP::MUL, 
+				   Operand(int_size, OperandTypereslove(int_size)), 
+				   Operand(index_s, OperandTypereslove(index_s)),
+				   Operand(tmp_ptr_offset, OperandTypereslove(tmp_ptr_offset))
+		);
+		string tmp_ptr = CreateLocalVar();
+		push_line (TACOP::ADD, 
+				   Operand(identity,OperandTypereslove(identity)), 
+				   Operand(tmp_ptr_offset, OperandTypereslove(tmp_ptr_offset)), 
+				   Operand(tmp_ptr, OperandTypereslove(tmp_ptr))
+		);
+		//todo map
+		ptrs[tmp_ptr]=1;
+
+		values->put(ctx, tmp_ptr);
 	}
 
 }
@@ -430,7 +500,9 @@ void myGoListener::enterSourceFile(GoParser::SourceFileContext *ctx){
 	TACBlocks[curFun]=currentBlock;
 }
 
-void myGoListener::exitSourceFile(GoParser::SourceFileContext *ctx){}
+void myGoListener::exitSourceFile(GoParser::SourceFileContext *ctx){
+	cout<<"exit source file"<<endl;
+}
 
 void myGoListener::enterImportDecl(GoParser::ImportDeclContext *ctx){}
 void myGoListener::exitImportDecl(GoParser::ImportDeclContext *ctx){}
@@ -552,8 +624,37 @@ void myGoListener::enterVarSpec(GoParser::VarSpecContext *ctx){
 
 }
 void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
-	int n = ctx->identifierList()->IDENTIFIER().size();
+	/*是否是数组*/
+	bool is_array=0;
+	int array_length=0;
+	/*如果是数组*/
+	if(ctx->type_()->typeLit()){
+		is_array=1;
+		/*如果是数组，长度是多少*/
+		shared_ptr<vector<string>> right_values;
+		right_values=ctx_decoder(values->get(ctx->type_()->typeLit()->arrayType()->arrayLength()->expression()));
+		// 数量是否是1
+		if( 1 !=right_values->size()){
+			cout<<"wrong number of array length input"<<endl;
+			exit(-1);
+		}
+		string array_length_s=(*right_values)[0];
+	
+		if(is_digit(array_length_s)){
+			array_length=std::stoi(array_length_s);
+			// 数组长度不为负数
+			if(array_length<1){
+				cout<<"array length should >=1"<<endl;
+				exit(-1);
+			}
+		}
+		else{
+			cout<<"array decleration need static capacity"<<endl;
+			exit(-1);
+		}
+	}
 
+	int n = ctx->identifierList()->IDENTIFIER().size();
 	for(int i=0;i<n;++i){
 		string varname = ctx->identifierList()->IDENTIFIER(i)->getText();
 		Symbol::Type type;
@@ -561,23 +662,34 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 			type=defineTmpType();
 		}
 		else{
-			string stype = ctx->type_()->typeName()->getText();
-			type = Symbol::toType(stype);
+			/* 变量 */
+			if(ctx->type_()->typeName()){
+				string stype = ctx->type_()->typeName()->getText();
+				type = Symbol::toType(stype);
+			}
+			/* 数组 */
+			else if(ctx->type_()->typeLit() && ctx->type_()->typeLit()->arrayType()){
+				string stype = ctx->type_()->typeLit()->arrayType()->elementType()->getText();
+				type = Symbol::toType(stype);
+			}
+			
 		}
+				
 		/*如果已经定义了，报错*/
-		if(currentScope->cur_resolve(varname)==SUCCESS){
+		if(currentScope->cur_resolve(varname)){
 			cout<<"Redeclaration of parameter:"<<varname<<endl;
 			exit(-1);
 		}
 		/*不重复，新建*/
-		std::shared_ptr<Symbol> symbol=make_shared<Symbol>(varname,currentScope,Symbol::SymbolType::VAR,type);
+		std::shared_ptr<Symbol> symbol=make_shared<Symbol>(varname,currentScope,Symbol::SymbolType::VAR,type,is_array,array_length);
+		if(is_array){
+			push_line (TACOP::CREATLIST, Operand(varname, OperandTypereslove(varname)), Operand(std::to_string(array_length), OperandTypereslove(std::to_string(array_length))), Operand("INT", TACOPERANDTYPE::NULL_));
+		}
 		myGoListener::currentScope->para_define(symbol);
 	}
 
-
-
-
-	/* TODO:如果是函数调用怎么办？？ */
+	/*定义时赋值*/
+	// 仅仅有变量
 	if(ctx->expressionList()){
 		shared_ptr<vector<string>> right_values;
 		right_values=ctx_decoder(values->get(ctx->expressionList()));
@@ -591,6 +703,7 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 			push_line(TACOP::ASSIGN, Operand((*right_values)[i], OperandTypereslove((*right_values)[i])),Operand("", TACOPERANDTYPE::NULL_),Operand(ctx->identifierList()->IDENTIFIER(i)->getText(), OperandTypereslove(ctx->identifierList()->IDENTIFIER(i)->getText())));
 		}
 	}
+	// TODO:数组compositeLit
 
 
 }
@@ -699,10 +812,22 @@ void myGoListener::exitAssignment(GoParser::AssignmentContext *ctx){
 		{
 			string varname = (*left_values)[i];
 			string varvalue = (*right_values)[i];
+
+			// // 数组赋值
+			// if(varname[varname.size()-1]==']'){
+			// 	tmp s="[";
+			// 	int identity_end=varname.find(tmp);
+
+			// }
+			// // 普通变量赋值
+			// else{
+			// cout<<"zyx:"<<"OperandTypereslove(varname):"<<ToString(OperandTypereslove(varname))<<endl;
 			push_line (TACOP::ASSIGN, Operand(varvalue, OperandTypereslove(varvalue)), Operand("", TACOPERANDTYPE::NULL_), Operand(varname, OperandTypereslove(varname)));
+			// }
+			
 		}
 	}
-
+	// 未实现数组的
 	if(ctx->assign_op()->getText() == "+=")
 	{
 		std::shared_ptr<vector<string>> left_values;

@@ -10,14 +10,14 @@ struct Scope;
 
 enum class TACOP {
 	ADD, SUB, MUL, DIV, ASSIGN, CALL, PARA, RET, ENDCALL, FUN_RET, FUN_PARA, IFEXP, ENDIF, GOTO, ELSE,
-	IFGT, IFGE, IFLT, IFLE, IFEQ, IFNEQ, LABEL,
+	IFGT, IFGE, IFLT, IFLE, IFEQ, IFNEQ, LABEL, CREATLIST
 };
 
 std::string to_string(const TACOP op);
 
 
 enum class TACOPERANDTYPE {
-	IMM, VAR, NULL_,
+	IMM, VAR, NULL_, PTR, 
 };
 
 struct Operand {
