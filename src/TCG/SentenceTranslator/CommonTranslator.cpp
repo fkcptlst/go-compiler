@@ -13,7 +13,7 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
 
     REG reg_dst = REG::None;
     if (TACLine_.src1.OperType == TACOPERANDTYPE::IMM) {
-        reg_dst = SymbolManager_.get_reg(str_dst_encode, "");
+        reg_dst = SymbolManager_.get_reg(TACLine_);
         if (reg_dst == REG::None) {
             reg_dst = SymbolManager_.get_reg();
             SymbolManager_.push_reg(reg_dst);
@@ -23,7 +23,7 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
 
     } else {
         std::string str_src1_encode = SymbolManager_.encode_var(str_src1);
-        reg_dst = SymbolManager_.get_reg(str_dst_encode, str_src1_encode);
+        reg_dst = SymbolManager_.get_reg(TACLine_);
         if (reg_dst == REG::None) {
             reg_dst = SymbolManager_.get_reg();
             SymbolManager_.push_reg(reg_dst);
@@ -62,7 +62,7 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
         asmlines.push_back(construct_asm(op_string, reg_dst, str_src2));
     } else if (TACLine_.src2.OperType == TACOPERANDTYPE::VAR) {
         std::string str_src2_encode = SymbolManager_.encode_var(str_src2);
-        
+
         POSTYPE pos = SymbolManager_.position(str_src2_encode);
         switch (pos) {
             case POSTYPE::REG: {

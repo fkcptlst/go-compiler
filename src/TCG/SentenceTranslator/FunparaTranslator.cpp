@@ -9,7 +9,7 @@ ASMLines FunparaTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TA
     ASMLines asmlines;
     std::string par_encode = SymbolManager_.encode_var(TACLine_.src1.value);
     int para_mem = SymbolManager_.para();
-    REG dst_reg = SymbolManager_.get_reg(par_encode, "");
+    REG dst_reg = SymbolManager_.get_reg(TACLine_);
     if (dst_reg == REG::None) {
         dst_reg = SymbolManager_.get_reg();
         SymbolManager_.push_reg(dst_reg);
