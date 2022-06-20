@@ -11,7 +11,8 @@ ASMLines FunparaTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TA
     int para_mem = SymbolManager_.para();
     REG dst_reg = SymbolManager_.get_reg(TACLine_);
     if (dst_reg == REG::None) {
-        dst_reg = SymbolManager_.get_reg();
+        RelacedEeg replaced_reg = SymbolManager_.get_replaced_reg();
+        dst_reg = replaced_reg.reg;
         SymbolManager_.push_reg(dst_reg);
         asmlines.push_back(construct_asm("push", dst_reg));
     }
