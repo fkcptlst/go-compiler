@@ -74,7 +74,7 @@ private:
 	std::shared_ptr<Symbol>						func_;
 
 	// 变量存储信息
-	std::vector<std::string> 					rvalue_ = std::vector<std::string>(static_cast<int>(REG::None));	// 地址-寄存器 -> 变量
+	std::vector<std::string> 					rvalue_ = std::vector<std::string>(static_cast<int>(REG::None) + 4);	// 地址-寄存器 -> 变量
 	std::vector<std::string>					svalue_;								// 地址-内存 -> 变量
 	std::unordered_map<std::string, REG> 		avalue_reg_;							// 变量 -> 地址-寄存器
 	std::unordered_map<std::string, int> 		avalue_mem_;  							// 变量 -> 地址-内存(存与ebp的偏移)
