@@ -25,7 +25,7 @@ inline UseInfo& UseInfo::operator=(const UseInfo& rhs) {
 
 
 inline std::ostream& operator<<(std::ostream& os, const UseInfo& rhs) {
-	os << rhs.next_use << "," << ((rhs.active) ? "Y" : "^");
+	os << "(" << rhs.next_use << "," << ((rhs.active) ? "Y" : "^") << ")";
 	return os;
 }
 
