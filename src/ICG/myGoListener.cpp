@@ -122,7 +122,7 @@ void myGoListener::push_line(TACOP op, Operand src1, Operand src2, Operand dst){
 
 void myGoListener::myPrint(std::shared_ptr<Scope> currentScope){
     for(auto it:currentScope->para_symbols) {
-		LOG(INFO) << "para_symbol: " << it.first;
+		LOG(INFO) << "para_symbol: " << it.first << "currenScope: " <<currentScope;
     }
     for(auto it:currentScope->fun_symbols) {
 		LOG(INFO) << "fun_symbol: " << it.first;
@@ -157,7 +157,7 @@ void myGoListener::exitInteger(GoParser::IntegerContext *ctx){
 void myGoListener::enterBasicLit(GoParser::BasicLitContext *ctx){}
 void myGoListener::exitBasicLit(GoParser::BasicLitContext *ctx){
 	if (ctx->integer()){
-		string dst = CreateLocalVar();
+		// string dst = CreateLocalVar();
 		string BasicLitValue = values->get(ctx->integer());
 		// push_line(TACOP::ASSIGN, Operand(BasicLitValue,TACOPERANDTYPE::IMM),Operand("",TACOPERANDTYPE::NULL_), Operand(dst,TACOPERANDTYPE::VAR));
 		// values->put(ctx, dst);
