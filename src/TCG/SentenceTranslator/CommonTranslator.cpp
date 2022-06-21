@@ -85,7 +85,10 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
             }
         }
     }
-    SymbolManager_.set_avalue_reg(str_dst_encode, reg_dst);
+
+    if (reg_dst != REG::EDI) {
+        SymbolManager_.set_avalue_reg(str_dst_encode, reg_dst);
+    }
     if (SymbolManager_.avalue_mem(str_dst_encode) != -1) {
         int dst_mem = SymbolManager_.avalue_mem(str_dst_encode);
         asmlines.push_back(construct_asm("mov", dst_mem, reg_dst));

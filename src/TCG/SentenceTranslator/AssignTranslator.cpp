@@ -7,6 +7,8 @@
 ASMLines AssignTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLine& TACLine_) {
     ASMLines asmlines;
     std::string str_dst_encode = SymbolManager_.encode_var(TACLine_.dst.value);
+    POSTYPE pos_dst = SymbolManager_.position(str_dst_encode);
+
     REG dst_reg = SymbolManager_.get_reg(str_dst_encode, "");
     if (dst_reg == REG::None) {
         dst_reg = SymbolManager_.get_reg();
