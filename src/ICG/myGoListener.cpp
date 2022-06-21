@@ -63,8 +63,6 @@ string myGoListener::ToString(TACOP num){
 		case TACOP::ENDCALL:	return "ENDCALL";
 		case TACOP::FUN_RET:	return "FUN_RET";
 		case TACOP::FUN_PARA:	return "FUN_PARA";
-		case TACOP::IFEXP:		return "IFEXP";
-		case TACOP::ENDIF: 		return "ENDIF";
 		case TACOP::IFGE:		return "IFGE";
 		case TACOP::IFLE:		return "IFLE";
 		case TACOP::IFGT:		return "IFGT";
@@ -72,7 +70,6 @@ string myGoListener::ToString(TACOP num){
 		case TACOP::IFEQ:		return "IFEQ";
 		case TACOP::IFNEQ:		return "IFNEQ";
 		case TACOP::GOTO:		return "GOTO";
-		case TACOP::ELSE:		return "ELSE";
 		case TACOP::LABEL: 		return "LABEL";
 		case TACOP::CREATLIST: 		return "CREATLIST";
 		default: 				return "";
