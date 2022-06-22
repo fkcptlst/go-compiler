@@ -5,7 +5,7 @@ func myprint(a int)
 
 
 func main() {
-	var a = 0;
+	var a = 20;
 	var b int;
 	if a != 20 {
 		a = 2;

@@ -17,7 +17,8 @@ std::string to_string(const TACOP op);
 
 
 enum class TACOPERANDTYPE {
-	IMM, VAR, NULL_, PTR, 
+	IMM, VAR, NULL_, PTR,
+	LABEL // eg: ELSE0
 };
 
 struct Operand {
