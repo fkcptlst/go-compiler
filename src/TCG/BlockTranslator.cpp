@@ -50,9 +50,15 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
                   << "scope " << (*TACBlock_)[i].scope;
         // 更新 SymbolManager 的 scope 和 待用信息
         SymbolManager_.set_scope((*TACBlock_)[i].scope);
-        SymbolManager_.set_use_info((*TACBlock_)[i].src1.value, (*TACBlock_)[i].src1.use_info);
-        SymbolManager_.set_use_info((*TACBlock_)[i].src2.value, (*TACBlock_)[i].src2.use_info);
-        SymbolManager_.set_use_info((*TACBlock_)[i].dst.value, (*TACBlock_)[i].dst.use_info);
+        if ((*TACBlock_)[i].src1.OperType == TACOPERANDTYPE::VAR) {
+            SymbolManager_.set_use_info((*TACBlock_)[i].src1.value, (*TACBlock_)[i].src1.use_info);
+        }
+        if ((*TACBlock_)[i].src2.OperType == TACOPERANDTYPE::VAR) {
+            SymbolManager_.set_use_info((*TACBlock_)[i].src2.value, (*TACBlock_)[i].src2.use_info);
+        }
+        if ((*TACBlock_)[i].dst.OperType == TACOPERANDTYPE::VAR) {
+            SymbolManager_.set_use_info((*TACBlock_)[i].dst.value, (*TACBlock_)[i].dst.use_info);
+        }
 
         // 翻译
         std::shared_ptr<BaseTranslator> trans;

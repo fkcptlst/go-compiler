@@ -625,7 +625,7 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 	bool is_array=0;
 	int array_length=0;
 	/*如果是数组*/
-	if(ctx->type_()->typeLit()){
+	if(ctx->type_() && ctx->type_()->typeLit()){
 		is_array=1;
 		/*如果是数组，长度是多少*/
 		shared_ptr<vector<string>> right_values;

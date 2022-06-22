@@ -47,19 +47,19 @@ void SymbolManager::cal_use_info(std::shared_ptr<TACBlock> block) {
 		set_scope(it->scope);
 		TACLine &line = *it;
 		if (line.op == TACOP::CALL) continue;
-		if (line.dst.value != "") {
+		if (line.dst.OperType == TACOPERANDTYPE::VAR) {
 			// 把符号表中 dst 的待用信息和活跃信息 附加到 中间代码上
 			line.dst.use_info = use_info(line.dst.value);
 			// 重置符号表 dst 的待用信息和活跃信息
 			set_use_info(line.dst.value, {0, false});
 		}
-		if (line.src1.value != "") {
+		if (line.src1.OperType == TACOPERANDTYPE::VAR) {
 			// 把符号表中 src1 的待用信息和活跃信息 附加到 中间代码上
 			line.src1.use_info = use_info(line.src1.value);
 			// 置位符号表 src1 的待用信息和活跃信息
 			set_use_info(line.src1.value, {line.line, true});
 		}
-		if (line.src2.value != "") {
+		if (line.src2.OperType == TACOPERANDTYPE::VAR) {
 			// 把符号表中 src2 的待用信息和活跃信息 附加到 中间代码上
 			line.src2.use_info = use_info(line.src2.value);
 			// 置位符号表 src2 的待用信息和活跃信息
