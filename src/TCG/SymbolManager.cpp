@@ -156,7 +156,7 @@ RelacedEeg SymbolManager::get_replaced_reg() {
 			max_next_use_reg = static_cast<REG>(i);
 		}
 	}
-	return {max_next_use_reg, "", false, -1};
+	return {max_next_use_reg, rvalue(max_next_use_reg), false, -1};
 }
 
 

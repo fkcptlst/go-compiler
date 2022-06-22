@@ -133,7 +133,7 @@ void myGoListener::push_line(TACOP op, Operand src1, Operand src2, Operand dst){
 
 void myGoListener::myPrint(std::shared_ptr<Scope> currentScope){
     for(auto it:currentScope->para_symbols) {
-		LOG(INFO) << "para_symbol: " << it.first << "currenScope: " <<currentScope;
+		LOG(INFO) << "para_symbol: " << it.first;
     }
     for(auto it:currentScope->fun_symbols) {
 		LOG(INFO) << "fun_symbol: " << it.first;
@@ -266,9 +266,9 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 		if(!array_symbol->is_array){
 			cout << "Only array can be indexed: " << identity<<endl;
 			exit(-1);
-		}		
+		}
 
-		
+
 		shared_ptr<vector<string>> array_index;
 		array_index=ctx_decoder(values->get(ctx->index()->expression()));
 		string index_s=(*array_index)[0];
@@ -289,15 +289,15 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 
 		string tmp_ptr_offset = CreateLocalVar();
 		string int_size="4";
-		push_line (TACOP::MUL, 
-				   Operand(int_size, OperandTypereslove(int_size)), 
+		push_line (TACOP::MUL,
+				   Operand(int_size, OperandTypereslove(int_size)),
 				   Operand(index_s, OperandTypereslove(index_s)),
 				   Operand(tmp_ptr_offset, OperandTypereslove(tmp_ptr_offset))
 		);
 		string tmp_ptr = CreateLocalVar();
-		push_line (TACOP::ADD, 
-				   Operand(identity,OperandTypereslove(identity)), 
-				   Operand(tmp_ptr_offset, OperandTypereslove(tmp_ptr_offset)), 
+		push_line (TACOP::ADD,
+				   Operand(identity,OperandTypereslove(identity)),
+				   Operand(tmp_ptr_offset, OperandTypereslove(tmp_ptr_offset)),
 				   Operand(tmp_ptr, OperandTypereslove(tmp_ptr))
 		);
 		//todo map
@@ -636,7 +636,7 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 			exit(-1);
 		}
 		string array_length_s=(*right_values)[0];
-	
+
 		if(is_digit(array_length_s)){
 			array_length=std::stoi(array_length_s);
 			// 数组长度不为负数
@@ -669,9 +669,9 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 				string stype = ctx->type_()->typeLit()->arrayType()->elementType()->getText();
 				type = Symbol::toType(stype);
 			}
-			
+
 		}
-				
+
 		/*如果已经定义了，报错*/
 		if(currentScope->cur_resolve(varname)){
 			cout<<"Redeclaration of parameter:"<<varname<<endl;
@@ -821,7 +821,7 @@ void myGoListener::exitAssignment(GoParser::AssignmentContext *ctx){
 			// cout<<"zyx:"<<"OperandTypereslove(varname):"<<ToString(OperandTypereslove(varname))<<endl;
 			push_line (TACOP::ASSIGN, Operand(varvalue, OperandTypereslove(varvalue)), Operand("", TACOPERANDTYPE::NULL_), Operand(varname, OperandTypereslove(varname)));
 			// }
-			
+
 		}
 	}
 	// 未实现数组的
@@ -871,7 +871,7 @@ void myGoListener::exitShortVarDecl(GoParser::ShortVarDeclContext *ctx){
 		type=defineTmpType();
 		/*如果已经定义了，报错*/
 		// 不报错
-		
+
 		// if(currentScope->cur_resolve(varname)==SUCCESS){
 		// 	cout<<"Redeclaration of parameter:"<<varname<<endl;
 		// 	exit(-1);
