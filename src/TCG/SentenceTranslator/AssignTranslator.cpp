@@ -6,29 +6,46 @@
 
 ASMLines AssignTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLine& TACLine_) {
     ASMLines asmlines;
-    std::string str_dst_encode = SymbolManager_.encode_var(TACLine_.dst.value);
+
+    // 为 dst 找寄存器
     REG dst_reg = SymbolManager_.get_reg(TACLine_);
+
+    // 没有找到寄存器，需要替换 (如果不需要替换，则 replaced_reg.reg == REG::None)
+    RelacedEeg replaced_reg;
     if (dst_reg == REG::None) {
-        RelacedEeg replaced_reg = SymbolManager_.get_replaced_reg();
+        replaced_reg = SymbolManager_.get_replaced_reg();
         dst_reg = replaced_reg.reg;
-        SymbolManager_.push_reg(dst_reg);
-        asmlines.push_back(construct_asm("push", dst_reg));
     }
+
+    // 如果需要进行备份原来寄存器
+    if (!replaced_reg.no_use) {
+        if (replaced_reg.mem == -1) {
+            // 如果该变量内存中没有位置，push备份
+            SymbolManager_.push_reg(dst_reg);
+            asmlines.push_back(construct_asm("push", dst_reg));
+        } else {
+            // 如果该变量内存中有位置，直接更新该变量在内存中的值
+            asmlines.push_back(construct_asm("mov", replaced_reg.mem, replaced_reg.reg));
+        }
+    }
+
+    // 更新 SymbolManager 中变量信息
+    std::string str_dst_encode = SymbolManager_.encode_var(TACLine_.dst.value);
+    SymbolManager_.set_avalue_reg(str_dst_encode, dst_reg);
+
+    // 开始翻译赋值语句 (ASSIGN dst src1)
     std::string str_src1 = TACLine_.src1.value;
     if (TACLine_.src1.OperType == TACOPERANDTYPE::IMM) {
+        // 如果 src1 是 立即数
         asmlines.push_back(construct_asm("mov", dst_reg, str_src1));
     } else if (TACLine_.src1.OperType == TACOPERANDTYPE::VAR) {
+        // 如果 src1 是 变量，可能会是 寄存器、栈、全局变量
         std::string encode_str_src1 = SymbolManager_.encode_var(str_src1);
         POSTYPE pos = SymbolManager_.position(encode_str_src1);
         switch (pos) {
             case POSTYPE::REG: {
                 REG src_reg = SymbolManager_.avalue_reg(encode_str_src1);
-                if (dst_reg == src_reg) {
-                    SymbolManager_.push_reg(src_reg);
-                    asmlines.push_back(construct_asm("push", src_reg));
-                } else {
-                    asmlines.push_back(construct_asm("mov", dst_reg, src_reg));
-                }
+                asmlines.push_back(construct_asm("mov", dst_reg, src_reg));
                 break;
             }
             case POSTYPE::MEM: {
@@ -41,15 +58,20 @@ ASMLines AssignTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
                 break;
             }
             default: {
-                std::cout << "assign default error" << std::endl;
+                LOG(ERROR) << "assign sentence: str1's pos wrong";
                 break;
             }
         }
     }
-    SymbolManager_.set_avalue_reg(str_dst_encode, dst_reg);
-    if (SymbolManager_.avalue_mem(str_dst_encode) != -1) {
-        int dst_mem = SymbolManager_.avalue_mem(str_dst_encode);
+
+    // TODO: 似乎不需要 如果 dst 也在内存中，更新其内存中的位置
+    int dst_mem = SymbolManager_.avalue_mem(str_dst_encode);
+    if (dst_mem != -1) {
         asmlines.push_back(construct_asm("mov", dst_mem, dst_reg));
     }
+
+    // 查看寄存器和内存中存的变量
+    // SymbolManager_.show_reg();
+    // SymbolManager_.show_mem();
     return asmlines;
 }

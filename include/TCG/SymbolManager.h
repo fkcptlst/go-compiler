@@ -19,7 +19,16 @@ struct RelacedEeg {
 	bool 		no_use;	// 以后是否不再使用
 	int 		mem;	// 如果该变量还要继续使用，且变量在内存中，则存储内存地址，否则为-1
 
+	RelacedEeg() : reg(REG::None), val(""), no_use(true), mem(-1) {}
 	RelacedEeg(REG reg, std::string val, bool no_use = true, int mem = -1) : reg(reg), val(val), no_use(no_use), mem(mem) {}
+
+	RelacedEeg& operator=(const RelacedEeg& eeg) {
+		reg = eeg.reg;
+		val = eeg.val;
+		no_use = eeg.no_use;
+		mem = eeg.mem;
+		return *this;
+	}
 };
 
 
@@ -34,16 +43,18 @@ public:
 	void 		cal_use_info(std::shared_ptr<TACBlock> block);
 	void		set_scope(std::shared_ptr<Scope> local_scope);
 
-	std::string encode_var(std::string var);
+	std::string encode_var(std::string var) const;
 
 	std::string rvalue(REG reg);
 	REG 		avalue_reg(const std::string& vairable) const;
 	int 		avalue_mem(const std::string& vairable) const;
 	void		set_avalue_reg(const std::string& vairable, REG reg);
 	void		set_avalue_mem(const std::string& variable, int mem);
+	void		show_reg(REG reg = REG::None);
+	void 		show_mem(int mem = -1);
 
 	// 待用信息 和 活跃信息
-	UseInfo		use_info(const std::string& vairable) const;
+	UseInfo		use_info(const std::string& vairable, bool encoded = false) const;
 	void		set_use_info(const std::string& vairable, UseInfo use_info);
 
 	REG 		get_free_reg();

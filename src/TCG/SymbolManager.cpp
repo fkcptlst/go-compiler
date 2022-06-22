@@ -16,10 +16,14 @@ void SymbolManager::set_scope(std::shared_ptr<Scope> local_scope) {
 }
 
 
-// 编码变量 = scode名 + 变量名
-std::string SymbolManager::encode_var(std::string var) {
-	std::shared_ptr<Symbol> symbol = local_scope_->resolve(var);
-	return std::to_string(uint64_t(symbol->scope.get())) + ":" + var;
+// 编码变量 = scode名 + 变量名 (如果是数字则返回空串)
+std::string SymbolManager::encode_var(std::string var) const {
+	std::string en_var;
+	if (!var.empty() && !isdigit(var[0])) {
+		std::shared_ptr<Symbol> symbol = local_scope_->resolve(var);
+		en_var = std::to_string(uint64_t(symbol->scope.get())) + ":" + var;
+	}
+	return en_var;
 }
 
 
@@ -30,42 +34,46 @@ void SymbolManager::cal_use_info(std::shared_ptr<TACBlock> block) {
 	use_info_.clear();
 	// 根据基本块出口来设置变量的活跃信息
 	for (auto it = block->rbegin(); it != block->rend(); it++) {
+		set_scope(it->scope);
 		TACLine &line = *it;
 		if (line.op == TACOP::FUN_RET) {
-			use_info_[line.src1.value] = {0, true};
+			set_use_info(line.src1.value, {0, true});
 		} else {
 			break;
 		}
 	}
 	// 从后往前遍历基本块，将 变量的待用信息和活跃信息 绑定在 TACline 上
 	for (auto it = block->rbegin(); it != block->rend(); it++) {
+		set_scope(it->scope);
 		TACLine &line = *it;
+		if (line.op == TACOP::CALL) continue;
 		if (line.dst.value != "") {
 			// 把符号表中 dst 的待用信息和活跃信息 附加到 中间代码上
-			line.dst.use_info = use_info_[line.dst.value];
+			line.dst.use_info = use_info(line.dst.value);
 			// 重置符号表 dst 的待用信息和活跃信息
-			use_info_[line.dst.value] = {0, false};
+			set_use_info(line.dst.value, {0, false});
 		}
 		if (line.src1.value != "") {
 			// 把符号表中 src1 的待用信息和活跃信息 附加到 中间代码上
-			line.src1.use_info = use_info_[line.src1.value];
+			line.src1.use_info = use_info(line.src1.value);
 			// 置位符号表 src1 的待用信息和活跃信息
-			use_info_[line.src1.value] = {line.line, true};
+			set_use_info(line.src1.value, {line.line, true});
 		}
 		if (line.src2.value != "") {
 			// 把符号表中 src2 的待用信息和活跃信息 附加到 中间代码上
-			line.src2.use_info = use_info_[line.src2.value];
+			line.src2.use_info = use_info(line.src2.value);
 			// 置位符号表 src2 的待用信息和活跃信息
-			use_info_[line.src2.value] = {line.line, true};
+			set_use_info(line.src2.value, {line.line, true});
 		}
 	}
 }
 
 
 // 查看 $1 的 use_info
-UseInfo SymbolManager::use_info(const std::string& vairable) const {
+UseInfo SymbolManager::use_info(const std::string& vairable, bool encoded) const {
+	std::string var_en = encoded ? vairable : encode_var(vairable);
 	try {
-		return use_info_.at(vairable);
+		return use_info_.at(var_en);
 	} catch (std::out_of_range& e) {
 		return {0, false};
 	}
@@ -74,7 +82,10 @@ UseInfo SymbolManager::use_info(const std::string& vairable) const {
 
 // set $1 的 use_info 为 $2, 在翻译每个 TACline 时调用，用于替换选择
 void SymbolManager::set_use_info(const std::string& vairable, UseInfo use_info) {
-	use_info_[vairable] = use_info;
+	std::string var_en = encode_var(vairable);
+	if (!var_en.empty()) {
+		use_info_[var_en] = use_info;
+	}
 }
 
 
@@ -108,8 +119,8 @@ REG SymbolManager::get_reg(std::string dst, std::string src1) {
 // 根据 line 返回对应的寄存器
 REG SymbolManager::get_reg(TACLine& line) {
 	// (B 在 reg1 中 &&  reg1仅有 B) && ( (B和A是一个变量) || (B是非待用和非活跃) )
-	REG reg_B = avalue_reg(line.src1.value);
-	if (reg_B != REG::None && (line.dst.value == line.src1.value || (line.src1.use_info.no_use()))) {
+	REG reg_B = avalue_reg(encode_var(line.src1.value));
+	if (reg_B != REG::None && (encode_var(line.dst.value) == encode_var(line.src1.value) || (line.src1.use_info.no_use()))) {
 		return reg_B;
 	}
 	// 如果有空闲寄存器
@@ -141,13 +152,23 @@ RelacedEeg SymbolManager::get_replaced_reg() {
 	// 寻找 内存中有位置的变量
 	for (int i(0); i < static_cast<int>(REG::None); i++) {
 		std::string& replaced_val = rvalue_[i];
-		int val_mem = avalue_mem_[replaced_val];
+		int val_mem = avalue_mem(replaced_val);
 		if (val_mem != -1) {
 			return {static_cast<REG>(i), rvalue_[i], false, val_mem};
 		}
 	}
-	// 返回 ESI, 需要 push
-	return {REG::ESI, "", false, -1};
+	// 返回需要 push 备份的寄存器
+	int max_next_use = 0;
+	REG max_next_use_reg;
+	for (int i = 0; i < static_cast<int>(REG::None); i++) {
+		std::string en_var = rvalue(static_cast<REG>(i));
+		int next_use_i = use_info(en_var, true).next_use;
+		if (max_next_use < next_use_i) {
+			max_next_use = next_use_i;
+			max_next_use_reg = static_cast<REG>(i);
+		}
+	}
+	return {max_next_use_reg, "", false, -1};
 }
 
 
@@ -230,6 +251,36 @@ void SymbolManager::set_avalue_mem(const std::string& variable, int mem) {
 	avalue_mem_[variable] = mem;
 	svalue_[mem / 4] = variable;
 }
+
+
+// 打印 当前通用寄存器中所存的变量
+void SymbolManager::show_reg(REG reg) {
+	if (reg != REG::None) {
+		LOG(INFO) << to_string(reg) << ": " << rvalue_[static_cast<int>(reg)];
+	} else {
+		for (int reg_i = 0; reg_i < static_cast<int>(REG::None); reg_i++) {
+			std::string en_var = rvalue_[static_cast<int>(reg_i)];
+			int var_next_use;
+			try {
+				var_next_use = use_info_.at(en_var).next_use;
+			} catch (std::out_of_range& e) {
+				var_next_use = 0;
+			}
+			LOG(INFO) << to_string(static_cast<REG>(reg_i)) << ": " << en_var << " " << var_next_use;
+		}
+	}
+}
+
+
+// 打印 当前栈中所存的变量
+void SymbolManager::show_mem(int mem) {
+	LOG(INFO) << "len of mem: " << len_;
+	for (auto it : avalue_mem_) {
+		LOG(INFO) << "mem " << it.second << ": " << it.first;
+	}
+}
+
+
 
 POSTYPE SymbolManager::position(std::string variable) {
 	int pos = variable.find(":");
