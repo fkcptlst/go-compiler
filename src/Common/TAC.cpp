@@ -14,10 +14,7 @@ std::string to_string(TACOP op) {
 		case TACOP::ENDCALL: return "endcall";
 		case TACOP::FUN_RET: return "funret";
 		case TACOP::FUN_PARA: return "funpara";
-		case TACOP::IFEXP: return "ifexp";
-		case TACOP::ENDIF: return "endif";
 		case TACOP::GOTO: return "goto";
-		case TACOP::ELSE: return "else";
 		case TACOP::IFGT: return "ifgt";
 		case TACOP::IFGE: return "ifge";
 		case TACOP::IFLT: return "iflt";

@@ -59,7 +59,6 @@ public:
 
 	REG 		get_free_reg();
 	REG 		get_reg(std::string dst, std::string src1 = "");
-	REG 		get_reg(TACLine& line);
 	REG			get_reg();
 	RelacedEeg	get_replaced_reg();
 

@@ -43,7 +43,7 @@ int main(int argc, char * argv[]){
     myGoListener listener;
     antlr4::tree::ParseTreeWalker::DEFAULT.walk(&listener, parser.sourceFile());
     listener.Go23file("../output/3code.txt");
-
+    sleep(1);
     LOG(WARNING) << "start 三地址 -> 汇编";
     std::shared_ptr<TACFile> tac_file = std::make_shared<TACFile>(std::move(listener.TACBlocks));
     Translator translator(std::shared_ptr<TACFile>(tac_file), listener.globalScope);

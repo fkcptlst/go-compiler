@@ -104,31 +104,19 @@ REG SymbolManager::get_free_reg() {
 REG SymbolManager::get_reg(std::string dst, std::string src1) {
 	/* crTODO: 在 translator 中, 也存在修改 两个数组的情况!!! */
 	/* crTODO: 目前默认认为如果变量移除寄存器, 可以保证该变量以后不会使用 或 该变量内存中有位置 */
+	if (avalue_reg(dst) != REG::None) {
+		return avalue_reg(dst);
+	}
 
-	// src1 寄存器 > dst 寄存器 > 空闲寄存器
+	if (avalue_mem_.end() != avalue_mem_.find(dst)) {
+		return REG::EDI;
+	}
+
 	if (src1 != "" && avalue_reg(src1) != REG::None) {
 		return avalue_reg(src1);
-	} else if (avalue_reg(dst) != REG::None) {
-		return avalue_reg(dst);
-	} else {
-		return get_free_reg();
 	}
-}
 
-
-// 根据 line 返回对应的寄存器
-REG SymbolManager::get_reg(TACLine& line) {
-	// (B 在 reg1 中 &&  reg1仅有 B) && ( (B和A是一个变量) || (B是非待用和非活跃) )
-	REG reg_B = avalue_reg(encode_var(line.src1.value));
-	if (reg_B != REG::None && (encode_var(line.dst.value) == encode_var(line.src1.value) || (line.src1.use_info.no_use()))) {
-		return reg_B;
-	}
-	// 如果有空闲寄存器
-	if (get_free_reg() != REG::None) {
-		return get_free_reg();
-	}
-	// 寻找一个将要替换的寄存器, 由于后面要生成汇编代码，所以该函数不处理，后面用 get_reg() 函数处理
-	return REG::None;
+	return get_free_reg();
 }
 
 

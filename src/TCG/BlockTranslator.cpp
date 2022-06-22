@@ -9,6 +9,10 @@
 #include "TCG/SentenceTranslator/FunretTranslator.h"
 #include "TCG/SentenceTranslator/ParaTranslator.h"
 #include "TCG/SentenceTranslator/RetTranslator.h"
+#include "TCG/SentenceTranslator/GotoTranslator.h"
+#include "TCG/SentenceTranslator/LabelTranslator.h"
+#include "TCG/SentenceTranslator/IfTranslator.h"
+#include "TCG/SentenceTranslator/CreatelistTranslator.h"
 
 
 ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::shared_ptr<TACBlock> TACBlock_) {
@@ -53,16 +57,29 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         // 翻译
         std::shared_ptr<BaseTranslator> trans;
         switch ((*TACBlock_)[i].op) {
-            case TACOP::ASSIGN:   trans = std::make_shared<AssignTranslator>(); break;
-            case TACOP::CALL:     trans = std::make_shared<CallTranslator>(); break;
-            case TACOP::FUN_PARA: trans = std::make_shared<FunparaTranslator>(); break;
-            case TACOP::FUN_RET:  trans = std::make_shared<FunretTranslator>(); break;
-            case TACOP::PARA:     trans = std::make_shared<ParaTranslator>(); break;
-            case TACOP::RET:      trans = std::make_shared<RetTranslator>(); break;
-            default: trans = std::make_shared<CommonTranslator>(); break;
+            case TACOP::ASSIGN:    trans = std::make_shared<AssignTranslator>(); break;
+            case TACOP::CALL:      trans = std::make_shared<CallTranslator>(); break;
+            case TACOP::FUN_PARA:  trans = std::make_shared<FunparaTranslator>(); break;
+            case TACOP::FUN_RET:   trans = std::make_shared<FunretTranslator>(); break;
+            case TACOP::PARA:      trans = std::make_shared<ParaTranslator>(); break;
+            case TACOP::RET:       trans = std::make_shared<RetTranslator>(); break;
+            case TACOP::GOTO:      trans = std::make_shared<GotoTranslator>(); break;
+            case TACOP::LABEL:     trans = std::make_shared<LabelTranslator>(); break;
+            case TACOP::CREATLIST: trans = std::make_shared<CreatelistTranslator>(); break;
+            case TACOP::IFEQ:      trans = std::make_shared<IfTranslator>(); break;
+            case TACOP::IFGE:      trans = std::make_shared<IfTranslator>(); break;
+            case TACOP::IFGT:      trans = std::make_shared<IfTranslator>(); break;
+            case TACOP::IFLE:      trans = std::make_shared<IfTranslator>(); break;
+            case TACOP::IFLT:      trans = std::make_shared<IfTranslator>(); break;
+            case TACOP::IFNEQ:     trans = std::make_shared<IfTranslator>(); break;
+            default:               trans = std::make_shared<CommonTranslator>(); break;
         }
         ASMLines tmp_res = trans->SentenceTranslate(SymbolManager_, (*TACBlock_)[i]);
         ASMBlock_.asmlines.insert(ASMBlock_.asmlines.end(), tmp_res.begin(), tmp_res.end());
+
+        // 查看寄存器和内存中存的变量
+        // SymbolManager_.show_reg();
+        // SymbolManager_.show_mem();
     }
 
 

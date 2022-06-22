@@ -12,19 +12,23 @@ func main() {
 	var a int;
 	var b int = 4-(2+4-4)+3;
 	a=0;
+	a++;
 	if a < 20 {
-	a = 2;
+		a = 2;
 	} else {
-	if a < 10 {
-	a = 1;
-	} else {
-	a = 3;
+		a = 3;
 	}
-	}
-        for i := 0; i <= 10; i++ {
-                a = i;
-        }
+
+    for i := 0; i <= 10; i++ {
+        a = i;
+    }
 	a,b=add1(a,b)
 	a,b=add1(1,2)
-	// var
+
+	var array [5]int
+
+	for i := 0; i <= 4; i++ {
+        array[i] = i;
+        a= i;
+    }
 }

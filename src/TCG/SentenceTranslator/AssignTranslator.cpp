@@ -6,12 +6,11 @@
 
 ASMLines AssignTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLine& TACLine_) {
     ASMLines asmlines;
+    std::string str_dst_encode = SymbolManager_.encode_var(TACLine_.dst.value);
+    POSTYPE pos_dst = SymbolManager_.position(str_dst_encode);
 
-    // 为 dst 找寄存器
-    REG dst_reg = SymbolManager_.get_reg(TACLine_);
-
-    // 没有找到寄存器，需要替换 (如果不需要替换，则 replaced_reg.reg == REG::None)
     RelacedEeg replaced_reg;
+    REG dst_reg = SymbolManager_.get_reg(str_dst_encode, "");
     if (dst_reg == REG::None) {
         replaced_reg = SymbolManager_.get_replaced_reg();
         dst_reg = replaced_reg.reg;
@@ -28,10 +27,6 @@ ASMLines AssignTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
             asmlines.push_back(construct_asm("mov", replaced_reg.mem, replaced_reg.reg));
         }
     }
-
-    // 更新 SymbolManager 中变量信息
-    std::string str_dst_encode = SymbolManager_.encode_var(TACLine_.dst.value);
-    SymbolManager_.set_avalue_reg(str_dst_encode, dst_reg);
 
     // 开始翻译赋值语句 (ASSIGN dst src1)
     std::string str_src1 = TACLine_.src1.value;
@@ -70,8 +65,7 @@ ASMLines AssignTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
         asmlines.push_back(construct_asm("mov", dst_mem, dst_reg));
     }
 
-    // 查看寄存器和内存中存的变量
-    // SymbolManager_.show_reg();
-    // SymbolManager_.show_mem();
+    // 更新 SymbolManager 中变量信息
+    SymbolManager_.set_avalue_reg(str_dst_encode, dst_reg);
     return asmlines;
 }

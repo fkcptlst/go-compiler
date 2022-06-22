@@ -29,7 +29,9 @@ public:
     antlr4::tree::ParseTreeProperty<string> *ifvalues = new antlr4::tree::ParseTreeProperty<string>;
     antlr4::tree::ParseTreeProperty<ForStmt> *forvalues = new antlr4::tree::ParseTreeProperty<ForStmt>;
     
-    // antlr4::tree::ParseTreeProperty<Scope*> scopes;
+    // 记录哪个临时变量是指针
+    std::unordered_map<string,bool> ptrs;
+
     std::shared_ptr<Scope> currentScope;
     std::shared_ptr<Scope> globalScope;
     vector<std::shared_ptr<Scope>> allScopes;
@@ -46,6 +48,8 @@ public:
 
     string CreateForLabel();
 
+    bool is_digit(string s);
+    
     void Go23file(string filename);
 
     string ToString(TACOP num);

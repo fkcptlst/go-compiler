@@ -13,7 +13,7 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
 
     REG reg_dst = REG::None;
     if (TACLine_.src1.OperType == TACOPERANDTYPE::IMM) {
-        reg_dst = SymbolManager_.get_reg(TACLine_);
+        reg_dst = SymbolManager_.get_reg(str_dst_encode, "");
         if (reg_dst == REG::None) {
             RelacedEeg replaced_reg = SymbolManager_.get_replaced_reg();
             reg_dst = replaced_reg.reg;
@@ -24,7 +24,7 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
 
     } else {
         std::string str_src1_encode = SymbolManager_.encode_var(str_src1);
-        reg_dst = SymbolManager_.get_reg(TACLine_);
+        reg_dst = SymbolManager_.get_reg(str_dst_encode, str_src1_encode);
         if (reg_dst == REG::None) {
             RelacedEeg replaced_reg = SymbolManager_.get_replaced_reg();
             reg_dst = replaced_reg.reg;
@@ -87,7 +87,10 @@ ASMLines CommonTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
             }
         }
     }
-    SymbolManager_.set_avalue_reg(str_dst_encode, reg_dst);
+
+    if (reg_dst != REG::EDI) {
+        SymbolManager_.set_avalue_reg(str_dst_encode, reg_dst);
+    }
     if (SymbolManager_.avalue_mem(str_dst_encode) != -1) {
         int dst_mem = SymbolManager_.avalue_mem(str_dst_encode);
         asmlines.push_back(construct_asm("mov", dst_mem, reg_dst));
