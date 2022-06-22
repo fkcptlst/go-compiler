@@ -37,9 +37,24 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         ASMBlock_.asmlines.push_back(construct_asm("push", REG::EDX));
         ASMBlock_.asmlines.push_back(construct_asm("push", REG::ESI));
     }
+
+    SymbolManager_.cal_use_info(TACBlock_);
     SymbolManager_.set_zero_len();
     // todo 完成对每个语句的翻译
     for (int i = 0; i < TACBlock_->size(); i++) {
+        LOG(INFO) << std::left
+                  << std::setw(20) << std::setfill(' ') << (*TACBlock_)[i].to_string()
+                  << (*TACBlock_)[i].src1.use_info << "\t"
+				  << (*TACBlock_)[i].src2.use_info << "\t"
+				  << (*TACBlock_)[i].dst.use_info << "\t"
+                  << "scope " << (*TACBlock_)[i].scope;
+        // 更新 SymbolManager 的 scope 和 待用信息
+        SymbolManager_.set_scope((*TACBlock_)[i].scope);
+        SymbolManager_.set_use_info((*TACBlock_)[i].src1.value, (*TACBlock_)[i].src1.use_info);
+        SymbolManager_.set_use_info((*TACBlock_)[i].src2.value, (*TACBlock_)[i].src2.use_info);
+        SymbolManager_.set_use_info((*TACBlock_)[i].dst.value, (*TACBlock_)[i].dst.use_info);
+
+        // 翻译
         std::shared_ptr<BaseTranslator> trans;
         switch ((*TACBlock_)[i].op) {
             case TACOP::ASSIGN:    trans = std::make_shared<AssignTranslator>(); break;
@@ -61,8 +76,10 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
         }
         ASMLines tmp_res = trans->SentenceTranslate(SymbolManager_, (*TACBlock_)[i]);
         ASMBlock_.asmlines.insert(ASMBlock_.asmlines.end(), tmp_res.begin(), tmp_res.end());
-        LOG(INFO) << (*TACBlock_)[i].to_string();
-        // std::cout << (*TACBlock_)[i].to_string() << std::endl;
+
+        // 查看寄存器和内存中存的变量
+        // SymbolManager_.show_reg();
+        // SymbolManager_.show_mem();
     }
 
 

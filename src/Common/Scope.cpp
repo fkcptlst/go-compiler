@@ -6,6 +6,7 @@ using namespace std;
 
 
 int Scope::resolve(string name, std::shared_ptr<Symbol>& ret){
+    // std::cout <<
     if (fun_symbols.count(name)==1){
         ret = fun_symbols.at(name);
         return SUCCESS;

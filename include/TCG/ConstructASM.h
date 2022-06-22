@@ -14,19 +14,19 @@ std::string construct_asm(std::string op, int src);
 std::string construct_asm(std::string op);
 
 inline std::string construct_asm(std::string op, REG dst, REG src) {
-    return "\t" + op + " \t " + tostring(dst) + " \t , \t " + tostring(src);
+    return "\t" + op + " \t " + to_string(dst) + " \t , \t " + to_string(src);
 }
 
 inline std::string construct_asm(std::string op, REG dst, int src) {
-    return "\t" + op + " \t " + tostring(dst) + " \t , \t " + "[ ebp" + (src > 0 ? " - " : " + ") + std::to_string(src > 0 ? src : -src) + " ]";
+    return "\t" + op + " \t " + to_string(dst) + " \t , \t " + "[ ebp" + (src > 0 ? " - " : " + ") + std::to_string(src > 0 ? src : -src) + " ]";
 }
 
 inline std::string construct_asm(std::string op, REG dst, std::string src) {
-    return "\t" + op + " \t " + tostring(dst) + " \t , \t " + src;
+    return "\t" + op + " \t " + to_string(dst) + " \t , \t " + src;
 }
 
 inline std::string construct_asm(std::string op, int dst, REG src) {
-    return "\t" + op + " \t " + "[ ebp" + (dst > 0 ? " - " : " + ") + std::to_string(dst > 0 ? dst : -dst) + " ]" + " \t , \t " + tostring(src);
+    return "\t" + op + " \t " + "[ ebp" + (dst > 0 ? " - " : " + ") + std::to_string(dst > 0 ? dst : -dst) + " ]" + " \t , \t " + to_string(src);
 }
 
 inline std::string construct_asm(std::string op, int dst, std::string src) {
@@ -39,7 +39,7 @@ inline std::string construct_asm(std::string op, std::string src) {
 }
 
 inline std::string construct_asm(std::string op, REG src) {
-    return "\t" + op + " \t " + tostring(src);
+    return "\t" + op + " \t " + to_string(src);
 }
 
 inline std::string construct_asm(std::string op, int src) {
