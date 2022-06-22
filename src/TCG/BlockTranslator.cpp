@@ -13,6 +13,7 @@
 #include "TCG/SentenceTranslator/LabelTranslator.h"
 #include "TCG/SentenceTranslator/IfTranslator.h"
 #include "TCG/SentenceTranslator/CreatelistTranslator.h"
+#include "TCG/SentenceTranslator/MulTranslator.h"
 
 
 ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::shared_ptr<TACBlock> TACBlock_) {
@@ -78,6 +79,7 @@ ASMBlock BlockTranslator::BlockTranslate(SymbolManager& SymbolManager_, std::sha
             case TACOP::IFLE:      trans = std::make_shared<IfTranslator>(); break;
             case TACOP::IFLT:      trans = std::make_shared<IfTranslator>(); break;
             case TACOP::IFNEQ:     trans = std::make_shared<IfTranslator>(); break;
+            case TACOP::MUL:       trans = std::make_shared<MulTranslator>(); break;
             default:               trans = std::make_shared<CommonTranslator>(); break;
         }
         ASMLines tmp_res = trans->SentenceTranslate(SymbolManager_, (*TACBlock_)[i]);

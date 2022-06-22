@@ -29,34 +29,78 @@ ASMLines AssignTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
     }
 
     // 开始翻译赋值语句 (ASSIGN dst src1)
-    std::string str_src1 = TACLine_.src1.value;
-    if (TACLine_.src1.OperType == TACOPERANDTYPE::IMM) {
-        // 如果 src1 是 立即数
-        asmlines.push_back(construct_asm("mov", dst_reg, str_src1));
-    } else if (TACLine_.src1.OperType == TACOPERANDTYPE::VAR) {
-        // 如果 src1 是 变量，可能会是 寄存器、栈、全局变量
-        std::string encode_str_src1 = SymbolManager_.encode_var(str_src1);
-        POSTYPE pos = SymbolManager_.position(encode_str_src1);
-        switch (pos) {
-            case POSTYPE::REG: {
-                REG src_reg = SymbolManager_.avalue_reg(encode_str_src1);
-                asmlines.push_back(construct_asm("mov", dst_reg, src_reg));
-                break;
+    if (TACLine_.dst.OperType == TACOPERANDTYPE::VAR) {
+        std::string str_src1 = TACLine_.src1.value;
+        if (TACLine_.src1.OperType == TACOPERANDTYPE::IMM) {
+            // 如果 src1 是 立即数
+            asmlines.push_back(construct_asm("mov", dst_reg, str_src1));
+        } else if (TACLine_.src1.OperType == TACOPERANDTYPE::VAR) {
+            // 如果 src1 是 变量，可能会是 寄存器、栈、全局变量
+            std::string encode_str_src1 = SymbolManager_.encode_var(str_src1);
+            POSTYPE pos = SymbolManager_.position(encode_str_src1);
+            switch (pos) {
+                case POSTYPE::REG: {
+                    REG src_reg = SymbolManager_.avalue_reg(encode_str_src1);
+                    asmlines.push_back(construct_asm("mov", dst_reg, src_reg));
+                    break;
+                }
+                case POSTYPE::MEM: {
+                    int src_mem = SymbolManager_.avalue_mem(encode_str_src1);
+                    asmlines.push_back(construct_asm("mov", dst_reg, src_mem));
+                    break;
+                }
+                case POSTYPE::GLOBAL: {
+                    asmlines.push_back(construct_asm("mov", dst_reg, str_src1));
+                    break;
+                }
+                default: {
+                    LOG(ERROR) << "assign sentence: str1's pos wrong";
+                    break;
+                }
             }
-            case POSTYPE::MEM: {
-                int src_mem = SymbolManager_.avalue_mem(encode_str_src1);
-                asmlines.push_back(construct_asm("mov", dst_reg, src_mem));
-                break;
-            }
-            case POSTYPE::GLOBAL: {
-                asmlines.push_back(construct_asm("mov", dst_reg, str_src1));
-                break;
-            }
-            default: {
-                LOG(ERROR) << "assign sentence: str1's pos wrong";
-                break;
-            }
+        } else if (TACLine_.src1.OperType == TACOPERANDTYPE::PTR) {
+            // 由于 TAC 对 operator[] 的处理，暂时可以认为这时指针一定在寄存器中
+            std::string encode_str_src1 = SymbolManager_.encode_var(str_src1);
+            REG src_reg = SymbolManager_.avalue_reg(encode_str_src1);
+            asmlines.push_back(construct_asm("mov", to_string(dst_reg), construct_asm_mem(src_reg, 0)));
         }
+    } else if (TACLine_.dst.OperType == TACOPERANDTYPE::PTR) {
+        std::string str_src1 = TACLine_.src1.value;
+        if (TACLine_.src1.OperType == TACOPERANDTYPE::IMM) {
+            // 如果 src1 是 立即数
+            asmlines.push_back(construct_asm("mov", dst_reg, 0, str_src1));
+        } else if (TACLine_.src1.OperType == TACOPERANDTYPE::VAR) {
+            // 如果 src1 是 变量，可能会是 寄存器、栈、全局变量
+            std::string encode_str_src1 = SymbolManager_.encode_var(str_src1);
+            POSTYPE pos = SymbolManager_.position(encode_str_src1);
+            switch (pos) {
+                case POSTYPE::REG: {
+                    REG src_reg = SymbolManager_.avalue_reg(encode_str_src1);
+                    asmlines.push_back(construct_asm("mov", dst_reg, 0, src_reg));
+                    break;
+                }
+                case POSTYPE::MEM: {
+                    int src_mem = SymbolManager_.avalue_mem(encode_str_src1);
+                    asmlines.push_back(construct_asm("mov", dst_reg, 0, src_mem));
+                    break;
+                }
+                case POSTYPE::GLOBAL: {
+                    asmlines.push_back(construct_asm("mov", dst_reg, 0, str_src1));
+                    break;
+                }
+                default: {
+                    LOG(ERROR) << "assign sentence: str1's pos wrong";
+                    break;
+                }
+            }
+        } else if (TACLine_.src1.OperType == TACOPERANDTYPE::PTR) {
+            // 由于 TAC 对 operator[] 的处理，暂时可以认为这时指针一定在寄存器中
+            std::string encode_str_src1 = SymbolManager_.encode_var(str_src1);
+            REG src_reg = SymbolManager_.avalue_reg(encode_str_src1);
+            asmlines.push_back(construct_asm("mov", construct_asm_mem(dst_reg, 0), construct_asm_mem(src_reg, 0)));
+        }
+    } else {
+        LOG(ERROR) << "assign sentence: dst' TACOPERANDTYPE wrong";
     }
 
     // TODO: 似乎不需要 如果 dst 也在内存中，更新其内存中的位置
