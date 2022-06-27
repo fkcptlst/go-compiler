@@ -14,11 +14,11 @@ void init_log(const std::string& log_file_name, const std::string& log_path) {
     system(("mkdir -p " + log_path).c_str());
     google::InitGoogleLogging(log_file_name.c_str());
     google::SetLogDestination(google::GLOG_INFO, (log_path + "/").c_str());
-    google::SetStderrLogging(google::INFO);
+    // google::SetStderrLogging(google::INFO);
     google::InstallFailureSignalHandler();                  // 捕捉信号
     FLAGS_log_prefix = true;                                // 日志前缀
     FLAGS_colorlogtostderr = true; // 颜色
-    FLAGS_alsologtostderr = true;                           // 日志输出到屏幕
+    FLAGS_alsologtostderr = false;                           // 日志输出到屏幕
     FLAGS_logbufsecs = 0;                                   // 日志缓冲时间
 }
 
@@ -45,8 +45,8 @@ CmdParam read_cmd_param(int argc, char* argv[]) {
             if ((argv_i == "-h") || (argv_i == "--help")) {
                 std::cout << "可选参数如下:" << std::endl;
                 std::cout << "-h (--help):      帮助" << std::endl;
-                std::cout << "-o (--output):    [default: .]            输出文件路径, 末尾不可含/" << std::endl;
-                std::cout << "-3 (--3code):     [default: 3code.txt]    输出 3code 文件名/" << std::endl;
+                std::cout << "-o (--output):    [default: .]            输出文件路径" << std::endl;
+                std::cout << "-3 (--3code):     [default: 3code.txt]    输出 3code 文件名" << std::endl;
                 std::cout << "-a (--asm):       [default: out]          输出 asm 文件名" << std::endl;
                 std::cout << "-b (--bin):       [default: bin]          输出 bin 文件名" << std::endl;
                 std::cout << "-l (--log):       [default: log]          输出 log 目录" << std::endl;

@@ -261,9 +261,9 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 		// 名字不是数组而是变量
 		std::shared_ptr<Symbol> array_symbol;
 		currentScope->resolve(identity,array_symbol);
-		cout<<"0000 "<<array_symbol->name<<endl;
-		cout<<"1111 "<<array_symbol->array_length<<endl;
-		cout<<"2222 "<<array_symbol->is_array<<endl;
+		// cout<<"0000 "<<array_symbol->name<<endl;
+		// cout<<"1111 "<<array_symbol->array_length<<endl;
+		// cout<<"2222 "<<array_symbol->is_array<<endl;
 		if(!array_symbol->is_array){
 			cout << "Only array can be indexed: " << identity<<endl;
 			exit(-1);
