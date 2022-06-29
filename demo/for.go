@@ -9,6 +9,8 @@ func main() {
 	var i int
 	for i = 0; i <= 10; i++ {
 		sum += i
+		myprint(i + i)
+		myprint(sum)
 	}
 	myprint(sum)
 }

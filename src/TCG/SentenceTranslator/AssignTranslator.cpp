@@ -62,7 +62,7 @@ ASMLines AssignTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
             // 由于 TAC 对 operator[] 的处理，暂时可以认为这时指针一定在寄存器中
             std::string encode_str_src1 = SymbolManager_.encode_var(str_src1);
             REG src_reg = SymbolManager_.avalue_reg(encode_str_src1);
-            asmlines.push_back(construct_asm("mov", to_string(dst_reg), construct_asm_mem(src_reg, 0, false)));
+            asmlines.push_back(construct_asm("mov", to_string(dst_reg), construct_asm_mem(src_reg, 0)));
         }
     } else if (TACLine_.dst.OperType == TACOPERANDTYPE::PTR) {
         std::string str_src1 = TACLine_.src1.value;
@@ -97,7 +97,7 @@ ASMLines AssignTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TAC
             // 由于 TAC 对 operator[] 的处理，暂时可以认为这时指针一定在寄存器中
             std::string encode_str_src1 = SymbolManager_.encode_var(str_src1);
             REG src_reg = SymbolManager_.avalue_reg(encode_str_src1);
-            asmlines.push_back(construct_asm("mov", construct_asm_mem(dst_reg, 0), construct_asm_mem(src_reg, 0, false)));
+            asmlines.push_back(construct_asm("mov", construct_asm_mem(dst_reg, 0, "dword"), construct_asm_mem(src_reg, 0)));
         }
     } else {
         LOG(ERROR) << "assign sentence: dst' TACOPERANDTYPE wrong";

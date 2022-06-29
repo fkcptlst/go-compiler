@@ -38,20 +38,20 @@ inline std::string construct_asm(std::string op, int dst, std::string src) {
 }
 
 // 指针寻址
-inline std::string construct_asm_mem(REG reg, int offset, bool data_size = true) {
-    return static_cast<std::string>((data_size ? "dword" : "")) + "[ " + to_string(reg) + (offset > 0 ? " - " : " + ") + std::to_string(offset > 0 ? offset : -offset) + " ]";
+inline std::string construct_asm_mem(REG reg, int offset, std::string data_size = "") {
+    return data_size + "[ " + to_string(reg) + (offset > 0 ? " - " : " + ") + std::to_string(offset > 0 ? offset : -offset) + " ]";
 }
 
 inline std::string construct_asm(std::string op, REG dst, int dst_offset, REG src1) {
-    return "\t" + op + "\t" + construct_asm_mem(dst, dst_offset) + " \t , \t " + to_string(src1);
+    return "\t" + op + "\t" + construct_asm_mem(dst, dst_offset, "dword") + " \t , \t " + to_string(src1);
 }
 
 inline std::string construct_asm(std::string op, REG dst, int dst_offset, int src1_mem) {
-    return "\t" + op + "\t" + construct_asm_mem(dst, dst_offset) + " \t , \t " + "[ ebp" + (src1_mem > 0 ? " - " : " + ") + std::to_string(src1_mem > 0 ? src1_mem : -src1_mem) + " ]";
+    return "\t" + op + "\t" + construct_asm_mem(dst, dst_offset, "dword") + " \t , \t " + "[ ebp" + (src1_mem > 0 ? " - " : " + ") + std::to_string(src1_mem > 0 ? src1_mem : -src1_mem) + " ]";
 }
 
 inline std::string construct_asm(std::string op, REG dst, int dst_offset, std::string src1_globle) {
-    return "\t" + op + "\t" + construct_asm_mem(dst, dst_offset) + " \t , \t " + src1_globle;
+    return "\t" + op + "\t" + construct_asm_mem(dst, dst_offset, "dword") + " \t , \t " + src1_globle;
 }
 
 
