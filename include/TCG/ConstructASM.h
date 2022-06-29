@@ -38,8 +38,8 @@ inline std::string construct_asm(std::string op, int dst, std::string src) {
 }
 
 // 指针寻址
-inline std::string construct_asm_mem(REG reg, int offset) {
-    return "dword[ " + to_string(reg) + (offset > 0 ? " - " : " + ") + std::to_string(offset > 0 ? offset : -offset) + " ]";
+inline std::string construct_asm_mem(REG reg, int offset, bool data_size = true) {
+    return static_cast<std::string>((data_size ? "dword" : "")) + "[ " + to_string(reg) + (offset > 0 ? " - " : " + ") + std::to_string(offset > 0 ? offset : -offset) + " ]";
 }
 
 inline std::string construct_asm(std::string op, REG dst, int dst_offset, REG src1) {

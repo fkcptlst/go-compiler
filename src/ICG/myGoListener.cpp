@@ -371,37 +371,37 @@ void myGoListener::exitRelationOperation(GoParser::RelationOperationContext *ctx
 		{
 			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFEQ, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, TACOPERANDTYPE::LABEL), currentScope);
 
-			push_line (TACOP::IFNEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+			push_line (TACOP::IFNEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, TACOPERANDTYPE::LABEL));
 		}
 		else if(ctx->NOT_EQUALS())
 		{
 			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFNEQ, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, TACOPERANDTYPE::LABEL), currentScope);
 
-			push_line (TACOP::IFEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+			push_line (TACOP::IFEQ, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, TACOPERANDTYPE::LABEL));
 		}
 		else if(ctx->GREATER())
 		{
 			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFGT, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, TACOPERANDTYPE::LABEL), currentScope);
 
-			push_line (TACOP::IFLE, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+			push_line (TACOP::IFLE, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, TACOPERANDTYPE::LABEL));
 		}
 		else if(ctx->GREATER_OR_EQUALS())
 		{
 			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFGE, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, TACOPERANDTYPE::LABEL), currentScope);
 
-			push_line (TACOP::IFLT, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+			push_line (TACOP::IFLT, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, TACOPERANDTYPE::LABEL));
 		}
 		else if(ctx->LESS())
 		{
 			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFLT, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, TACOPERANDTYPE::LABEL), currentScope);
 
-			push_line (TACOP::IFGE, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+			push_line (TACOP::IFGE, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, TACOPERANDTYPE::LABEL));
 		}
 		else if(ctx->LESS_OR_EQUALS())
 		{
 			tmpline = TACLine(myGoListener::LineIndex, TACOP::IFLE, Operand((*left)[0], OperandTypereslove((*left)[0])), Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst_, TACOPERANDTYPE::LABEL), currentScope);
 
-			push_line (TACOP::IFGT, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, OperandTypereslove(dst)));
+			push_line (TACOP::IFGT, Operand((*left)[0], OperandTypereslove((*left)[0])),  Operand((*right)[0], OperandTypereslove((*right)[0])), Operand(dst, TACOPERANDTYPE::LABEL));
 		}
 		tmp.LoopCon = tmpline;
 		forvalues->put(ctx->parent->parent, tmp);
