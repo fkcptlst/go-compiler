@@ -91,6 +91,10 @@ CmdParam read_cmd_param(int argc, char* argv[]) {
 
 
 int main(int argc, char * argv[]){
+    std::string cmd0 = "cd ../grammar/java";
+    cmd0 += "&& javac *.java";
+    cmd0 += "&& cd ../../build";
+    system(cmd0.c_str());
 
     CmdParam cmd_param = read_cmd_param(argc, argv);
     init_log(cmd_param.log_file_name, cmd_param.log_path);

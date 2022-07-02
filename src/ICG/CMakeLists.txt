@@ -10,6 +10,12 @@ execute_process(
     COMMAND java -jar "${ANTLR4CPP_JAR_LOCATION}" ${ANTLR4_FLAGS} ${grammar_g4} -o ${CMAKE_SOURCE_DIR}/grammar/gen
 )
 
+set(ANTLR4_FLAGS -Dlanguage=Java)
+execute_process(
+    COMMAND java -jar "${ANTLR4CPP_JAR_LOCATION}" ${ANTLR4_FLAGS} ${grammar_g4} -o ${CMAKE_SOURCE_DIR}/grammar/java
+)
+
+
 
 # cmake
 file(GLOB_RECURSE src_lib_gen ${CMAKE_SOURCE_DIR}/grammar/gen/*.cpp)
