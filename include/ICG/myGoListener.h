@@ -51,6 +51,8 @@ public:
     bool is_digit(string s);
     
     void Go23file(string filename);
+    
+    void Go23file_(string filename);
 
     string ToString(TACOP num);
 

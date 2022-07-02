@@ -18,7 +18,7 @@ void init_log(const std::string& log_file_name, const std::string& log_path) {
     google::InstallFailureSignalHandler();                  // 捕捉信号
     FLAGS_log_prefix = true;                                // 日志前缀
     FLAGS_colorlogtostderr = true; // 颜色
-    FLAGS_alsologtostderr = false;                           // 日志输出到屏幕
+    FLAGS_alsologtostderr = true;                           // 日志输出到屏幕
     FLAGS_logbufsecs = 0;                                   // 日志缓冲时间
 }
 
@@ -110,7 +110,7 @@ int main(int argc, char * argv[]){
     myGoListener listener;
     antlr4::tree::ParseTreeWalker::DEFAULT.walk(&listener, parser.sourceFile());
     std::string path_3code = cmd_param.output + "/" + cmd_param.output_3code;
-    listener.Go23file(path_3code);
+    listener.Go23file_(path_3code);
     sleep(1);
 
     LOG(WARNING) << "start 三地址 -> 汇编";

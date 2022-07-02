@@ -126,6 +126,24 @@ void myGoListener::Go23file(string filename){
 	outfile.close();
 }
 
+void myGoListener::Go23file_(string filename){
+	ofstream outfile;
+	outfile.open(filename, ios::out);
+	outfile.clear();
+
+	for(auto p : TACBlocks)
+	{
+		auto block=p.second;
+		for(auto it: *block){
+
+			outfile <<it.line << "\t"  <<ToString(it.op) << "\t"  <<it.src1.value << "\t" <<it.src2.value  << "\t" <<it.dst.value<< "\t"  << endl;
+		}
+		outfile<<"----------------------\n";
+
+	}
+	outfile.close();
+}
+
 // 第一个参数，改成函数名字
 void myGoListener::push_line(TACOP op, Operand src1, Operand src2, Operand dst){
 	TACBlocks[curFun]->push_back(TACLine(myGoListener::LineIndex, op, src1, src2, dst, currentScope));
@@ -227,6 +245,7 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 		/*判断参数数量合理*/
 
 		if(fun_symbol->fun_para_type_list->size()!=arguments_values->size()){
+			LOG(FATAL) << "Undefined function: " << identity;
 			cout<<"Wrong parameter number for : "<<identity<<endl;
 			exit(-1);
 		}
@@ -265,6 +284,7 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 		// cout<<"1111 "<<array_symbol->array_length<<endl;
 		// cout<<"2222 "<<array_symbol->is_array<<endl;
 		if(!array_symbol->is_array){
+			LOG(FATAL) << "Only array can be indexed: " << identity;
 			cout << "Only array can be indexed: " << identity<<endl;
 			exit(-1);
 		}
@@ -274,6 +294,7 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 		array_index=ctx_decoder(values->get(ctx->index()->expression()));
 		string index_s=(*array_index)[0];
 		if( 1 !=array_index->size()){
+			LOG(FATAL) << "wrong number of array index input";
 			cout<<"wrong number of array index input"<<endl;
 			exit(-1);
 		}
@@ -282,6 +303,7 @@ void myGoListener::exitPrimaryExpr(GoParser::PrimaryExprContext *ctx){
 		if(is_digit(index_s)){
 			int idx = std::stoi(index_s);
 			if(idx > array_symbol->array_length-1 || idx<0){
+				LOG(FATAL) << "Array index out of bound: " << identity;
 				cout << "Array index out of bound: " << identity<<endl;
 				cout<<idx<<' '<<array_symbol->array_length<<endl;
 				exit(-1);
@@ -330,6 +352,7 @@ void myGoListener::exitPlusMinusOperation(GoParser::PlusMinusOperationContext *c
 	std::shared_ptr<vector<string>> right=ctx_decoder(values->get(ctx->expression(1)));
 	/*判断value是否只有一个*/
 	if(left->size()!=1 || right->size()!=1){
+		LOG(FATAL) << "wrong literal number1";
 		cout<<"wrong literal number1"<<endl;
 		exit(-1);
 	}
@@ -353,6 +376,7 @@ void myGoListener::exitRelationOperation(GoParser::RelationOperationContext *ctx
 	std::shared_ptr<vector<string>> left=ctx_decoder(values->get(ctx->expression(0)));
 	std::shared_ptr<vector<string>> right=ctx_decoder(values->get(ctx->expression(1)));
 	if(left->size()!=1 || right->size()!=1){
+		LOG(FATAL) << "wrong literal number1";
 		cout<<"wrong literal number1"<<endl;
 		exit(-1);
 	}
@@ -460,6 +484,7 @@ void myGoListener::exitMulDivOperation(GoParser::MulDivOperationContext *ctx){
 	/*判断value是否只有一个*/
 
 	if(left->size()!=1 || right->size()!=1){
+		LOG(FATAL) << "wrong literal number2";
 		cout<<"wrong literal number2"<<endl;
 		exit(-1);
 	}
@@ -547,6 +572,7 @@ void myGoListener::enterFunctionDecl(GoParser::FunctionDeclContext *ctx){
 	string identifier=ctx->IDENTIFIER()->getText();
 	/*判断是否函数名字重复*/
 	if(currentScope->cur_resolve(identifier)==SUCCESS){
+		LOG(FATAL) <<"Redeclaration of funciton:"<<identifier;
 		cout<<"Redeclaration of funciton:"<<identifier<<endl;
 		exit(-1);
 	}
@@ -633,6 +659,7 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 		right_values=ctx_decoder(values->get(ctx->type_()->typeLit()->arrayType()->arrayLength()->expression()));
 		// 数量是否是1
 		if( 1 !=right_values->size()){
+			LOG(FATAL)<<"wrong number of array length input";
 			cout<<"wrong number of array length input"<<endl;
 			exit(-1);
 		}
@@ -642,11 +669,13 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 			array_length=std::stoi(array_length_s);
 			// 数组长度不为负数
 			if(array_length<1){
+				LOG(FATAL)<<"array length should >=1";
 				cout<<"array length should >=1"<<endl;
 				exit(-1);
 			}
 		}
 		else{
+			LOG(FATAL)<<"array decleration need static capacity";
 			cout<<"array decleration need static capacity"<<endl;
 			exit(-1);
 		}
@@ -675,6 +704,7 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 
 		/*如果已经定义了，报错*/
 		if(currentScope->cur_resolve(varname)){
+			LOG(FATAL)<<"Redeclaration of parameter:"<<varname;
 			cout<<"Redeclaration of parameter:"<<varname<<endl;
 			exit(-1);
 		}
@@ -693,7 +723,8 @@ void myGoListener::exitVarSpec(GoParser::VarSpecContext *ctx){
 		right_values=ctx_decoder(values->get(ctx->expressionList()));
 		/*数量是否匹配*/
 		if(n!=right_values->size()){
-			cout<<"wrong number"<<endl;
+			LOG(FATAL)<<"wrong number matched";
+			cout<<"wrong number matched"<<endl;
 			exit(-1);
 		}
 		/*赋值*/
@@ -764,6 +795,7 @@ void myGoListener::exitIncDecStmt(GoParser::IncDecStmtContext *ctx){
 		std::shared_ptr<vector<string>> left_values;
 		left_values=ctx_decoder(values->get(ctx->expression()));
 		if(left_values->size()!=1){
+			LOG(FATAL)<<"too many parameter for incdec \"++\"";
 			cout<<"too many parameter for incdec \"++\""<<endl;
 			exit(-1);
 		}
@@ -801,6 +833,7 @@ void myGoListener::exitAssignment(GoParser::AssignmentContext *ctx){
 		right_values=ctx_decoder(values->get(ctx->expressionList(1)));
 		/*左右参数量是否相等*/
 		if(left_values->size()!=right_values->size()){
+			LOG(FATAL)<<"not equal number parameter for assign";
 			cout<<"not equal number parameter for assign"<<endl;
 			exit(-1);
 		}
@@ -834,6 +867,7 @@ void myGoListener::exitAssignment(GoParser::AssignmentContext *ctx){
 		right_values=ctx_decoder(values->get(ctx->expressionList(1)));
 		/*左右参数量是否相等*/
 		if(left_values->size()!=1 || right_values->size() != 1){
+			LOG(FATAL)<<"too many parameter for assign \"+=\"";
 			cout<<"too many parameter for assign \"+=\""<<endl;
 			exit(-1);
 		}
@@ -891,7 +925,8 @@ void myGoListener::exitShortVarDecl(GoParser::ShortVarDeclContext *ctx){
 		right_values=ctx_decoder(values->get(ctx->expressionList()));
 		/*数量是否匹配*/
 		if(n!=right_values->size()){
-			cout<<"wrong number"<<endl;
+			LOG(FATAL) << "wrong number match";
+			cout<<"wrong number match"<<endl;
 			exit(-1);
 		}
 		/*赋值*/
@@ -926,6 +961,7 @@ void myGoListener::exitReturnStmt(GoParser::ReturnStmtContext *ctx){
 		shared_ptr<Symbol> tmp;
 		if(currentScope->resolve(i,tmp)==FAIL){
 			LOG(FATAL) << "Undefined: " << i;
+			exit(-1);
 		}
 	}
 	/*生成TAC*/
@@ -1102,6 +1138,7 @@ void myGoListener::exitOperandName(GoParser::OperandNameContext *ctx){
 	shared_ptr<Symbol> tmp;
 	if(currentScope->resolve(ctx->IDENTIFIER()->getText(),tmp)==FAIL){
 		LOG(FATAL) << "Undefined: " << ctx->IDENTIFIER()->getText();
+		exit(-1);
 	}
 	values->put(ctx,ctx->IDENTIFIER()->getText()+DELIMITER);
 }
