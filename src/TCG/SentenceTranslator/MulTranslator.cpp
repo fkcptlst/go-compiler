@@ -122,8 +122,24 @@ ASMLines MulTranslator::SentenceTranslate_(SymbolManager& SymbolManager_, TACLin
         }
     }
 
+    // 如果是 div，因为会将 余数存在 EDX，所以需要备份
+    std::string edx_symbol = SymbolManager_.rvalue(REG::EDX);
+    int edx_mem;
+    if (!SymbolManager_.use_info(edx_symbol, true).no_use()) {
+        edx_mem = SymbolManager_.avalue_mem(edx_symbol);
+        if (edx_mem == -1) {
+            // 内存中没有位置, push 保存
+            SymbolManager_.push_reg(REG::EDX);
+            asmlines.push_back(construct_asm("push", REG::EDX));
+        } else {
+            // 内存中有位置, 更新内存中的值
+            asmlines.push_back(construct_asm("mov", edx_mem, REG::EDX));
+        }
+    }
+
     // MUL
-    asmlines.push_back(construct_asm("mul", reg_src2));
+    std::string op = to_string(TACLine_.op);
+    asmlines.push_back(construct_asm(op, reg_src2));
     SymbolManager_.set_avalue_reg(SymbolManager_.encode_var(str_dst), REG::EAX);
 
     return asmlines;

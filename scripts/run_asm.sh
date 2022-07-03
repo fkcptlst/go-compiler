@@ -1,6 +1,5 @@
-# nasm -f elf32 -o ${1}.o ../output/${1}.asm
-# nasm -f elf32 -o print.o ../example/print.asm
-#ld -m elf_i386 -o run.bin ${1}.o print.o
+nasm -f elf32 -o out.o ../output/out.asm
+nasm -f elf32 -o print.o ../demo/print.asm
 ld -m elf_i386 -o run.bin out.o print.o
 ./run.bin
 
