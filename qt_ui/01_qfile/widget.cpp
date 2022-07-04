@@ -68,6 +68,7 @@ void Widget::on_pushButton_3_clicked()
     QString content4 = codec4->toUnicode(array4);
 
     //输出到edit上
+    this->ui->textEdit_5->setText("");
     this->ui->textEdit_5->append(content4);
     Highlighter * h = new Highlighter(this->ui->textEdit_4->document());//传一个QTextDocument
 
@@ -122,6 +123,7 @@ void Widget::on_pushButton_clicked()
         QString content4 = codec4->toUnicode(array4);
 
         //输出到edit上
+        this->ui->textEdit_4->setText("");
         this->ui->textEdit_4->append(content4);
         Highlighter * h = new Highlighter(this->ui->textEdit_4->document());//传一个QTextDocument
 
@@ -154,6 +156,7 @@ void Widget::on_pushButton_clicked()
     QString content = codec->toUnicode(array);
 
     //输出到edit上
+    this->ui->textEdit->setText("");
     this->ui->textEdit->append(content);
     Highlighter * h1 = new Highlighter(this->ui->textEdit->document());//传一个QTextDocument
 
@@ -183,6 +186,7 @@ void Widget::on_pushButton_clicked()
     QString content2 = codec2->toUnicode(array2);
 
     //输出到edit上
+    this->ui->textEdit_2->setText("");
     this->ui->textEdit_2->append(content2);
     Highlighter * h2 = new Highlighter(this->ui->textEdit_2->document());//传一个QTextDocument
 
@@ -209,6 +213,7 @@ void Widget::on_pushButton_clicked()
     QString content3 = codec3->toUnicode(array3);
 
     //输出到edit上
+    this->ui->textEdit_3->setText("");
     this->ui->textEdit_3->append(content3);
     Highlighter * h3 = new Highlighter(this->ui->textEdit_3->document());//传一个QTextDocument
     file3.close();
@@ -234,6 +239,7 @@ void Widget::on_pushButton_clicked()
     QString content4 = codec4->toUnicode(array4);
 
     //输出到edit上
+    this->ui->textEdit_4->setText("");
     this->ui->textEdit_4->append(content4);
     Highlighter * h4 = new Highlighter(this->ui->textEdit_4->document());//传一个QTextDocument
     file4.close();
