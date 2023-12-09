@@ -1,0 +1,3 @@
+*.py    eol=lf
+*.sh    eol=lf
+*.g4    eol=lf
