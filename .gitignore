@@ -10,6 +10,11 @@ java-g4
 # vscode
 .vscode
 
+# idea
+.idea
+
+cmake-build-debug
+
 # Symbol is to contrast
 Symbol
 3code.txt
@@ -17,3 +22,7 @@ Symbol
 # output
 log
 output
+
+out.o
+out.asm
+tjugo

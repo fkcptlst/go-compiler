@@ -15,11 +15,14 @@ execute_process(
     COMMAND java -jar "${ANTLR4CPP_JAR_LOCATION}" ${ANTLR4_FLAGS} ${grammar_g4} -o ${CMAKE_SOURCE_DIR}/grammar/java
 )
 
-
-
 # cmake
 file(GLOB_RECURSE src_lib_gen ${CMAKE_SOURCE_DIR}/grammar/gen/*.cpp)
 file(GLOB_RECURSE src_lib_icg *.cpp)
+
+add_library(lib_gen ${src_lib_gen})
+
+add_library(lib_icg ${src_lib_icg})
+add_dependencies(lib_icg lib_gen)
 
 add_library(icg
     ${src_lib_gen}
