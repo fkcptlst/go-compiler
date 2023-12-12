@@ -2,7 +2,7 @@
 #define INCLUDE_COMMON_SCOPE_H_
 
 #include "Common/Common.h"
-#include "Common/TAC.h"
+//#include "Common/TAC.h"
 
 #define SUCCESS 1
 #define FAIL 0
@@ -10,9 +10,9 @@
 
 
 struct Scope;
-struct TACLine;
-
-using TACBlock = std::vector<TACLine>;
+//struct TACLine;
+//
+//using TACBlock = std::vector<TACLine>;
 
 struct Symbol{
     
