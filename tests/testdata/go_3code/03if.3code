@@ -1,0 +1,21 @@
+0   FUN_PARA       VAR:      a         NULL_:              NULL_:              
+
+1   ASSIGN         IMM:      5         NULL_:              VAR:      a         
+2   IFGE           VAR:      a         IMM:      10        LABEL:    ELSE0     
+3   PARA           IMM:      1         NULL_:              NULL_:              
+4   CALL           VAR:      myprint   NULL_:              NULL_:              
+5   IFGE           VAR:      a         IMM:      5         LABEL:    ELSE1     
+6   PARA           IMM:      11        NULL_:              NULL_:              
+7   CALL           VAR:      myprint   NULL_:              NULL_:              
+8   GOTO           LABEL:    ENDIF1    NULL_:              NULL_:              
+9   LABEL          LABEL:    ELSE1     NULL_:              NULL_:              
+10  PARA           IMM:      12        NULL_:              NULL_:              
+11  CALL           VAR:      myprint   NULL_:              NULL_:              
+12  LABEL          LABEL:    ENDIF1    NULL_:              NULL_:              
+13  GOTO           LABEL:    ENDIF0    NULL_:              NULL_:              
+14  LABEL          LABEL:    ELSE0     NULL_:              NULL_:              
+15  PARA           IMM:      2         NULL_:              NULL_:              
+16  CALL           VAR:      myprint   NULL_:              NULL_:              
+17  LABEL          LABEL:    ENDIF0    NULL_:              NULL_:              
+
+

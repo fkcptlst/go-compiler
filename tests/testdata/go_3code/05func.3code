@@ -1,0 +1,24 @@
+1   FUN_PARA       VAR:      a         NULL_:              NULL_:              
+2   FUN_PARA       VAR:      b         NULL_:              NULL_:              
+3   ADD            VAR:      a         IMM:      1         VAR:      T0        
+4   ADD            VAR:      b         IMM:      1         VAR:      T1        
+5   FUN_RET        VAR:      T0        NULL_:              NULL_:              
+6   FUN_RET        VAR:      T1        NULL_:              NULL_:              
+
+0   FUN_PARA       VAR:      a         NULL_:              NULL_:              
+
+7   ASSIGN         IMM:      100       NULL_:              VAR:      a         
+8   ASSIGN         IMM:      105       NULL_:              VAR:      b         
+9   RET            VAR:      T2        NULL_:              NULL_:              
+10  RET            VAR:      T3        NULL_:              NULL_:              
+11  PARA           VAR:      a         NULL_:              NULL_:              
+12  PARA           VAR:      b         NULL_:              NULL_:              
+13  CALL           VAR:      add_1     NULL_:              NULL_:              
+14  ASSIGN         VAR:      T2        NULL_:              VAR:      c         
+15  ASSIGN         VAR:      T3        NULL_:              VAR:      d         
+16  PARA           VAR:      c         NULL_:              NULL_:              
+17  CALL           VAR:      myprint   NULL_:              NULL_:              
+18  PARA           VAR:      d         NULL_:              NULL_:              
+19  CALL           VAR:      myprint   NULL_:              NULL_:              
+
+

@@ -1,0 +1,14 @@
+0   FUN_PARA       VAR:      a         NULL_:              NULL_:              
+
+1   ASSIGN         IMM:      0         NULL_:              VAR:      sum       
+2   ASSIGN         IMM:      0         NULL_:              VAR:      i         
+3   IFGT           VAR:      i         IMM:      10        LABEL:    ENDFOR0   
+4   LABEL          LABEL:    FORLOOP0  NULL_:              NULL_:              
+5   ADD            VAR:      sum       VAR:      i         VAR:      sum       
+6   PARA           VAR:      sum       NULL_:              NULL_:              
+7   CALL           VAR:      myprint   NULL_:              NULL_:              
+8   ADD            VAR:      i         IMM:      1         VAR:      i         
+9   IFLE           VAR:      i         IMM:      10        LABEL:    FORLOOP0  
+10  LABEL          LABEL:    ENDFOR0   NULL_:              NULL_:              
+
+

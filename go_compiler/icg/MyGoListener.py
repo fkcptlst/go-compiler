@@ -13,6 +13,11 @@ from ..icg.statement_icg.ForStatement import ForStatement
 my_func_count = 0
 
 
+def reset_my_func_count():
+    global my_func_count
+    my_func_count = 0
+
+
 def my_func(func):
     def wrapper(*args, **kwargs):
         global my_func_count
@@ -99,11 +104,10 @@ class MyGoListener(GoParserListener):
 
     def go_to_3file(self, filename: str):
         with open(filename, "w") as f:
-            for p in self.TACBlocks:
-                block: TACBlock = self.TACBlocks[p]
+            for key, block in self.TACBlocks.items():
                 for it in block:
-                    f.write(f"{it.line}\tOperator: {it.op.name:10}\tsrc1: {it.src1.OperType.name:7}:{it.src1.value}\tsrc2: {it.src2.OperType.name:7}:{it.src2.value}\tdst: {it.dst.OperType.name:7}:{it.dst.value}\n")
-                f.write("----------------------\n")
+                    f.write(f"{it.line:<4}{it.op.name:<15}{it.src1.OperType.name:>7}:{it.src1.value:<10}{it.src2.OperType.name:>7}:{it.src2.value:<10}{it.dst.OperType.name:>7}:{it.dst.value:<10}\n")
+                f.write("\n")
 
     def push_line(self, op: TACOP, src1: Operand, src2: Operand, dst: Operand):
         self.TACBlocks[self.cur_fun].append(TACLine(self.line_index, op, src1, src2, dst, self.currentScope))

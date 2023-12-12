@@ -1,0 +1,26 @@
+0   FUN_PARA       VAR:      a         NULL_:              NULL_:              
+
+1   CREATLIST      VAR:      v         IMM:      3         NULL_:    INT       
+2   MUL            IMM:      4         IMM:      0         VAR:      T0        
+3   ADD            VAR:      v         VAR:      T0        VAR:      T1        
+4   ASSIGN         IMM:      789       NULL_:              PTR:      T1        
+5   MUL            IMM:      4         IMM:      1         VAR:      T2        
+6   ADD            VAR:      v         VAR:      T2        VAR:      T3        
+7   ASSIGN         IMM:      456       NULL_:              PTR:      T3        
+8   MUL            IMM:      4         IMM:      2         VAR:      T4        
+9   ADD            VAR:      v         VAR:      T4        VAR:      T5        
+10  ASSIGN         IMM:      123       NULL_:              PTR:      T5        
+11  MUL            IMM:      4         IMM:      0         VAR:      T6        
+12  ADD            VAR:      v         VAR:      T6        VAR:      T7        
+13  PARA           PTR:      T7        NULL_:              NULL_:              
+14  CALL           VAR:      myprint   NULL_:              NULL_:              
+15  MUL            IMM:      4         IMM:      1         VAR:      T8        
+16  ADD            VAR:      v         VAR:      T8        VAR:      T9        
+17  PARA           PTR:      T9        NULL_:              NULL_:              
+18  CALL           VAR:      myprint   NULL_:              NULL_:              
+19  MUL            IMM:      4         IMM:      2         VAR:      T10       
+20  ADD            VAR:      v         VAR:      T10       VAR:      T11       
+21  PARA           PTR:      T11       NULL_:              NULL_:              
+22  CALL           VAR:      myprint   NULL_:              NULL_:              
+
+

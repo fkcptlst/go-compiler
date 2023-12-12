@@ -1,0 +1,68 @@
+0   FUN_PARA       VAR:      a         NULL_:              NULL_:              
+
+1   ASSIGN         IMM:      1         NULL_:              VAR:      v1        
+2   ADD            VAR:      v1        IMM:      1         VAR:      T0        
+3   ASSIGN         VAR:      T0        NULL_:              VAR:      v2        
+4   ADD            VAR:      v2        IMM:      1         VAR:      T1        
+5   ASSIGN         VAR:      T1        NULL_:              VAR:      v3        
+6   ADD            VAR:      v3        IMM:      1         VAR:      T2        
+7   ASSIGN         VAR:      T2        NULL_:              VAR:      v4        
+8   ADD            VAR:      v4        IMM:      1         VAR:      T3        
+9   ASSIGN         VAR:      T3        NULL_:              VAR:      v5        
+10  ADD            VAR:      v5        IMM:      1         VAR:      T4        
+11  ASSIGN         VAR:      T4        NULL_:              VAR:      v6        
+12  ADD            VAR:      v6        IMM:      1         VAR:      T5        
+13  ASSIGN         VAR:      T5        NULL_:              VAR:      v7        
+14  ADD            VAR:      v7        IMM:      1         VAR:      T6        
+15  ASSIGN         VAR:      T6        NULL_:              VAR:      v8        
+16  PARA           VAR:      v1        NULL_:              NULL_:              
+17  CALL           VAR:      myprint   NULL_:              NULL_:              
+18  PARA           VAR:      v2        NULL_:              NULL_:              
+19  CALL           VAR:      myprint   NULL_:              NULL_:              
+20  PARA           VAR:      v3        NULL_:              NULL_:              
+21  CALL           VAR:      myprint   NULL_:              NULL_:              
+22  PARA           VAR:      v4        NULL_:              NULL_:              
+23  CALL           VAR:      myprint   NULL_:              NULL_:              
+24  PARA           VAR:      v5        NULL_:              NULL_:              
+25  CALL           VAR:      myprint   NULL_:              NULL_:              
+26  PARA           VAR:      v6        NULL_:              NULL_:              
+27  CALL           VAR:      myprint   NULL_:              NULL_:              
+28  PARA           VAR:      v7        NULL_:              NULL_:              
+29  CALL           VAR:      myprint   NULL_:              NULL_:              
+30  PARA           VAR:      v8        NULL_:              NULL_:              
+31  CALL           VAR:      myprint   NULL_:              NULL_:              
+32  ASSIGN         IMM:      1         NULL_:              VAR:      v1        
+33  MUL            VAR:      v1        IMM:      2         VAR:      T7        
+34  ASSIGN         VAR:      T7        NULL_:              VAR:      v2        
+35  MUL            VAR:      v2        IMM:      2         VAR:      T8        
+36  ASSIGN         VAR:      T8        NULL_:              VAR:      v3        
+37  MUL            VAR:      v3        IMM:      2         VAR:      T9        
+38  ASSIGN         VAR:      T9        NULL_:              VAR:      v4        
+39  MUL            VAR:      v4        IMM:      2         VAR:      T10       
+40  ASSIGN         VAR:      T10       NULL_:              VAR:      v5        
+41  MUL            VAR:      v4        IMM:      2         VAR:      T11       
+42  ASSIGN         VAR:      T11       NULL_:              VAR:      v5        
+43  MUL            VAR:      v5        IMM:      2         VAR:      T12       
+44  ASSIGN         VAR:      T12       NULL_:              VAR:      v6        
+45  MUL            VAR:      v6        IMM:      2         VAR:      T13       
+46  ASSIGN         VAR:      T13       NULL_:              VAR:      v7        
+47  MUL            VAR:      v7        IMM:      2         VAR:      T14       
+48  ASSIGN         VAR:      T14       NULL_:              VAR:      v8        
+49  PARA           VAR:      v1        NULL_:              NULL_:              
+50  CALL           VAR:      myprint   NULL_:              NULL_:              
+51  PARA           VAR:      v2        NULL_:              NULL_:              
+52  CALL           VAR:      myprint   NULL_:              NULL_:              
+53  PARA           VAR:      v3        NULL_:              NULL_:              
+54  CALL           VAR:      myprint   NULL_:              NULL_:              
+55  PARA           VAR:      v4        NULL_:              NULL_:              
+56  CALL           VAR:      myprint   NULL_:              NULL_:              
+57  PARA           VAR:      v5        NULL_:              NULL_:              
+58  CALL           VAR:      myprint   NULL_:              NULL_:              
+59  PARA           VAR:      v6        NULL_:              NULL_:              
+60  CALL           VAR:      myprint   NULL_:              NULL_:              
+61  PARA           VAR:      v7        NULL_:              NULL_:              
+62  CALL           VAR:      myprint   NULL_:              NULL_:              
+63  PARA           VAR:      v8        NULL_:              NULL_:              
+64  CALL           VAR:      myprint   NULL_:              NULL_:              
+
+
