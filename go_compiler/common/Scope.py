@@ -1,5 +1,5 @@
 from enum import Enum, auto
-from common import SUCCESS, FAIL
+from .common import SUCCESS, FAIL
 
 
 class Symbol:
