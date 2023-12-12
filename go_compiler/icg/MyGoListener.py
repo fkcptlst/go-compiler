@@ -10,6 +10,18 @@ from ..common.Scope import Scope, Symbol
 from ..icg.utils import ctx_decoder, ctx_encoder
 from ..icg.statement_icg.ForStatement import ForStatement
 
+my_func_count = 0
+
+
+def my_func(func):
+    def wrapper(*args, **kwargs):
+        global my_func_count
+        print(f"{my_func_count}: func called: {func.__name__}", flush=True)
+        my_func_count += 1
+        func(*args, **kwargs)
+
+    return wrapper
+
 
 class MyGoListener(GoParserListener):
     def __init__(self):
@@ -42,7 +54,10 @@ class MyGoListener(GoParserListener):
     def create_local_var(self) -> str:
         local: str = ""
         check_result: bool = False
-        while not check_result:
+        first_time: bool = True
+        while check_result or first_time:
+            first_time = False  # do while loop
+
             local = "T" + str(self.local_index)
             self.local_index += 1
             tmp: Symbol | None = self.currentScope.resolve(local)
@@ -66,12 +81,8 @@ class MyGoListener(GoParserListener):
         self.for_index += 1
         return local
 
-    @staticmethod
-    def to_string(num: TACOP | TACOPERANDTYPE) -> str:
-        return str(num)
-
     def operand_type_resolve(self, name: str) -> TACOPERANDTYPE:
-        if self.ptrs[name]:
+        if self.ptrs.get(name, False):
             return TACOPERANDTYPE.PTR
         if name[0].isdigit() or name[0] == '-':
             return TACOPERANDTYPE.IMM
@@ -86,6 +97,14 @@ class MyGoListener(GoParserListener):
         except ValueError:
             return False
 
+    def go_to_3file(self, filename: str):
+        with open(filename, "w") as f:
+            for p in self.TACBlocks:
+                block: TACBlock = self.TACBlocks[p]
+                for it in block:
+                    f.write(f"{it.line}\tOperator: {it.op.name:10}\tsrc1: {it.src1.OperType.name:7}:{it.src1.value}\tsrc2: {it.src2.OperType.name:7}:{it.src2.value}\tdst: {it.dst.OperType.name:7}:{it.dst.value}\n")
+                f.write("----------------------\n")
+
     def push_line(self, op: TACOP, src1: Operand, src2: Operand, dst: Operand):
         self.TACBlocks[self.cur_fun].append(TACLine(self.line_index, op, src1, src2, dst, self.currentScope))
         self.line_index += 1
@@ -95,20 +114,29 @@ class MyGoListener(GoParserListener):
         self.allScopes.append(scope)
         self.currentScope = scope
 
+    def my_print(self, scope: Scope):
+        for symbol in scope.para_symbols:
+            print("para_symbol: ", symbol, flush=True)
+        for symbol in scope.fun_symbols:
+            print("fun_symbol: ", symbol, flush=True)
+
     def pop_scope(self):
-        # self.my_print(self.currentScope)
+        self.my_print(self.currentScope)
         self.currentScope = self.currentScope.enclosing_scope
 
+    @my_func
     @override
     def exitInteger(self, ctx: GoParser.IntegerContext):
         self.values[ctx] = ctx.DECIMAL_LIT().getText()
 
+    @my_func
     @override
     def exitBasicLit(self, ctx: GoParser.BasicLitContext):
         if ctx.integer():
             basic_lit_value: str = self.values[ctx.integer()]
             self.values[ctx] = basic_lit_value
 
+    @my_func
     @override
     def exitOperand(self, ctx: GoParser.OperandContext):
         if ctx.literal():
@@ -121,12 +149,14 @@ class MyGoListener(GoParserListener):
             operand_value: str = self.values[ctx.operandName()]
             self.values[ctx] = operand_value
 
+    @my_func
     @override
     def exitLiteral(self, ctx: GoParser.LiteralContext):
         if ctx.basicLit():
             literal_value: str = self.values[ctx.basicLit()]
             self.values[ctx] = literal_value + DELIMITER
 
+    @my_func
     @override
     def exitPrimaryExpr(self, ctx: GoParser.PrimaryExprContext):
 
@@ -214,11 +244,13 @@ class MyGoListener(GoParserListener):
 
             self.values[ctx] = tmp_ptr
 
+    @my_func
     @override
     def exitPrimaryExpression(self, ctx: GoParser.PrimaryExpressionContext):
         expression_value: str = self.values[ctx.primaryExpr()]
         self.values[ctx] = expression_value
 
+    @my_func
     @override
     def exitPlusMinusOperation(self, ctx: GoParser.PlusMinusOperationContext):
         left: list[str] = ctx_decoder(self.values[ctx.expression(0)])
@@ -240,6 +272,7 @@ class MyGoListener(GoParserListener):
                            Operand(dst, self.operand_type_resolve(dst)))
         self.values[ctx] = ctx_encoder(plus_minus_operation_values)
 
+    @my_func
     @override
     def exitRelationOperation(self, ctx: GoParser.RelationOperationContext):
         left: list[str] = ctx_decoder(self.values[ctx.expression(0)])
@@ -313,6 +346,7 @@ class MyGoListener(GoParserListener):
             elif ctx.LESS_OR_EQUALS():
                 push_line_partial(op=TACOP.IFGT)
 
+    @my_func
     @override
     def exitMulDivOperation(self, ctx: GoParser.MulDivOperationContext):
         left: list[str] = ctx_decoder(self.values[ctx.expression(0)])
@@ -337,6 +371,7 @@ class MyGoListener(GoParserListener):
 
         self.values[ctx] = ctx_encoder(mul_div_operation_values)
 
+    @my_func
     @override
     def enterSourceFile(self, ctx: GoParser.SourceFileContext):
         self.globalScope = Scope()
@@ -344,10 +379,12 @@ class MyGoListener(GoParserListener):
         current_block: TACBlock = []
         self.TACBlocks[self.cur_fun] = current_block
 
+    @my_func
     @override
     def exitSourceFile(self, ctx: GoParser.SourceFileContext):
         print("exit source file")
 
+    @my_func
     @override
     def exitExpressionList(self, ctx: GoParser.ExpressionListContext):
         expression_values: list[str] = []
@@ -358,6 +395,7 @@ class MyGoListener(GoParserListener):
                 expression_values.append(each)
         self.values[ctx] = ctx_encoder(expression_values)
 
+    @my_func
     @override
     def enterFunctionDecl(self, ctx: GoParser.FunctionDeclContext):
         identifier: str = ctx.IDENTIFIER().getText()
@@ -416,11 +454,13 @@ class MyGoListener(GoParserListener):
                 self.push_line(TACOP.FUN_PARA, Operand(fun_para, self.operand_type_resolve(fun_para)),
                                Operand("", TACOPERANDTYPE.NULL_), Operand("", TACOPERANDTYPE.NULL_))
 
+    @my_func
     @override
     def exitFunctionDecl(self, ctx: GoParser.FunctionDeclContext):
         self.cur_fun = "global"
         self.pop_scope()
 
+    @my_func
     @override
     def exitVarSpec(self, ctx: GoParser.VarSpecContext):
         # 是否是数组
@@ -502,6 +542,7 @@ class MyGoListener(GoParserListener):
                                Operand(ctx.identifierList().IDENTIFIER(i).getText(),
                                        self.operand_type_resolve(ctx.identifierList().IDENTIFIER(i).getText())))
 
+    @my_func
     @override
     def enterBlock(self, ctx: GoParser.BlockContext):
         # for 情况
@@ -510,12 +551,15 @@ class MyGoListener(GoParserListener):
                            Operand("FORLOOP" + self.for_values[ctx.parentCtx].cur_index, TACOPERANDTYPE.LABEL),
                            Operand("", TACOPERANDTYPE.NULL_),
                            Operand("", TACOPERANDTYPE.NULL_))
+        # TODO: need to fix index out of range
         # if else 情况
-        if ctx.parentCtx.children[4] == ctx and ctx.parentCtx.children[3].getText() == "else":
+        if len(ctx.parentCtx.children) > 4 and ctx.parentCtx.children[4] == ctx and ctx.parentCtx.children[
+            3].getText() == "else":
             self.push_line(TACOP.LABEL, Operand("ELSE" + self.if_values[ctx.parentCtx], TACOPERANDTYPE.LABEL),
                            Operand("", TACOPERANDTYPE.NULL_), Operand("", TACOPERANDTYPE.NULL_))
         self.add_scope()
 
+    @my_func
     @override
     def exitBlock(self, ctx: GoParser.BlockContext):
         # for 情况
@@ -533,6 +577,7 @@ class MyGoListener(GoParserListener):
 
         self.pop_scope()
 
+    @my_func
     @override
     def exitIncDecStmt(self, ctx: GoParser.IncDecStmtContext):
         if ctx.children[1].getText() == "++":
@@ -561,6 +606,7 @@ class MyGoListener(GoParserListener):
                            Operand(varvalue, self.operand_type_resolve(varvalue)),
                            Operand(varname, self.operand_type_resolve(varname)))
 
+    @my_func
     @override
     def exitAssignment(self, ctx: GoParser.AssignmentContext):
         if ctx.assign_op().getText() == "=":
@@ -611,6 +657,7 @@ class MyGoListener(GoParserListener):
                                Operand(varvalue, self.operand_type_resolve(varvalue)),
                                Operand(varname, self.operand_type_resolve(varname)))
 
+    @my_func
     @override
     def exitShortVarDecl(self, ctx: GoParser.ShortVarDeclContext):
         n: int = len(ctx.identifierList().IDENTIFIER())
@@ -647,6 +694,7 @@ class MyGoListener(GoParserListener):
                 for_tmp.new_paras.append(varname)
             self.for_values[ctx.parentCtx.parentCtx.parentCtx] = for_tmp
 
+    @my_func
     @override
     def exitReturnStmt(self, ctx: GoParser.ReturnStmtContext):
         return_values: list[str] = ctx_decoder(self.values[ctx.expressionList()])
@@ -663,16 +711,19 @@ class MyGoListener(GoParserListener):
             self.push_line(TACOP.FUN_RET, Operand(i, self.operand_type_resolve(i)),
                            Operand("", TACOPERANDTYPE.NULL_), Operand("", TACOPERANDTYPE.NULL_))
 
+    @my_func
     @override
     def enterIfStmt(self, ctx: GoParser.IfStmtContext):
         if_tmp: str = self.create_else_label()
         self.if_values[ctx] = if_tmp
 
+    @my_func
     @override
     def exitIfStmt(self, ctx: GoParser.IfStmtContext):
         self.push_line(TACOP.LABEL, Operand("ENDIF" + self.if_values[ctx], TACOPERANDTYPE.LABEL),
                        Operand("", TACOPERANDTYPE.NULL_), Operand("", TACOPERANDTYPE.NULL_))
 
+    @my_func
     @override
     def enterForStmt(self, ctx: GoParser.ForStmtContext):
         tmp: str = self.create_for_label()
@@ -681,6 +732,7 @@ class MyGoListener(GoParserListener):
         self.for_values[ctx] = newfor
         self.add_scope()
 
+    @my_func
     @override
     def exitForStmt(self, ctx: GoParser.ForStmtContext):
         tmp: ForStatement = self.for_values[ctx]
@@ -688,6 +740,7 @@ class MyGoListener(GoParserListener):
         self.push_line(TACOP.LABEL, Operand("ENDFOR" + self.for_values[ctx].cur_index, TACOPERANDTYPE.LABEL),
                        Operand("", TACOPERANDTYPE.NULL_), Operand("", TACOPERANDTYPE.NULL_))
 
+    @my_func
     @override
     def enterParameterDecl(self, ctx: GoParser.ParameterDeclContext):
         if ctx.identifierList():
@@ -699,6 +752,7 @@ class MyGoListener(GoParserListener):
                 symbol: Symbol = Symbol(integer, self.currentScope, Symbol.SymbolType.VAR, type_=type_)
                 self.currentScope.para_define(symbol)
 
+    @my_func
     @override
     def exitOperandName(self, ctx: GoParser.OperandNameContext):
         tmp: Symbol | None = self.currentScope.resolve(ctx.IDENTIFIER().getText())
@@ -708,6 +762,7 @@ class MyGoListener(GoParserListener):
             exit(-1)
         self.values[ctx] = ctx.IDENTIFIER().getText() + DELIMITER
 
+    @my_func
     @override
     def exitArguments(self, ctx: GoParser.ArgumentsContext):
         if ctx.expressionList():
