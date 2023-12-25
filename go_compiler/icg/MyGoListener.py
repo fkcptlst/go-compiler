@@ -71,8 +71,9 @@ class MyGoListener(GoParserListener):
             else:
                 check_result = False
 
-        symbol: Symbol = Symbol(local, self.currentScope, Symbol.SymbolType.VAR,
-                                type_=self.tmp_symbol_type)
+        symbol: Symbol = Symbol(
+            local, self.currentScope, Symbol.SymbolType.VAR, type_=self.tmp_symbol_type
+        )
         self.currentScope.para_define(symbol)
         return local
 
@@ -89,7 +90,7 @@ class MyGoListener(GoParserListener):
     def operand_type_resolve(self, name: str) -> TACOPERANDTYPE:
         if self.ptrs.get(name, False):
             return TACOPERANDTYPE.PTR
-        if name[0].isdigit() or name[0] == '-':
+        if name[0].isdigit() or name[0] == "-":
             return TACOPERANDTYPE.IMM
         return TACOPERANDTYPE.VAR
 
@@ -106,11 +107,15 @@ class MyGoListener(GoParserListener):
         with open(filename, "w") as f:
             for key, block in self.TACBlocks.items():
                 for it in block:
-                    f.write(f"{it.line:<4}{it.op.name:<15}{it.src1.OperType.name:>7}:{it.src1.value:<10}{it.src2.OperType.name:>7}:{it.src2.value:<10}{it.dst.OperType.name:>7}:{it.dst.value:<10}\n")
+                    f.write(
+                        f"{it.line:<4}{it.op.name:<15}{it.src1.OperType.name:>7}:{it.src1.value:<10}{it.src2.OperType.name:>7}:{it.src2.value:<10}{it.dst.OperType.name:>7}:{it.dst.value:<10}\n"
+                    )
                 f.write("\n")
 
     def push_line(self, op: TACOP, src1: Operand, src2: Operand, dst: Operand):
-        self.TACBlocks[self.cur_fun].append(TACLine(self.line_index, op, src1, src2, dst, self.currentScope))
+        self.TACBlocks[self.cur_fun].append(
+            TACLine(self.line_index, op, src1, src2, dst, self.currentScope)
+        )
         self.line_index += 1
 
     def add_scope(self):
@@ -163,7 +168,6 @@ class MyGoListener(GoParserListener):
     @my_func
     @override
     def exitPrimaryExpr(self, ctx: GoParser.PrimaryExprContext):
-
         # 是函数调用
         if ctx.arguments():
             primary_expr_value: list[str] = []
@@ -189,14 +193,26 @@ class MyGoListener(GoParserListener):
             for _ in fun_symbol.fun_ret_type_list:
                 # TODO: CreateLocalVar应当传入不同变量的type
                 tmp: str = self.create_local_var()
-                self.push_line(TACOP.RET, Operand(tmp, self.operand_type_resolve(tmp)),
-                               Operand(blank, TACOPERANDTYPE.NULL_), Operand(blank, TACOPERANDTYPE.NULL_))
+                self.push_line(
+                    TACOP.RET,
+                    Operand(tmp, self.operand_type_resolve(tmp)),
+                    Operand(blank, TACOPERANDTYPE.NULL_),
+                    Operand(blank, TACOPERANDTYPE.NULL_),
+                )
                 primary_expr_value.append(tmp)
             for para in arguments_values:
-                self.push_line(TACOP.PARA, Operand(para, self.operand_type_resolve(para)),
-                               Operand(blank, TACOPERANDTYPE.NULL_), Operand(blank, TACOPERANDTYPE.NULL_))
-            self.push_line(TACOP.CALL, Operand(identity, self.operand_type_resolve(identity)),
-                           Operand(blank, TACOPERANDTYPE.NULL_), Operand(blank, TACOPERANDTYPE.NULL_))
+                self.push_line(
+                    TACOP.PARA,
+                    Operand(para, self.operand_type_resolve(para)),
+                    Operand(blank, TACOPERANDTYPE.NULL_),
+                    Operand(blank, TACOPERANDTYPE.NULL_),
+                )
+            self.push_line(
+                TACOP.CALL,
+                Operand(identity, self.operand_type_resolve(identity)),
+                Operand(blank, TACOPERANDTYPE.NULL_),
+                Operand(blank, TACOPERANDTYPE.NULL_),
+            )
             self.values[ctx] = ctx_encoder(primary_expr_value)
 
         # 数
@@ -208,6 +224,7 @@ class MyGoListener(GoParserListener):
         elif ctx.index():
             array_name: list[str] = ctx_decoder(self.values[ctx.primaryExpr()])
             identity: str = array_name[0]
+            print(f"identity: {identity}")
 
             # 名字不是数组而是变量
             array_symbol: Symbol | None = self.currentScope.resolve(identity)
@@ -234,19 +251,24 @@ class MyGoListener(GoParserListener):
 
             tmp_ptr_offset: str = self.create_local_var()
             int_size: str = "4"
-            self.push_line(TACOP.MUL,
-                           Operand(int_size, self.operand_type_resolve(int_size)),
-                           Operand(index_s, self.operand_type_resolve(index_s)),
-                           Operand(tmp_ptr_offset, self.operand_type_resolve(tmp_ptr_offset)))
+            self.push_line(
+                TACOP.MUL,
+                Operand(int_size, self.operand_type_resolve(int_size)),
+                Operand(index_s, self.operand_type_resolve(index_s)),
+                Operand(tmp_ptr_offset, self.operand_type_resolve(tmp_ptr_offset)),
+            )
             tmp_ptr: str = self.create_local_var()
-            self.push_line(TACOP.ADD,
-                           Operand(identity, self.operand_type_resolve(identity)),
-                           Operand(tmp_ptr_offset, self.operand_type_resolve(tmp_ptr_offset)),
-                           Operand(tmp_ptr, self.operand_type_resolve(tmp_ptr)))
+            self.push_line(
+                TACOP.ADD,
+                Operand(identity, self.operand_type_resolve(identity)),
+                Operand(tmp_ptr_offset, self.operand_type_resolve(tmp_ptr_offset)),
+                Operand(tmp_ptr, self.operand_type_resolve(tmp_ptr)),
+            )
             # todo map
             self.ptrs[tmp_ptr] = True
 
-            self.values[ctx] = tmp_ptr
+            # NOTE: You have to encode it before assignment -> suffix must be #
+            self.values[ctx] = ctx_encoder([tmp_ptr])
 
     @my_func
     @override
@@ -267,13 +289,19 @@ class MyGoListener(GoParserListener):
         plus_minus_operation_values: list[str] = [dst]
 
         if ctx.PLUS():
-            self.push_line(TACOP.ADD, Operand(left[0], self.operand_type_resolve(left[0])),
-                           Operand(right[0], self.operand_type_resolve(right[0])),
-                           Operand(dst, self.operand_type_resolve(dst)))
+            self.push_line(
+                TACOP.ADD,
+                Operand(left[0], self.operand_type_resolve(left[0])),
+                Operand(right[0], self.operand_type_resolve(right[0])),
+                Operand(dst, self.operand_type_resolve(dst)),
+            )
         elif ctx.MINUS():
-            self.push_line(TACOP.SUB, Operand(left[0], self.operand_type_resolve(left[0])),
-                           Operand(right[0], self.operand_type_resolve(right[0])),
-                           Operand(dst, self.operand_type_resolve(dst)))
+            self.push_line(
+                TACOP.SUB,
+                Operand(left[0], self.operand_type_resolve(left[0])),
+                Operand(right[0], self.operand_type_resolve(right[0])),
+                Operand(dst, self.operand_type_resolve(dst)),
+            )
         self.values[ctx] = ctx_encoder(plus_minus_operation_values)
 
     @my_func
@@ -287,22 +315,29 @@ class MyGoListener(GoParserListener):
             exit(-1)
 
         # expression 在for 下的情况，需要添加ifexp 并且反过来 将condition_loop信息写入forstatement里面
-        if (ctx.parentCtx.parentCtx.children[0].getText() == "for" and
-                ctx.parentCtx.parentCtx.children[1] == ctx.parentCtx):
+        if (
+            ctx.parentCtx.parentCtx.children[0].getText() == "for"
+            and ctx.parentCtx.parentCtx.children[1] == ctx.parentCtx
+        ):
             tmp: ForStatement = self.for_values[ctx.parentCtx.parentCtx]
             dst: str = "ENDFOR" + tmp.cur_index
             dst_: str = "FORLOOP" + tmp.cur_index
             tmpline: TACLine | None = None
 
-            tac_line_partial = partial(TACLine,
-                                       line=self.line_index,
-                                       src1=Operand(left[0], self.operand_type_resolve(left[0])),
-                                       src2=Operand(right[0], self.operand_type_resolve(right[0])),
-                                       dst=Operand(dst_, TACOPERANDTYPE.LABEL), scope=self.currentScope)
-            push_line_partial = partial(self.push_line,
-                                        src1=Operand(left[0], self.operand_type_resolve(left[0])),
-                                        src2=Operand(right[0], self.operand_type_resolve(right[0])),
-                                        dst=Operand(dst, TACOPERANDTYPE.LABEL))
+            tac_line_partial = partial(
+                TACLine,
+                line=self.line_index,
+                src1=Operand(left[0], self.operand_type_resolve(left[0])),
+                src2=Operand(right[0], self.operand_type_resolve(right[0])),
+                dst=Operand(dst_, TACOPERANDTYPE.LABEL),
+                scope=self.currentScope,
+            )
+            push_line_partial = partial(
+                self.push_line,
+                src1=Operand(left[0], self.operand_type_resolve(left[0])),
+                src2=Operand(right[0], self.operand_type_resolve(right[0])),
+                dst=Operand(dst, TACOPERANDTYPE.LABEL),
+            )
 
             if ctx.EQUALS():
                 tmpline = tac_line_partial(op=TACOP.IFEQ)
@@ -332,10 +367,12 @@ class MyGoListener(GoParserListener):
             else:
                 dst = "ENDIF" + self.if_values[ctx.parentCtx]
 
-            push_line_partial = partial(self.push_line,
-                                        src1=Operand(left[0], self.operand_type_resolve(left[0])),
-                                        src2=Operand(right[0], self.operand_type_resolve(right[0])),
-                                        dst=Operand(dst, TACOPERANDTYPE.LABEL))
+            push_line_partial = partial(
+                self.push_line,
+                src1=Operand(left[0], self.operand_type_resolve(left[0])),
+                src2=Operand(right[0], self.operand_type_resolve(right[0])),
+                dst=Operand(dst, TACOPERANDTYPE.LABEL),
+            )
 
             if ctx.EQUALS():
                 push_line_partial(op=TACOP.IFNEQ)
@@ -365,13 +402,19 @@ class MyGoListener(GoParserListener):
         mul_div_operation_values: list[str] = [dst]
 
         if ctx.STAR():
-            self.push_line(TACOP.MUL, Operand(left[0], self.operand_type_resolve(left[0])),
-                           Operand(right[0], self.operand_type_resolve(right[0])),
-                           Operand(dst, self.operand_type_resolve(dst)))
+            self.push_line(
+                TACOP.MUL,
+                Operand(left[0], self.operand_type_resolve(left[0])),
+                Operand(right[0], self.operand_type_resolve(right[0])),
+                Operand(dst, self.operand_type_resolve(dst)),
+            )
         elif ctx.DIV():
-            self.push_line(TACOP.DIV, Operand(left[0], self.operand_type_resolve(left[0])),
-                           Operand(right[0], self.operand_type_resolve(right[0])),
-                           Operand(dst, self.operand_type_resolve(dst)))
+            self.push_line(
+                TACOP.DIV,
+                Operand(left[0], self.operand_type_resolve(left[0])),
+                Operand(right[0], self.operand_type_resolve(right[0])),
+                Operand(dst, self.operand_type_resolve(dst)),
+            )
 
         self.values[ctx] = ctx_encoder(mul_div_operation_values)
 
@@ -395,6 +438,7 @@ class MyGoListener(GoParserListener):
         for i in range(len(ctx.expression())):
             s: str = self.values[ctx.expression(i)]
             vs: list[str] = ctx_decoder(s)
+            # print(f"{s} -> {vs}")
             for each in vs:
                 expression_values.append(each)
         self.values[ctx] = ctx_encoder(expression_values)
@@ -419,13 +463,24 @@ class MyGoListener(GoParserListener):
         fun_para_list: list[Symbol.Type] = []
 
         # 函数ret参数
-        if not ctx.signature().result() or len(ctx.signature().result().parameters().parameterDecl()) == 0:  # 无返回值
+        if (
+            not ctx.signature().result()
+            or len(ctx.signature().result().parameters().parameterDecl()) == 0
+        ):  # 无返回值
             # do nothing
             pass
         else:  # 有返回值
             n: int = len(ctx.signature().result().parameters().parameterDecl())
             for i in range(n):
-                each_type: str = ctx.signature().result().parameters().parameterDecl(i).type_().typeName().getText()
+                each_type: str = (
+                    ctx.signature()
+                    .result()
+                    .parameters()
+                    .parameterDecl(i)
+                    .type_()
+                    .typeName()
+                    .getText()
+                )
                 each_s_type: Symbol.Type = Symbol.to_type(each_type)
                 fun_ret_type_list.append(each_s_type)
 
@@ -438,25 +493,61 @@ class MyGoListener(GoParserListener):
             # 有参数
             n: int = len(ctx.signature().parameters().parameterDecl())
             for i in range(n):
-                each_type: str = ctx.signature().parameters().parameterDecl(i).type_().typeName().getText()
+                each_type: str = (
+                    ctx.signature()
+                    .parameters()
+                    .parameterDecl(i)
+                    .type_()
+                    .typeName()
+                    .getText()
+                )
                 each_s_type: Symbol.Type = Symbol.to_type(each_type)
-                for j in range(len(ctx.signature().parameters().parameterDecl(i).identifierList().IDENTIFIER())):
+                for j in range(
+                    len(
+                        ctx.signature()
+                        .parameters()
+                        .parameterDecl(i)
+                        .identifierList()
+                        .IDENTIFIER()
+                    )
+                ):
                     fun_para_list.append(each_s_type)
 
-        symbol: Symbol = Symbol(identifier, self.currentScope, Symbol.SymbolType.FUN,
-                                fun_ret_type_list=fun_ret_type_list,
-                                fun_para_type_list=fun_para_list)
+        symbol: Symbol = Symbol(
+            identifier,
+            self.currentScope,
+            Symbol.SymbolType.FUN,
+            fun_ret_type_list=fun_ret_type_list,
+            fun_para_type_list=fun_para_list,
+        )
         scope: Scope = Scope(self.currentScope)
         self.currentScope.fun_define(symbol)
         self.currentScope = scope
 
         # 打印 FUN_PARA
         for i in range(len(ctx.signature().parameters().parameterDecl())):
-            para_number: int = len(ctx.signature().parameters().parameterDecl(i).identifierList().IDENTIFIER())
+            para_number: int = len(
+                ctx.signature()
+                .parameters()
+                .parameterDecl(i)
+                .identifierList()
+                .IDENTIFIER()
+            )
             for j in range(para_number):
-                fun_para: str = ctx.signature().parameters().parameterDecl(i).identifierList().IDENTIFIER(j).getText()
-                self.push_line(TACOP.FUN_PARA, Operand(fun_para, self.operand_type_resolve(fun_para)),
-                               Operand("", TACOPERANDTYPE.NULL_), Operand("", TACOPERANDTYPE.NULL_))
+                fun_para: str = (
+                    ctx.signature()
+                    .parameters()
+                    .parameterDecl(i)
+                    .identifierList()
+                    .IDENTIFIER(j)
+                    .getText()
+                )
+                self.push_line(
+                    TACOP.FUN_PARA,
+                    Operand(fun_para, self.operand_type_resolve(fun_para)),
+                    Operand("", TACOPERANDTYPE.NULL_),
+                    Operand("", TACOPERANDTYPE.NULL_),
+                )
 
     @my_func
     @override
@@ -476,7 +567,10 @@ class MyGoListener(GoParserListener):
             is_array = True
             # 如果是数组，长度是多少
             right_values: list[str] = ctx_decoder(
-                self.values[ctx.type_().typeLit().arrayType().arrayLength().expression()])
+                self.values[
+                    ctx.type_().typeLit().arrayType().arrayLength().expression()
+                ]
+            )
             # 数量是否是1
             if 1 != len(right_values):
                 logging.fatal("wrong number of array length input")
@@ -510,7 +604,9 @@ class MyGoListener(GoParserListener):
                     type_ = Symbol.to_type(stype)
                 # 数组
                 elif ctx.type_().typeLit() and ctx.type_().typeLit().arrayType():
-                    stype: str = ctx.type_().typeLit().arrayType().elementType().getText()
+                    stype: str = (
+                        ctx.type_().typeLit().arrayType().elementType().getText()
+                    )
                     type_ = Symbol.to_type(stype)
 
             # 如果已经定义了，报错
@@ -520,15 +616,24 @@ class MyGoListener(GoParserListener):
                 exit(-1)
             # 不重复，新建
             assert type_ is not None, "type_ is None"
-            symbol: Symbol = Symbol(varname, self.currentScope, Symbol.SymbolType.VAR,
-                                    type_=type_,
-                                    is_array=is_array,
-                                    array_length=array_length)
+            symbol: Symbol = Symbol(
+                varname,
+                self.currentScope,
+                Symbol.SymbolType.VAR,
+                type_=type_,
+                is_array=is_array,
+                array_length=array_length,
+            )
 
             if is_array:
-                self.push_line(TACOP.CREATLIST, Operand(varname, self.operand_type_resolve(varname)),
-                               Operand(str(array_length), self.operand_type_resolve(str(array_length))),
-                               Operand("INT", TACOPERANDTYPE.NULL_))
+                self.push_line(
+                    TACOP.CREATLIST,
+                    Operand(varname, self.operand_type_resolve(varname)),
+                    Operand(
+                        str(array_length), self.operand_type_resolve(str(array_length))
+                    ),
+                    Operand("INT", TACOPERANDTYPE.NULL_),
+                )
             self.currentScope.para_define(symbol)
 
         # 定义时赋值
@@ -541,26 +646,47 @@ class MyGoListener(GoParserListener):
                 exit(-1)
             # 赋值
             for i in range(n):
-                self.push_line(TACOP.ASSIGN, Operand(right_values[i], self.operand_type_resolve(right_values[i])),
-                               Operand("", TACOPERANDTYPE.NULL_),
-                               Operand(ctx.identifierList().IDENTIFIER(i).getText(),
-                                       self.operand_type_resolve(ctx.identifierList().IDENTIFIER(i).getText())))
+                self.push_line(
+                    TACOP.ASSIGN,
+                    Operand(
+                        right_values[i], self.operand_type_resolve(right_values[i])
+                    ),
+                    Operand("", TACOPERANDTYPE.NULL_),
+                    Operand(
+                        ctx.identifierList().IDENTIFIER(i).getText(),
+                        self.operand_type_resolve(
+                            ctx.identifierList().IDENTIFIER(i).getText()
+                        ),
+                    ),
+                )
 
     @my_func
     @override
     def enterBlock(self, ctx: GoParser.BlockContext):
         # for 情况
         if ctx.parentCtx.children[0].getText() == "for":
-            self.push_line(TACOP.LABEL,
-                           Operand("FORLOOP" + self.for_values[ctx.parentCtx].cur_index, TACOPERANDTYPE.LABEL),
-                           Operand("", TACOPERANDTYPE.NULL_),
-                           Operand("", TACOPERANDTYPE.NULL_))
+            self.push_line(
+                TACOP.LABEL,
+                Operand(
+                    "FORLOOP" + self.for_values[ctx.parentCtx].cur_index,
+                    TACOPERANDTYPE.LABEL,
+                ),
+                Operand("", TACOPERANDTYPE.NULL_),
+                Operand("", TACOPERANDTYPE.NULL_),
+            )
         # TODO: need to fix index out of range
         # if else 情况
-        if len(ctx.parentCtx.children) > 4 and ctx.parentCtx.children[4] == ctx and ctx.parentCtx.children[
-            3].getText() == "else":
-            self.push_line(TACOP.LABEL, Operand("ELSE" + self.if_values[ctx.parentCtx], TACOPERANDTYPE.LABEL),
-                           Operand("", TACOPERANDTYPE.NULL_), Operand("", TACOPERANDTYPE.NULL_))
+        if (
+            len(ctx.parentCtx.children) > 4
+            and ctx.parentCtx.children[4] == ctx
+            and ctx.parentCtx.children[3].getText() == "else"
+        ):
+            self.push_line(
+                TACOP.LABEL,
+                Operand("ELSE" + self.if_values[ctx.parentCtx], TACOPERANDTYPE.LABEL),
+                Operand("", TACOPERANDTYPE.NULL_),
+                Operand("", TACOPERANDTYPE.NULL_),
+            )
         self.add_scope()
 
     @my_func
@@ -571,13 +697,30 @@ class MyGoListener(GoParserListener):
             for_tmp: ForStatement = self.for_values[ctx.parentCtx]
             update_condition: TACLine = for_tmp.update_con
             loop_condition: TACLine = for_tmp.loop_con
-            self.push_line(update_condition.op, update_condition.src1, update_condition.src2, update_condition.dst)
-            self.push_line(loop_condition.op, loop_condition.src1, loop_condition.src2, loop_condition.dst)
+            self.push_line(
+                update_condition.op,
+                update_condition.src1,
+                update_condition.src2,
+                update_condition.dst,
+            )
+            self.push_line(
+                loop_condition.op,
+                loop_condition.src1,
+                loop_condition.src2,
+                loop_condition.dst,
+            )
 
         # if 情况
-        if ctx.parentCtx.children[2] == ctx and ctx.parentCtx.children[0].getText() == "if":
-            self.push_line(TACOP.GOTO, Operand("ENDIF" + self.if_values[ctx.parentCtx], TACOPERANDTYPE.LABEL),
-                           Operand("", TACOPERANDTYPE.NULL_), Operand("", TACOPERANDTYPE.NULL_))
+        if (
+            ctx.parentCtx.children[2] == ctx
+            and ctx.parentCtx.children[0].getText() == "if"
+        ):
+            self.push_line(
+                TACOP.GOTO,
+                Operand("ENDIF" + self.if_values[ctx.parentCtx], TACOPERANDTYPE.LABEL),
+                Operand("", TACOPERANDTYPE.NULL_),
+                Operand("", TACOPERANDTYPE.NULL_),
+            )
 
         self.pop_scope()
 
@@ -587,28 +730,41 @@ class MyGoListener(GoParserListener):
         if ctx.children[1].getText() == "++":
             left_values: list[str] = ctx_decoder(self.values[ctx.expression()])
             if len(left_values) != 1:
-                logging.fatal("too many parameter for incdec \"++\"")
-                print("too many parameter for incdec \"++\"")
+                logging.fatal('too many parameter for incdec "++"')
+                print('too many parameter for incdec "++"')
                 exit(-1)
 
             # for statement 的情况，不写入3code，但是要记录在forstmt里面，作为update的条件
-            if (ctx.parentCtx.parentCtx.parentCtx.children[0].getText() == "for"
-                    and ctx.parentCtx.parentCtx == ctx.parentCtx.parentCtx.parentCtx.children[1]):
+            if (
+                ctx.parentCtx.parentCtx.parentCtx.children[0].getText() == "for"
+                and ctx.parentCtx.parentCtx
+                == ctx.parentCtx.parentCtx.parentCtx.children[1]
+            ):
                 varname: str = left_values[0]
                 varvalue: str = "1"
-                for_tmp: ForStatement = self.for_values[ctx.parentCtx.parentCtx.parentCtx]
-                tmpline: TACLine = TACLine(self.line_index, TACOP.ADD,
-                                           Operand(varname, self.operand_type_resolve(varname)),
-                                           Operand(varvalue, self.operand_type_resolve(varvalue)),
-                                           Operand(varname, self.operand_type_resolve(varname)), self.currentScope)
+                for_tmp: ForStatement = self.for_values[
+                    ctx.parentCtx.parentCtx.parentCtx
+                ]
+                tmpline: TACLine = TACLine(
+                    self.line_index,
+                    TACOP.ADD,
+                    Operand(varname, self.operand_type_resolve(varname)),
+                    Operand(varvalue, self.operand_type_resolve(varvalue)),
+                    Operand(varname, self.operand_type_resolve(varname)),
+                    self.currentScope,
+                )
                 for_tmp.update_con = tmpline
                 self.for_values[ctx.parentCtx.parentCtx.parentCtx] = for_tmp
-            # 普通情况，block里面，写入3code
-            varname: str = left_values[0]
-            varvalue: str = "1"
-            self.push_line(TACOP.ADD, Operand(varname, self.operand_type_resolve(varname)),
-                           Operand(varvalue, self.operand_type_resolve(varvalue)),
-                           Operand(varname, self.operand_type_resolve(varname)))
+            else:
+                # 普通情况，block里面，写入3code
+                varname: str = left_values[0]
+                varvalue: str = "1"
+                self.push_line(
+                    TACOP.ADD,
+                    Operand(varname, self.operand_type_resolve(varname)),
+                    Operand(varvalue, self.operand_type_resolve(varvalue)),
+                    Operand(varname, self.operand_type_resolve(varname)),
+                )
 
     @my_func
     @override
@@ -619,7 +775,10 @@ class MyGoListener(GoParserListener):
             # 左右参数量是否相等
             if len(left_values) != len(right_values):
                 logging.fatal("not equal number parameter for assign")
-                print("not equal number parameter for assign")
+                print(
+                    f"{left_values} != {right_values} not equal number parameter for assign"
+                )
+                print(f"{ctx.getText()}")
                 exit(-1)
 
             # ok
@@ -627,9 +786,12 @@ class MyGoListener(GoParserListener):
                 varname: str = left_values[i]
                 varvalue: str = right_values[i]
 
-                self.push_line(TACOP.ASSIGN, Operand(varvalue, self.operand_type_resolve(varvalue)),
-                               Operand("", TACOPERANDTYPE.NULL_),
-                               Operand(varname, self.operand_type_resolve(varname)))
+                self.push_line(
+                    TACOP.ASSIGN,
+                    Operand(varvalue, self.operand_type_resolve(varvalue)),
+                    Operand("", TACOPERANDTYPE.NULL_),
+                    Operand(varname, self.operand_type_resolve(varname)),
+                )
 
         # 未实现数组的
         if ctx.assign_op().getText() == "+=":
@@ -637,29 +799,41 @@ class MyGoListener(GoParserListener):
             right_values: list[str] = ctx_decoder(self.values[ctx.expressionList(1)])
             # 左右参数量是否相等
             if len(left_values) != 1 or len(right_values) != 1:
-                logging.fatal("too many parameter for assign \"+=\"")
-                print("too many parameter for assign \"+=\"")
+                logging.fatal('too many parameter for assign "+="')
+                print('too many parameter for assign "+="')
                 exit(-1)
 
             # for statement 的情况，不写入3code，但是要记录在forstmt里面，作为update的条件
-            if ctx.parentCtx.parentCtx.parentCtx.children[0].getText() == "for" and ctx.parentCtx.parentCtx == \
-                    ctx.parentCtx.parentCtx.parentCtx.children[1]:
+            if (
+                ctx.parentCtx.parentCtx.parentCtx.children[0].getText() == "for"
+                and ctx.parentCtx.parentCtx
+                == ctx.parentCtx.parentCtx.parentCtx.children[1]
+            ):
                 varname: str = left_values[0]
                 varvalue: str = right_values[0]
-                for_tmp: ForStatement = self.for_values[ctx.parentCtx.parentCtx.parentCtx]
-                tmpline: TACLine = TACLine(self.line_index, TACOP.ADD,
-                                           Operand(varname, self.operand_type_resolve(varname)),
-                                           Operand(varvalue, self.operand_type_resolve(varvalue)),
-                                           Operand(varname, self.operand_type_resolve(varname)), self.currentScope)
+                for_tmp: ForStatement = self.for_values[
+                    ctx.parentCtx.parentCtx.parentCtx
+                ]
+                tmpline: TACLine = TACLine(
+                    self.line_index,
+                    TACOP.ADD,
+                    Operand(varname, self.operand_type_resolve(varname)),
+                    Operand(varvalue, self.operand_type_resolve(varvalue)),
+                    Operand(varname, self.operand_type_resolve(varname)),
+                    self.currentScope,
+                )
                 for_tmp.update_con = tmpline
                 self.for_values[ctx.parentCtx.parentCtx.parentCtx] = for_tmp
             # 普通情况，block里面，写入3code
             else:
                 varname: str = left_values[0]
                 varvalue: str = right_values[0]
-                self.push_line(TACOP.ADD, Operand(varname, self.operand_type_resolve(varname)),
-                               Operand(varvalue, self.operand_type_resolve(varvalue)),
-                               Operand(varname, self.operand_type_resolve(varname)))
+                self.push_line(
+                    TACOP.ADD,
+                    Operand(varname, self.operand_type_resolve(varname)),
+                    Operand(varvalue, self.operand_type_resolve(varvalue)),
+                    Operand(varname, self.operand_type_resolve(varname)),
+                )
 
     @my_func
     @override
@@ -670,8 +844,9 @@ class MyGoListener(GoParserListener):
             type_: Symbol.Type = self.tmp_symbol_type
 
             # 不重复，新建
-            symbol: Symbol = Symbol(varname, self.currentScope, Symbol.SymbolType.VAR,
-                                    type_=type_)
+            symbol: Symbol = Symbol(
+                varname, self.currentScope, Symbol.SymbolType.VAR, type_=type_
+            )
             self.currentScope.para_define(symbol)
 
         # TODO:如果是函数调用怎么办？？
@@ -684,13 +859,24 @@ class MyGoListener(GoParserListener):
                 exit(-1)
             # 赋值
             for i in range(n):
-                self.push_line(TACOP.ASSIGN, Operand(right_values[i], self.operand_type_resolve(right_values[i])),
-                               Operand("", TACOPERANDTYPE.NULL_),
-                               Operand(ctx.identifierList().IDENTIFIER(i).getText(),
-                                       self.operand_type_resolve(ctx.identifierList().IDENTIFIER(i).getText())))
+                self.push_line(
+                    TACOP.ASSIGN,
+                    Operand(
+                        right_values[i], self.operand_type_resolve(right_values[i])
+                    ),
+                    Operand("", TACOPERANDTYPE.NULL_),
+                    Operand(
+                        ctx.identifierList().IDENTIFIER(i).getText(),
+                        self.operand_type_resolve(
+                            ctx.identifierList().IDENTIFIER(i).getText()
+                        ),
+                    ),
+                )
 
-        if ctx.parentCtx.parentCtx.parentCtx.children[0].getText() == "for" and \
-                ctx.parentCtx.parentCtx.parentCtx.children[1] == ctx.parentCtx.parentCtx:
+        if (
+            ctx.parentCtx.parentCtx.parentCtx.children[0].getText() == "for"
+            and ctx.parentCtx.parentCtx.parentCtx.children[1] == ctx.parentCtx.parentCtx
+        ):
             # init 变量添加进forstmt结构体，方便在forstmt结束后销毁变量
             for_tmp: ForStatement = self.for_values[ctx.parentCtx.parentCtx.parentCtx]
             for i in range(n):
@@ -712,8 +898,12 @@ class MyGoListener(GoParserListener):
 
         # 生成TAC
         for i in return_values:
-            self.push_line(TACOP.FUN_RET, Operand(i, self.operand_type_resolve(i)),
-                           Operand("", TACOPERANDTYPE.NULL_), Operand("", TACOPERANDTYPE.NULL_))
+            self.push_line(
+                TACOP.FUN_RET,
+                Operand(i, self.operand_type_resolve(i)),
+                Operand("", TACOPERANDTYPE.NULL_),
+                Operand("", TACOPERANDTYPE.NULL_),
+            )
 
     @my_func
     @override
@@ -724,8 +914,12 @@ class MyGoListener(GoParserListener):
     @my_func
     @override
     def exitIfStmt(self, ctx: GoParser.IfStmtContext):
-        self.push_line(TACOP.LABEL, Operand("ENDIF" + self.if_values[ctx], TACOPERANDTYPE.LABEL),
-                       Operand("", TACOPERANDTYPE.NULL_), Operand("", TACOPERANDTYPE.NULL_))
+        self.push_line(
+            TACOP.LABEL,
+            Operand("ENDIF" + self.if_values[ctx], TACOPERANDTYPE.LABEL),
+            Operand("", TACOPERANDTYPE.NULL_),
+            Operand("", TACOPERANDTYPE.NULL_),
+        )
 
     @my_func
     @override
@@ -741,19 +935,26 @@ class MyGoListener(GoParserListener):
     def exitForStmt(self, ctx: GoParser.ForStmtContext):
         tmp: ForStatement = self.for_values[ctx]
         self.pop_scope()
-        self.push_line(TACOP.LABEL, Operand("ENDFOR" + self.for_values[ctx].cur_index, TACOPERANDTYPE.LABEL),
-                       Operand("", TACOPERANDTYPE.NULL_), Operand("", TACOPERANDTYPE.NULL_))
+        self.push_line(
+            TACOP.LABEL,
+            Operand("ENDFOR" + self.for_values[ctx].cur_index, TACOPERANDTYPE.LABEL),
+            Operand("", TACOPERANDTYPE.NULL_),
+            Operand("", TACOPERANDTYPE.NULL_),
+        )
 
     @my_func
     @override
     def enterParameterDecl(self, ctx: GoParser.ParameterDeclContext):
         if ctx.identifierList():
+            # TODO: What if identifierList returns None?
             n: int = len(ctx.identifierList().IDENTIFIER())
             for i in range(n):
                 integer: str = ctx.identifierList().IDENTIFIER(i).getText()
                 stype: str = ctx.type_().typeName().getText()
                 type_: Symbol.Type = Symbol.to_type(stype)
-                symbol: Symbol = Symbol(integer, self.currentScope, Symbol.SymbolType.VAR, type_=type_)
+                symbol: Symbol = Symbol(
+                    integer, self.currentScope, Symbol.SymbolType.VAR, type_=type_
+                )
                 self.currentScope.para_define(symbol)
 
     @my_func
