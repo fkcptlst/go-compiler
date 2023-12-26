@@ -1,10 +1,11 @@
-from ..common.common import *
-from ..common.tac import *
-from ..common.Scope import *
-from asm import *
-from BlockTranslator import *
+from go_compiler.tcg.SymbolManager import SymbolManager
+from go_compiler.common.tac import TACOP, TACBlock, TACFile
+from go_compiler.common.Scope import Scope
+from BlockTranslator import ASMBlock, BlockTranslator
+from asm import ASMFile, ASMSection
 import logging
 import pickle
+
 
 class Translator:
     def __init__(self, TACFile_: TACFile, Global_Scope_: Scope):
@@ -12,6 +13,11 @@ class Translator:
         self.TACFile_ = TACFile_
         self.Global_Scope = Global_Scope_
         self.ASMFile_: ASMFile = []
+
+    # BlockTranslator BlockTranslator_;
+    # std::shared_ptr<Scope> Global_Scope;
+    # std::shared_ptr<TACFile> TACFile_;
+    # std::shared_ptr<ASMFile> ASMFile_;
 
     def dataTranslate(self):
         ASMSection_ = ASMSection()
@@ -29,9 +35,9 @@ class Translator:
                 ASMLine_ = global_[i].dst.value + "   equ  " + global_[i].src1.value
                 ASMBlock_.asmlines.append(ASMLine_)
             else:
-                logging.error("global op error: " + f'{pickle.dumps(global_[i].op)}')
+                logging.error("global op error: " + f"{pickle.dumps(global_[i].op)}")
 
-        ASMSection_.asmBlocks.append(ASMBlock_)
+        ASMSection_.asmblocks.append(ASMBlock_)
         self.ASMFile_.append(ASMSection_)
 
     def textTranslate(self):
@@ -49,15 +55,16 @@ class Translator:
         # todo 以函数为单位
         for key, value in self.TACFile_.items():
             # todo 根据函数名到block的map初始化
-            if key == "global" or key == 'myprint' or len(value) == 0:
+            if key == "global" or key == "myprint" or len(value) == 0:
                 continue
             logging.warning("start 翻译函数: " + key)
             SymbolManager_: SymbolManager = SymbolManager(self.Global_Scope, key)
-            ASMBlock_: ASMBlock = self.BlockTranslator_.BlockTranslate(SymbolManager_, value)
+            ASMBlock_: ASMBlock = self.BlockTranslator_.BlockTranslate(
+                SymbolManager_, value
+            )
             ASMSection_.asmblocks.append(ASMBlock_)
 
         self.ASMFile_.append(ASMSection_)
-
 
     def Translate(self):
         self.dataTranslate()
@@ -75,4 +82,3 @@ class Translator:
                         outfile.write(self.ASMFile_[i].asmblocks[j].asmlines[k] + "\n")
                     outfile.write("\n")
                 outfile.write("\n")
-

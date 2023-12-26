@@ -27,6 +27,16 @@ class TACOP(Enum):
     CREATLIST = auto()
 
 
+tacopmap = {
+    TACOP.IFEQ: "je",
+    TACOP.IFGE: "jge",
+    TACOP.IFGT: "jg",
+    TACOP.IFLE: "jle",
+    TACOP.IFLT: "jl",
+    TACOP.IFNEQ: "jne",
+}
+
+
 def to_string(op: TACOP) -> str:
     return op.name.lower()
 
@@ -47,7 +57,15 @@ class Operand:
 
 
 class TACLine:
-    def __init__(self, line: int, op: TACOP, src1: Operand, src2: Operand, dst: Operand, scope: Scope):
+    def __init__(
+        self,
+        line: int,
+        op: TACOP,
+        src1: Operand,
+        src2: Operand,
+        dst: Operand,
+        scope: Scope,
+    ):
         self.line: int = line
         self.op: TACOP = op
         self.src1: Operand = src1

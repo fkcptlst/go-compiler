@@ -1,22 +1,26 @@
 from construct_asm import *
-from SentenceTranslator.AssignTranslator import AssignTranslator
-from SentenceTranslator.CallTranslator import CallTranslator
-from SentenceTranslator.CommonTranslator import CommonTranslator
-from SentenceTranslator.CreatelistTranslator import CreatelistTranslator
-from SentenceTranslator.FunparaTranslator import FunparaTranslator
-from SentenceTranslator.FunretTranslator import FunretTranslator
-from SentenceTranslator.GotoTranslator import GotoTranslator
-from SentenceTranslator.IfTranslator import IfTranslator
-from SentenceTranslator.LabelTranslator import LabelTranslator
-from SentenceTranslator.MulTranslator import MulTranslator
-from SentenceTranslator.ParaTranslator import ParaTranslator
-from SentenceTranslator.RetTranslator import RetTranslator
+from go_compiler.tcg.asm import ASMBlock
+from go_compiler.tcg.sentence_translator.CallTranslator import CallTranslator
+from go_compiler.tcg.sentence_translator.CommonTranslator import CommonTranslator
+from go_compiler.tcg.sentence_translator.CreatelistTranslator import (
+    CreatelistTranslator,
+)
+from go_compiler.tcg.sentence_translator.AssignTranslator import AssignTranslator
+from go_compiler.tcg.sentence_translator.FunparaTranslator import FunparaTranslator
+from go_compiler.tcg.sentence_translator.FunretTranslator import FunretTranslator
+from go_compiler.tcg.sentence_translator.GotoTranslator import GotoTranslator
+from go_compiler.tcg.sentence_translator.IfTranslator import IfTranslator
+from go_compiler.tcg.sentence_translator.LabelTranslator import LabelTranslator
+from go_compiler.tcg.sentence_translator.MulTranslator import MulTranslator
+from go_compiler.tcg.sentence_translator.ParaTranslator import ParaTranslator
+from go_compiler.tcg.sentence_translator.RetTranslator import RetTranslator
 from SymbolManager import *
+
 
 class BlockTranslator:
     @staticmethod
     def BlockTranslate(SymbolManager_: SymbolManager, TACBlock_: TACBlock) -> ASMBlock:
-        ASMBlock_: ASMBlock = ASMBlock()
+        ASMBlock_: ASMBlock = ASMBlock("")
         SymbolManager_.push_reg(REG.EBP, 0)
         ASMBlock_.asmlines.append(construct_asm(op="push", src=REG.EBP))
         ASMBlock_.asmlines.append(construct_asm(op="mov", dst=REG.EBP, src=REG.ESP))
@@ -40,14 +44,19 @@ class BlockTranslator:
         SymbolManager_.set_zero_len()
         # todo 完成对每个语句的翻译
         for i in range(len(TACBlock_)):
-
             SymbolManager_.set_scope(TACBlock_[i].scope)
             if TACBlock_[i].src1.OperType == TACOPERANDTYPE.VAR:
-                SymbolManager_.set_use_info(TACBlock_[i].src1.value, TACBlock_[i].src1.use_info)
+                SymbolManager_.set_use_info(
+                    TACBlock_[i].src1.value, TACBlock_[i].src1.use_info
+                )
             if TACBlock_[i].src2.OperType == TACOPERANDTYPE.VAR:
-                SymbolManager_.set_use_info(TACBlock_[i].src2.value, TACBlock_[i].src2.use_info)
+                SymbolManager_.set_use_info(
+                    TACBlock_[i].src2.value, TACBlock_[i].src2.use_info
+                )
             if TACBlock_[i].dst.OperType == TACOPERANDTYPE.VAR:
-                SymbolManager_.set_use_info(TACBlock_[i].dst.value, TACBlock_[i].dst.use_info)
+                SymbolManager_.set_use_info(
+                    TACBlock_[i].dst.value, TACBlock_[i].dst.use_info
+                )
 
             # 翻译
             trans: BaseTranslator = None
@@ -92,7 +101,9 @@ class BlockTranslator:
         stack_len: int = SymbolManager_.get_stack_len()
         if stack_len > 0:
             SymbolManager_.set_esp_bias(-4 * stack_len)
-            ASMBlock_.asmlines.append(construct_asm(op="add", dst=REG.ESP, src=str(stack_len * 4)))
+            ASMBlock_.asmlines.append(
+                construct_asm(op="add", dst=REG.ESP, src=str(stack_len * 4))
+            )
         elif stack_len < 0:
             logging.error(f"{stack_len} stack overflow")
 
