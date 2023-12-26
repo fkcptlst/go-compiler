@@ -1,0 +1,5 @@
+antlr4-python3-runtime==4.9.3
+
+[dev]
+pytest~=7.4.3
+pytest-cov~=4.1.0

@@ -1,0 +1,1064 @@
+[
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tjugo.dir/main.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/main.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/main.cpp",
+  "output": "CMakeFiles/tjugo.dir/main.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/ANTLRErrorListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ANTLRErrorListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ANTLRErrorListener.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/ANTLRErrorListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/ANTLRErrorStrategy.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ANTLRErrorStrategy.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ANTLRErrorStrategy.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/ANTLRErrorStrategy.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/ANTLRFileStream.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ANTLRFileStream.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ANTLRFileStream.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/ANTLRFileStream.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/ANTLRInputStream.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ANTLRInputStream.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ANTLRInputStream.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/ANTLRInputStream.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/BailErrorStrategy.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/BailErrorStrategy.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/BailErrorStrategy.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/BailErrorStrategy.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/BaseErrorListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/BaseErrorListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/BaseErrorListener.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/BaseErrorListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/BufferedTokenStream.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/BufferedTokenStream.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/BufferedTokenStream.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/BufferedTokenStream.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/CharStream.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/CharStream.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/CharStream.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/CharStream.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/CommonToken.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/CommonToken.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/CommonToken.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/CommonToken.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/CommonTokenFactory.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/CommonTokenFactory.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/CommonTokenFactory.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/CommonTokenFactory.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/CommonTokenStream.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/CommonTokenStream.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/CommonTokenStream.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/CommonTokenStream.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/ConsoleErrorListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ConsoleErrorListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ConsoleErrorListener.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/ConsoleErrorListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/DefaultErrorStrategy.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/DefaultErrorStrategy.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/DefaultErrorStrategy.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/DefaultErrorStrategy.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/DiagnosticErrorListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/DiagnosticErrorListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/DiagnosticErrorListener.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/DiagnosticErrorListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/Exceptions.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/Exceptions.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/Exceptions.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/Exceptions.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/FailedPredicateException.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/FailedPredicateException.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/FailedPredicateException.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/FailedPredicateException.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/InputMismatchException.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/InputMismatchException.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/InputMismatchException.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/InputMismatchException.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/IntStream.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/IntStream.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/IntStream.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/IntStream.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/InterpreterRuleContext.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/InterpreterRuleContext.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/InterpreterRuleContext.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/InterpreterRuleContext.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/Lexer.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/Lexer.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/Lexer.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/Lexer.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/LexerInterpreter.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/LexerInterpreter.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/LexerInterpreter.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/LexerInterpreter.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/LexerNoViableAltException.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/LexerNoViableAltException.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/LexerNoViableAltException.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/LexerNoViableAltException.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/ListTokenSource.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ListTokenSource.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ListTokenSource.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/ListTokenSource.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/NoViableAltException.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/NoViableAltException.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/NoViableAltException.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/NoViableAltException.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/Parser.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/Parser.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/Parser.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/Parser.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/ParserInterpreter.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ParserInterpreter.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ParserInterpreter.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/ParserInterpreter.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/ParserRuleContext.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ParserRuleContext.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ParserRuleContext.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/ParserRuleContext.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/ProxyErrorListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ProxyErrorListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/ProxyErrorListener.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/ProxyErrorListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/RecognitionException.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/RecognitionException.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/RecognitionException.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/RecognitionException.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/Recognizer.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/Recognizer.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/Recognizer.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/Recognizer.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/RuleContext.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/RuleContext.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/RuleContext.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/RuleContext.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/RuleContextWithAltNum.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/RuleContextWithAltNum.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/RuleContextWithAltNum.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/RuleContextWithAltNum.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/RuntimeMetaData.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/RuntimeMetaData.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/RuntimeMetaData.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/RuntimeMetaData.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/Token.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/Token.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/Token.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/Token.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/TokenSource.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/TokenSource.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/TokenSource.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/TokenSource.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/TokenStream.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/TokenStream.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/TokenStream.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/TokenStream.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/TokenStreamRewriter.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/TokenStreamRewriter.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/TokenStreamRewriter.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/TokenStreamRewriter.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/UnbufferedCharStream.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/UnbufferedCharStream.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/UnbufferedCharStream.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/UnbufferedCharStream.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/UnbufferedTokenStream.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/UnbufferedTokenStream.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/UnbufferedTokenStream.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/UnbufferedTokenStream.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/Vocabulary.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/Vocabulary.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/Vocabulary.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/Vocabulary.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/WritableToken.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/WritableToken.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/WritableToken.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/WritableToken.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATN.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATN.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATN.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATN.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNConfig.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNConfig.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNConfig.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNConfig.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNConfigSet.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNConfigSet.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNConfigSet.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNConfigSet.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNDeserializationOptions.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNDeserializationOptions.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNDeserializationOptions.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNDeserializationOptions.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNDeserializer.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNDeserializer.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNDeserializer.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNDeserializer.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNSerializer.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNSerializer.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNSerializer.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNSerializer.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNSimulator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNSimulator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNSimulator.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNSimulator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ATNState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ATNState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/AbstractPredicateTransition.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/AbstractPredicateTransition.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/AbstractPredicateTransition.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/AbstractPredicateTransition.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ActionTransition.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ActionTransition.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ActionTransition.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ActionTransition.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/AmbiguityInfo.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/AmbiguityInfo.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/AmbiguityInfo.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/AmbiguityInfo.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ArrayPredictionContext.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ArrayPredictionContext.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ArrayPredictionContext.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ArrayPredictionContext.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/AtomTransition.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/AtomTransition.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/AtomTransition.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/AtomTransition.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/BasicBlockStartState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/BasicBlockStartState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/BasicBlockStartState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/BasicBlockStartState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/BasicState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/BasicState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/BasicState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/BasicState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/BlockEndState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/BlockEndState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/BlockEndState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/BlockEndState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/BlockStartState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/BlockStartState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/BlockStartState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/BlockStartState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ContextSensitivityInfo.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ContextSensitivityInfo.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ContextSensitivityInfo.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ContextSensitivityInfo.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/DecisionEventInfo.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/DecisionEventInfo.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/DecisionEventInfo.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/DecisionEventInfo.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/DecisionInfo.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/DecisionInfo.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/DecisionInfo.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/DecisionInfo.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/DecisionState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/DecisionState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/DecisionState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/DecisionState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/EmptyPredictionContext.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/EmptyPredictionContext.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/EmptyPredictionContext.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/EmptyPredictionContext.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/EpsilonTransition.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/EpsilonTransition.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/EpsilonTransition.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/EpsilonTransition.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ErrorInfo.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ErrorInfo.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ErrorInfo.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ErrorInfo.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LL1Analyzer.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LL1Analyzer.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LL1Analyzer.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LL1Analyzer.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerATNConfig.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerATNConfig.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerATNConfig.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerATNConfig.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerATNSimulator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerATNSimulator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerATNSimulator.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerATNSimulator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerAction.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerAction.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerAction.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerAction.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerActionExecutor.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerActionExecutor.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerActionExecutor.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerActionExecutor.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerChannelAction.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerChannelAction.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerChannelAction.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerChannelAction.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerCustomAction.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerCustomAction.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerCustomAction.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerCustomAction.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerIndexedCustomAction.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerIndexedCustomAction.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerIndexedCustomAction.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerIndexedCustomAction.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerModeAction.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerModeAction.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerModeAction.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerModeAction.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerMoreAction.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerMoreAction.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerMoreAction.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerMoreAction.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerPopModeAction.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerPopModeAction.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerPopModeAction.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerPopModeAction.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerPushModeAction.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerPushModeAction.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerPushModeAction.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerPushModeAction.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerSkipAction.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerSkipAction.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerSkipAction.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerSkipAction.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerTypeAction.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerTypeAction.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LexerTypeAction.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LexerTypeAction.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LookaheadEventInfo.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LookaheadEventInfo.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LookaheadEventInfo.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LookaheadEventInfo.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LoopEndState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LoopEndState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/LoopEndState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/LoopEndState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/NotSetTransition.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/NotSetTransition.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/NotSetTransition.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/NotSetTransition.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/OrderedATNConfigSet.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/OrderedATNConfigSet.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/OrderedATNConfigSet.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/OrderedATNConfigSet.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ParseInfo.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ParseInfo.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ParseInfo.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ParseInfo.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ParserATNSimulator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ParserATNSimulator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ParserATNSimulator.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ParserATNSimulator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PlusBlockStartState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PlusBlockStartState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PlusBlockStartState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PlusBlockStartState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PlusLoopbackState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PlusLoopbackState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PlusLoopbackState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PlusLoopbackState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PrecedencePredicateTransition.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PrecedencePredicateTransition.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PrecedencePredicateTransition.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PrecedencePredicateTransition.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PredicateEvalInfo.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PredicateEvalInfo.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PredicateEvalInfo.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PredicateEvalInfo.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PredicateTransition.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PredicateTransition.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PredicateTransition.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PredicateTransition.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PredictionContext.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PredictionContext.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PredictionContext.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PredictionContext.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PredictionMode.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PredictionMode.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/PredictionMode.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/PredictionMode.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ProfilingATNSimulator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ProfilingATNSimulator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/ProfilingATNSimulator.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/ProfilingATNSimulator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/RangeTransition.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/RangeTransition.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/RangeTransition.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/RangeTransition.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/RuleStartState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/RuleStartState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/RuleStartState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/RuleStartState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/RuleStopState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/RuleStopState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/RuleStopState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/RuleStopState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/RuleTransition.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/RuleTransition.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/RuleTransition.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/RuleTransition.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/SemanticContext.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/SemanticContext.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/SemanticContext.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/SemanticContext.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/SetTransition.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/SetTransition.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/SetTransition.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/SetTransition.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/SingletonPredictionContext.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/SingletonPredictionContext.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/SingletonPredictionContext.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/SingletonPredictionContext.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/StarBlockStartState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/StarBlockStartState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/StarBlockStartState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/StarBlockStartState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/StarLoopEntryState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/StarLoopEntryState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/StarLoopEntryState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/StarLoopEntryState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/StarLoopbackState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/StarLoopbackState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/StarLoopbackState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/StarLoopbackState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/TokensStartState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/TokensStartState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/TokensStartState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/TokensStartState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/Transition.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/Transition.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/Transition.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/Transition.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/atn/WildcardTransition.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/WildcardTransition.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/atn/WildcardTransition.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/atn/WildcardTransition.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/dfa/DFA.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/dfa/DFA.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/dfa/DFA.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/dfa/DFA.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/dfa/DFASerializer.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/dfa/DFASerializer.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/dfa/DFASerializer.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/dfa/DFASerializer.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/dfa/DFAState.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/dfa/DFAState.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/dfa/DFAState.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/dfa/DFAState.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/dfa/LexerDFASerializer.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/dfa/LexerDFASerializer.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/dfa/LexerDFASerializer.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/dfa/LexerDFASerializer.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/misc/InterpreterDataReader.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/misc/InterpreterDataReader.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/misc/InterpreterDataReader.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/misc/InterpreterDataReader.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/misc/Interval.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/misc/Interval.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/misc/Interval.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/misc/Interval.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/misc/IntervalSet.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/misc/IntervalSet.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/misc/IntervalSet.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/misc/IntervalSet.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/misc/MurmurHash.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/misc/MurmurHash.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/misc/MurmurHash.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/misc/MurmurHash.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/misc/Predicate.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/misc/Predicate.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/misc/Predicate.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/misc/Predicate.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/support/Any.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/support/Any.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/support/Any.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/support/Any.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/support/Arrays.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/support/Arrays.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/support/Arrays.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/support/Arrays.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/support/CPPUtils.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/support/CPPUtils.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/support/CPPUtils.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/support/CPPUtils.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/support/Guid.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/support/Guid.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/support/Guid.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/support/Guid.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/support/StringUtils.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/support/StringUtils.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/support/StringUtils.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/support/StringUtils.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/ErrorNode.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/ErrorNode.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/ErrorNode.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/ErrorNode.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/ErrorNodeImpl.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/ErrorNodeImpl.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/ErrorNodeImpl.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/ErrorNodeImpl.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/IterativeParseTreeWalker.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/IterativeParseTreeWalker.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/IterativeParseTreeWalker.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/IterativeParseTreeWalker.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/ParseTree.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/ParseTree.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/ParseTree.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/ParseTree.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/ParseTreeListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/ParseTreeListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/ParseTreeListener.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/ParseTreeListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/ParseTreeVisitor.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/ParseTreeVisitor.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/ParseTreeVisitor.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/ParseTreeVisitor.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/ParseTreeWalker.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/ParseTreeWalker.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/ParseTreeWalker.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/ParseTreeWalker.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/TerminalNode.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/TerminalNode.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/TerminalNode.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/TerminalNode.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/TerminalNodeImpl.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/TerminalNodeImpl.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/TerminalNodeImpl.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/TerminalNodeImpl.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/Trees.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/Trees.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/Trees.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/Trees.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/Chunk.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/Chunk.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/Chunk.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/Chunk.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/ParseTreeMatch.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/ParseTreeMatch.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/ParseTreeMatch.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/ParseTreeMatch.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/ParseTreePattern.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/ParseTreePattern.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/ParseTreePattern.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/ParseTreePattern.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/ParseTreePatternMatcher.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/ParseTreePatternMatcher.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/ParseTreePatternMatcher.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/ParseTreePatternMatcher.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/RuleTagToken.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/RuleTagToken.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/RuleTagToken.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/RuleTagToken.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/TagChunk.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/TagChunk.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/TagChunk.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/TagChunk.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/TextChunk.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/TextChunk.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/TextChunk.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/TextChunk.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/TokenTagToken.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/TokenTagToken.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/pattern/TokenTagToken.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/pattern/TokenTagToken.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPath.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPath.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPath.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPath.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathElement.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathElement.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathElement.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathElement.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathLexer.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathLexer.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathLexer.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathLexer.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathLexerErrorListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathLexerErrorListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathLexerErrorListener.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathLexerErrorListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathRuleAnywhereElement.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathRuleAnywhereElement.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathRuleAnywhereElement.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathRuleAnywhereElement.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathRuleElement.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathRuleElement.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathRuleElement.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathRuleElement.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathTokenAnywhereElement.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathTokenAnywhereElement.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathTokenAnywhereElement.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathTokenAnywhereElement.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathTokenElement.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathTokenElement.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathTokenElement.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathTokenElement.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathWildcardAnywhereElement.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathWildcardAnywhereElement.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathWildcardAnywhereElement.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathWildcardAnywhereElement.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/3rd",
+  "command": "/usr/bin/c++  -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathWildcardElement.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathWildcardElement.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src/tree/xpath/XPathWildcardElement.cpp",
+  "output": "3rd/CMakeFiles/3rd.dir/antlr4-runtime/src/tree/xpath/XPathWildcardElement.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/Common",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/common.dir/REG.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/Common/REG.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/Common/REG.cpp",
+  "output": "src/Common/CMakeFiles/common.dir/REG.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/Common",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/common.dir/Scope.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/Common/Scope.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/Common/Scope.cpp",
+  "output": "src/Common/CMakeFiles/common.dir/Scope.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/Common",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/common.dir/TAC.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/Common/TAC.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/Common/TAC.cpp",
+  "output": "src/Common/CMakeFiles/common.dir/TAC.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/ICG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/icg.dir/__/__/grammar/gen/GoLexer.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoLexer.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoLexer.cpp",
+  "output": "src/ICG/CMakeFiles/icg.dir/__/__/grammar/gen/GoLexer.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/ICG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/icg.dir/__/__/grammar/gen/GoParser.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoParser.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoParser.cpp",
+  "output": "src/ICG/CMakeFiles/icg.dir/__/__/grammar/gen/GoParser.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/ICG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/icg.dir/__/__/grammar/gen/GoParserBaseListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoParserBaseListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoParserBaseListener.cpp",
+  "output": "src/ICG/CMakeFiles/icg.dir/__/__/grammar/gen/GoParserBaseListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/ICG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/icg.dir/__/__/grammar/gen/GoParserListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoParserListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoParserListener.cpp",
+  "output": "src/ICG/CMakeFiles/icg.dir/__/__/grammar/gen/GoParserListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/ICG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/3rd/antlr4-runtime/src -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/icg.dir/myGoListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/ICG/myGoListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/ICG/myGoListener.cpp",
+  "output": "src/ICG/CMakeFiles/icg.dir/myGoListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/ICG",
+  "command": "/usr/bin/c++    -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/lib_gen.dir/__/__/grammar/gen/GoLexer.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoLexer.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoLexer.cpp",
+  "output": "src/ICG/CMakeFiles/lib_gen.dir/__/__/grammar/gen/GoLexer.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/ICG",
+  "command": "/usr/bin/c++    -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/lib_gen.dir/__/__/grammar/gen/GoParser.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoParser.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoParser.cpp",
+  "output": "src/ICG/CMakeFiles/lib_gen.dir/__/__/grammar/gen/GoParser.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/ICG",
+  "command": "/usr/bin/c++    -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/lib_gen.dir/__/__/grammar/gen/GoParserBaseListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoParserBaseListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoParserBaseListener.cpp",
+  "output": "src/ICG/CMakeFiles/lib_gen.dir/__/__/grammar/gen/GoParserBaseListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/ICG",
+  "command": "/usr/bin/c++    -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/lib_gen.dir/__/__/grammar/gen/GoParserListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoParserListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/grammar/gen/GoParserListener.cpp",
+  "output": "src/ICG/CMakeFiles/lib_gen.dir/__/__/grammar/gen/GoParserListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/ICG",
+  "command": "/usr/bin/c++    -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/lib_icg.dir/myGoListener.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/ICG/myGoListener.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/ICG/myGoListener.cpp",
+  "output": "src/ICG/CMakeFiles/lib_icg.dir/myGoListener.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/BlockTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/BlockTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/BlockTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/BlockTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SentenceTranslator/AssignTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/AssignTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/AssignTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SentenceTranslator/AssignTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SentenceTranslator/CallTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/CallTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/CallTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SentenceTranslator/CallTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SentenceTranslator/CommonTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/CommonTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/CommonTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SentenceTranslator/CommonTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SentenceTranslator/CreatelistTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/CreatelistTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/CreatelistTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SentenceTranslator/CreatelistTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SentenceTranslator/FunparaTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/FunparaTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/FunparaTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SentenceTranslator/FunparaTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SentenceTranslator/FunretTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/FunretTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/FunretTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SentenceTranslator/FunretTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SentenceTranslator/GotoTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/GotoTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/GotoTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SentenceTranslator/GotoTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SentenceTranslator/IfTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/IfTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/IfTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SentenceTranslator/IfTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SentenceTranslator/LabelTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/LabelTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/LabelTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SentenceTranslator/LabelTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SentenceTranslator/MulTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/MulTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/MulTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SentenceTranslator/MulTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SentenceTranslator/ParaTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/ParaTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/ParaTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SentenceTranslator/ParaTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SentenceTranslator/RetTranslator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/RetTranslator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SentenceTranslator/RetTranslator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SentenceTranslator/RetTranslator.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/SymbolManager.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SymbolManager.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/SymbolManager.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/SymbolManager.cpp.o"
+},
+{
+  "directory": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/out/Debug/src/TCG",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGLOG_CUSTOM_PREFIX_SUPPORT -I/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/include  -w -O3 -g -O3 -DNDEBUG -std=gnu++11 -o CMakeFiles/tcg.dir/Translator.cpp.o -c /mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/Translator.cpp",
+  "file": "/mnt/win/E/Christopher/TJU/20231/编译原理/Part3/go-compiler_cpp/src/TCG/Translator.cpp",
+  "output": "src/TCG/CMakeFiles/tcg.dir/Translator.cpp.o"
+}
+]

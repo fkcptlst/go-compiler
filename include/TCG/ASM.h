@@ -5,49 +5,56 @@
 #include "Common/REG.h"
 
 enum class ASMOP {
-    MOV, PUSH, POP, CALL, JMP, RET,
+  MOV,
+  PUSH,
+  POP,
+  CALL,
+  JMP,
+  RET,
 };
 
 enum class OprandType {
-    t_NULL, t_IMM, t_REG, t_MEM,
+  t_NULL,
+  t_IMM,
+  t_REG,
+  t_MEM,
 };
 
 struct ASMOprand {
-    OprandType type;
-    int32_t value;
-    ASMOprand() {}
-    ASMOprand(OprandType type, int32_t value)
-    : type(type), value(value) {}
+  OprandType type;
+  int32_t value;
+  ASMOprand() {}
+  ASMOprand(OprandType type, int32_t value) : type(type), value(value) {}
 };
 
 struct ASMLine {
-    ASMOP op;
-    std::vector<ASMOprand> oprands;
+  ASMOP op;
+  std::vector<ASMOprand> oprands;
 
-    ASMLine() {}
-    ASMLine(ASMOP op, std::vector<ASMOprand> oprands)
-    : op(op), oprands(oprands) {}
+  ASMLine() {}
+  ASMLine(ASMOP op, std::vector<ASMOprand> oprands)
+      : op(op), oprands(oprands) {}
 };
 
 // using ASMLines = std::vector<ASMLine>;
 using ASMLines = std::vector<std::string>;
 
 struct ASMBlock {
-    std::string name;
-    ASMLines asmlines;
+  std::string name;
+  ASMLines asmlines;
 
-    ASMBlock() {}
-    ASMBlock(std::string name, ASMLines asmlines)
-    : name(name), asmlines(asmlines) {}
+  ASMBlock() {}
+  ASMBlock(std::string name, ASMLines asmlines)
+      : name(name), asmlines(asmlines) {}
 };
 
 struct ASMSection {
-    std::string name;
-    std::vector<ASMBlock> asmblocks;
+  std::string name;
+  std::vector<ASMBlock> asmblocks;
 
-    ASMSection() {}
-    ASMSection(std::string name, std::vector<ASMBlock> asmblocks)
-    : name(name), asmblocks(asmblocks) {}
+  ASMSection() {}
+  ASMSection(std::string name, std::vector<ASMBlock> asmblocks)
+      : name(name), asmblocks(asmblocks) {}
 };
 
 using ASMFile = std::vector<ASMSection>;
@@ -96,6 +103,5 @@ using ASMFile = std::vector<ASMSection>;
 //     }
 //     return asmline;
 // }
-
 
 #endif // INCLUDE_TCG_ASM_H_

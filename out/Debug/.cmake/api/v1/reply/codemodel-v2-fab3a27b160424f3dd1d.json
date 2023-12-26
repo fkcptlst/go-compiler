@@ -1,0 +1,198 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-cd9465fb271fb44afd53.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "3rd",
+					"jsonFile" : "directory-3rd-Release-67ddda307163f94fc060.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "3rd",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "src",
+					"childIndexes" : 
+					[
+						3,
+						4,
+						5
+					],
+					"jsonFile" : "directory-src-Release-b6cf2213fc5053b67c22.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src"
+				},
+				{
+					"build" : "src/Common",
+					"jsonFile" : "directory-src.Common-Release-4e15477be5f1dec2cf8d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "src/Common",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "src/ICG",
+					"jsonFile" : "directory-src.ICG-Release-923cc5a0ac5eec4fe57a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "src/ICG",
+					"targetIndexes" : 
+					[
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"build" : "src/TCG",
+					"jsonFile" : "directory-src.TCG-Release-52d523c77a171caa33cb.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "src/TCG",
+					"targetIndexes" : 
+					[
+						5
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					],
+					"name" : "tjugo",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "3rd::@c4864f3b3257843ea81b",
+					"jsonFile" : "target-3rd-Release-56ed16cf7f1d03ebb541.json",
+					"name" : "3rd",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "common::@29aabc9fbfb9b5406d55",
+					"jsonFile" : "target-common-Release-142a320a0240cd19b031.json",
+					"name" : "common",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "icg::@59ea628bb3f2ef2a25e6",
+					"jsonFile" : "target-icg-Release-47fd16c84d0f82b58cf3.json",
+					"name" : "icg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "lib_gen::@59ea628bb3f2ef2a25e6",
+					"jsonFile" : "target-lib_gen-Release-b5db0b338d56e2641442.json",
+					"name" : "lib_gen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "lib_icg::@59ea628bb3f2ef2a25e6",
+					"jsonFile" : "target-lib_icg-Release-89b143309765f1324439.json",
+					"name" : "lib_icg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "tcg::@4a978c0bb0cc4c97629f",
+					"jsonFile" : "target-tcg-Release-dbc587541cf19562315b.json",
+					"name" : "tcg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "tjugo::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-tjugo-Release-eae4880fb7fda2b19dfe.json",
+					"name" : "tjugo",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/mnt/win/E/Christopher/TJU/20231/\u7f16\u8bd1\u539f\u7406/Part3/go-compiler_cpp/out/Debug",
+		"source" : "/mnt/win/E/Christopher/TJU/20231/\u7f16\u8bd1\u539f\u7406/Part3/go-compiler_cpp"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

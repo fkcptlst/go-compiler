@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcommon.a CMakeFiles/common.dir/REG.cpp.o CMakeFiles/common.dir/Scope.cpp.o CMakeFiles/common.dir/TAC.cpp.o
+/usr/bin/ranlib libcommon.a

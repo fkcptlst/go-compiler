@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblib_icg.a CMakeFiles/lib_icg.dir/myGoListener.cpp.o
+/usr/bin/ranlib liblib_icg.a

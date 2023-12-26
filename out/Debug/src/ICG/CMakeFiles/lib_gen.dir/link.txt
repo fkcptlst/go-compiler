@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblib_gen.a CMakeFiles/lib_gen.dir/__/__/grammar/gen/GoLexer.cpp.o CMakeFiles/lib_gen.dir/__/__/grammar/gen/GoParser.cpp.o CMakeFiles/lib_gen.dir/__/__/grammar/gen/GoParserBaseListener.cpp.o CMakeFiles/lib_gen.dir/__/__/grammar/gen/GoParserListener.cpp.o
+/usr/bin/ranlib liblib_gen.a

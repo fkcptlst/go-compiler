@@ -1,0 +1,2 @@
+/usr/bin/ar qc libicg.a CMakeFiles/icg.dir/__/__/grammar/gen/GoLexer.cpp.o CMakeFiles/icg.dir/__/__/grammar/gen/GoParser.cpp.o CMakeFiles/icg.dir/__/__/grammar/gen/GoParserBaseListener.cpp.o CMakeFiles/icg.dir/__/__/grammar/gen/GoParserListener.cpp.o CMakeFiles/icg.dir/myGoListener.cpp.o
+/usr/bin/ranlib libicg.a

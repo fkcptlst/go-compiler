@@ -1,0 +1,1 @@
+/usr/bin/c++  -w -O3 -g -O3 -DNDEBUG CMakeFiles/tjugo.dir/main.cpp.o -o tjugo  src/Common/libcommon.a src/ICG/libicg.a src/TCG/libtcg.a 3rd/lib3rd.a src/Common/libcommon.a /usr/lib/libglog.so.0.6.0 /usr/lib/libgflags.so.2.2.2 -lpthread 

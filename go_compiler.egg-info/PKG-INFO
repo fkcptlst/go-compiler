@@ -1,0 +1,26 @@
+Metadata-Version: 2.1
+Name: go-compiler
+Version: 0.0.0
+Summary: A simple compiler implementation for the Go programming language
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: antlr4-python3-runtime==4.9.3
+Provides-Extra: dev
+Requires-Dist: pytest~=7.4.3; extra == "dev"
+Requires-Dist: pytest-cov~=4.1.0; extra == "dev"
+
+# go-compiler
+
+## setup project
+
+```bash
+pip install -e .[dev]
+```
+
+## run tests (with coverage)
+
+```bash
+pytest --cov=go_compiler tests/
+```
