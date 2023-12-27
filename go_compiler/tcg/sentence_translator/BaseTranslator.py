@@ -5,7 +5,10 @@ from ..SymbolManager import SymbolManager
 
 
 class BaseTranslator:
-    def SentenceTranslator(self, sm: SymbolManager, tac: TACLine):
+    def __init__(self) -> None:
+        pass
+
+    def SentenceTranslator(self, sm: SymbolManager, tac: TACLine) -> ASMLines:
         sm.set_scope(tac.scope)
         return self.SentenceTranslate_(sm, tac)
 

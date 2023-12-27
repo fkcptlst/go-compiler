@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, auto
 from typing import TypeAlias
 
 
@@ -41,8 +41,8 @@ class ASMBlock:
 
 class ASMSection:
     def __init__(self):
-        self.name: str
-        self.asmblocks: list[ASMBlock]
+        self.name: str = ""
+        self.asmblocks: list[ASMBlock] = []
 
 
 ASMFile: TypeAlias = list[ASMSection]

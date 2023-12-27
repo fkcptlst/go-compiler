@@ -1,14 +1,14 @@
-from go_compiler.tcg.SymbolManager import SymbolManager
-from go_compiler.common.tac import TACOP, TACBlock, TACFile
-from go_compiler.common.Scope import Scope
-from BlockTranslator import ASMBlock, BlockTranslator
-from asm import ASMFile, ASMSection
+from ..tcg.SymbolManager import SymbolManager
+from ..common.tac import TACOP, TACBlock, TACFile
+from ..common.Scope import Scope
+from ..tcg.BlockTranslator import ASMBlock, BlockTranslator
+from ..tcg.asm import ASMFile, ASMSection
 import logging
 import pickle
 
 
 class Translator:
-    def __init__(self, TACFile_: TACFile, Global_Scope_: Scope):
+    def __init__(self, TACFile_: TACFile, Global_Scope_: Scope | None):
         self.BlockTranslator_: BlockTranslator = BlockTranslator()
         self.TACFile_ = TACFile_
         self.Global_Scope = Global_Scope_
@@ -71,6 +71,7 @@ class Translator:
         self.textTranslate()
 
     def OutputFile(self, filename: str):
+        print("Writing", filename)
         with open(filename, "w") as outfile:
             for i in range(len(self.ASMFile_)):
                 if self.ASMFile_[i].name != "":

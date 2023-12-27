@@ -1,10 +1,10 @@
 import logging
-from go_compiler.common.REG import REG
-from go_compiler.common.tac import TACOP, TACOPERANDTYPE, TACLine
-from go_compiler.tcg.SymbolManager import POSTYPE, SymbolManager
-from go_compiler.tcg.asm import ASMLines
-from go_compiler.tcg.construct_asm import construct_asm
-from go_compiler.tcg.sentence_translator.BaseTranslator import BaseTranslator
+from ...common.REG import REG
+from ...common.tac import TACOP, TACOPERANDTYPE, TACLine
+from ...tcg.SymbolManager import POSTYPE, SymbolManager
+from ...tcg.asm import ASMLines
+from ...tcg.construct_asm import construct_asm
+from ...tcg.sentence_translator.BaseTranslator import BaseTranslator
 
 
 class CommonTranslator(BaseTranslator):

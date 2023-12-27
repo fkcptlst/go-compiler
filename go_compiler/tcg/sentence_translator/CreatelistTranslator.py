@@ -1,4 +1,3 @@
-from typing_extensions import override
 from ...common.REG import REG
 from ...common.tac import TACLine
 from ...tcg.asm import ASMLines
@@ -11,7 +10,6 @@ class CreatelistTranslator(BaseTranslator):
     def __init__(self) -> None:
         super().__init__()
 
-    @override
     def SentenceTranslate_(
         self, SymbolManager_: SymbolManager, TACLine_: TACLine
     ) -> ASMLines:

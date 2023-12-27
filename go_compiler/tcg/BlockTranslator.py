@@ -1,26 +1,33 @@
-from construct_asm import *
-from go_compiler.tcg.asm import ASMBlock
-from go_compiler.tcg.sentence_translator.CallTranslator import CallTranslator
-from go_compiler.tcg.sentence_translator.CommonTranslator import CommonTranslator
-from go_compiler.tcg.sentence_translator.CreatelistTranslator import (
-    CreatelistTranslator,
-)
-from go_compiler.tcg.sentence_translator.AssignTranslator import AssignTranslator
-from go_compiler.tcg.sentence_translator.FunparaTranslator import FunparaTranslator
-from go_compiler.tcg.sentence_translator.FunretTranslator import FunretTranslator
-from go_compiler.tcg.sentence_translator.GotoTranslator import GotoTranslator
-from go_compiler.tcg.sentence_translator.IfTranslator import IfTranslator
-from go_compiler.tcg.sentence_translator.LabelTranslator import LabelTranslator
-from go_compiler.tcg.sentence_translator.MulTranslator import MulTranslator
-from go_compiler.tcg.sentence_translator.ParaTranslator import ParaTranslator
-from go_compiler.tcg.sentence_translator.RetTranslator import RetTranslator
-from SymbolManager import *
+from ..tcg.construct_asm import construct_asm
+
+from ..tcg.asm import ASMBlock, ASMLines
+from ..tcg.sentence_translator.BaseTranslator import BaseTranslator
+
+from ..tcg.sentence_translator.CallTranslator import CallTranslator
+from ..tcg.sentence_translator.CommonTranslator import CommonTranslator
+from ..tcg.sentence_translator.AssignTranslator import AssignTranslator
+from ..tcg.sentence_translator.FunparaTranslator import FunparaTranslator
+from ..tcg.sentence_translator.FunretTranslator import FunretTranslator
+from ..tcg.sentence_translator.GotoTranslator import GotoTranslator
+from ..tcg.sentence_translator.IfTranslator import IfTranslator
+from ..tcg.sentence_translator.LabelTranslator import LabelTranslator
+from ..tcg.sentence_translator.MulTranslator import MulTranslator
+from ..tcg.sentence_translator.ParaTranslator import ParaTranslator
+from ..tcg.sentence_translator.RetTranslator import RetTranslator
+from ..tcg.sentence_translator.CreatelistTranslator import CreatelistTranslator
+
+from ..tcg.SymbolManager import SymbolManager
+
+from ..common.REG import REG
+from ..common.tac import TACOP, TACOPERANDTYPE, TACBlock
+
+import logging
 
 
 class BlockTranslator:
     @staticmethod
     def BlockTranslate(SymbolManager_: SymbolManager, TACBlock_: TACBlock) -> ASMBlock:
-        ASMBlock_: ASMBlock = ASMBlock("")
+        ASMBlock_: ASMBlock = ASMBlock()
         SymbolManager_.push_reg(REG.EBP, 0)
         ASMBlock_.asmlines.append(construct_asm(op="push", src=REG.EBP))
         ASMBlock_.asmlines.append(construct_asm(op="mov", dst=REG.EBP, src=REG.ESP))
@@ -59,9 +66,9 @@ class BlockTranslator:
                 )
 
             # 翻译
-            trans: BaseTranslator = None
+            trans: BaseTranslator
             if TACBlock_[i].op == TACOP.ASSIGN:
-                trans: AssignTranslator = AssignTranslator()
+                trans: BaseTranslator = AssignTranslator()
             elif TACBlock_[i].op == TACOP.CALL:
                 trans: CallTranslator = CallTranslator()
             elif TACBlock_[i].op == TACOP.FUN_PARA:
@@ -95,7 +102,7 @@ class BlockTranslator:
             else:
                 trans: CommonTranslator = CommonTranslator()
 
-            tmp_res: ASMLines = trans.SentenceTranslate(SymbolManager_, TACBlock_[i])
+            tmp_res: ASMLines = trans.SentenceTranslate_(SymbolManager_, TACBlock_[i])
             ASMBlock_.asmlines.extend(tmp_res)
 
         stack_len: int = SymbolManager_.get_stack_len()

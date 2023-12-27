@@ -142,7 +142,7 @@ class SymbolManager:
         # 找到非活跃的寄存器
         if self.avalue_reg(dst) != REG.NONE:
             return self.avalue_reg(dst)
-        if dst not in self.avalue_mem:
+        if dst not in self.avalue_mem_:
             return REG.EDI
         if (src1 != "") and (self.avalue_reg(src1) != REG.NONE):
             return self.avalue_reg(src1)
@@ -209,7 +209,7 @@ class SymbolManager:
 
     def resolve_fun(self, name) -> Symbol | None:
         p: Symbol | None = self.local_scope_.resolve(name)
-        if p.isFun():
+        if p.is_fun():
             return p
         else:
             return None
