@@ -4,12 +4,12 @@ from .common import SUCCESS, FAIL
 
 class Symbol:
     class SymbolType(Enum):
-        VAR = auto()
+        VAR = 0
         FUN = auto()
 
     class Type(Enum):
         # boolean
-        BOOL = auto()
+        BOOL = 0
         # number
         INT8 = auto()
         INT16 = auto()

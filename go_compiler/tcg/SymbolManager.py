@@ -9,7 +9,7 @@ from loguru import logger
 
 
 class POSTYPE(Enum):
-    GLOBAL = auto()
+    GLOBAL = 0
     REG = auto()
     MEM = auto()
     NONE = auto()
@@ -29,7 +29,7 @@ class RelacedEeg:
         )
 
     def __str__(self) -> str:
-        return f"(reg: {self.reg}, val: {self.val}, no_use: {self.no_use}, mem: {self.mem})"
+        return f"{{{self.reg}, {self.val}, {self.no_use}, {self.mem}}}"
 
     def copy(self):
         return RelacedEeg(self.reg, self.val, self.no_use, self.mem)
@@ -86,7 +86,6 @@ class SymbolManager:
 
     # 计算一个代码块中, 变量的待用信息和活跃信息
     def cal_use_info(self, block: TACBlock):
-        logger.debug("cal_use_info")
         # 初始化符号表中所有变量的待用信息
         self.use_info_.clear()
         # 根据基本块出口来设置变量的活跃信息
@@ -241,7 +240,7 @@ class SymbolManager:
         if reg != REG.NONE:
             logger.info(f"{reg.name}: {self.rvalue_[reg.value]}")
         else:
-            for i in range(REG.NONE.value):
+            for i in range(0, REG.NONE.value):
                 en_var: str = self.rvalue_[i]
                 try:
                     var_next_use: int = self.use_info_[en_var].next_use
@@ -273,7 +272,7 @@ class SymbolManager:
     # 模拟堆栈 push指令 把reg里面的变量放到mem里 并且让reg空
     # WARN: `overwrite = 0` 这个默认值可能有问题
     #       cpp 这个地方没有默认值，但是有的调用并没有给出该值
-    def push_reg(self, reg: REG, overwrite: int = 0):
+    def push_reg(self, reg: REG, overwrite: int = 1):
         if overwrite == 1:
             var: str = self.rvalue_[reg.value]
             self.svalue_.append(var)

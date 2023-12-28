@@ -25,6 +25,8 @@ class CommonTranslator(BaseTranslator):
     def SentenceTranslate_(
         self, SymbolManager_: SymbolManager, TACLine_: TACLine
     ) -> ASMLines:
+        logger.info(f"line: {TACLine_}")
+
         asmlines: ASMLines = ASMLines()
         str_dst_encode = SymbolManager_.encode_var(TACLine_.dst.value)
         str_src1 = TACLine_.src1.value
@@ -43,45 +45,53 @@ class CommonTranslator(BaseTranslator):
 
             asmlines.append(construct_asm("mov", reg_dst, str_src1))
         else:
+            logger.warning(f"str_src1: {str_src1}")
             str_src1_encode = SymbolManager_.encode_var(str_src1)
             reg_dst = SymbolManager_.get_reg(str_dst_encode, str_src1_encode)
+            logger.warning(f"reg_dst: {reg_dst}")
             if reg_dst == REG.NONE:
+                logger.warning("reg_dst=None")
                 replaced_reg = SymbolManager_.get_replaced_reg()
                 reg_dst = replaced_reg.reg
                 SymbolManager_.push_reg(reg_dst)
                 asmlines.append(construct_asm("push", reg_dst))
-            pos = SymbolManager_.position(str_src1_encode)
-            if pos == POSTYPE.REG:
-                reg_src1 = SymbolManager_.avalue_reg(str_src1_encode)
-                if reg_dst != reg_src1:
-                    asmlines.append(construct_asm("mov", reg_dst, reg_src1))
-                else:
-                    SymbolManager_.push_reg(reg_src1)
-                    asmlines.append(construct_asm("push", reg_src1))
-            elif pos == POSTYPE.MEM:
-                mem_src1 = SymbolManager_.avalue_mem(str_src1_encode)
-                asmlines.append(construct_asm("mov", reg_dst, mem_src1))
-            elif pos == POSTYPE.GLOBAL:
-                asmlines.append(construct_asm("mov", reg_dst, str_src1))
-            else:
-                logger.error("common default error")
+            match SymbolManager_.position(str_src1_encode):
+                case POSTYPE.REG:
+                    logger.warning("Match REG")
+                    reg_src1 = SymbolManager_.avalue_reg(str_src1_encode)
+                    if reg_dst != reg_src1:
+                        asmlines.append(construct_asm("mov", reg_dst, reg_src1))
+                    else:
+                        SymbolManager_.push_reg(reg_src1)  # reg_src1 edi
+                        asmlines.append(construct_asm("push", reg_src1))
+                case POSTYPE.MEM:
+                    logger.warning("Match MEM")
+                    mem_src1 = SymbolManager_.avalue_mem(str_src1_encode)
+                    asmlines.append(construct_asm("mov", reg_dst, mem_src1))
+                case POSTYPE.GLOBAL:
+                    logger.warning("Match Global")
+                    asmlines.append(construct_asm("mov", reg_dst, str_src1))
+                case _:
+                    logger.error("common default error")
 
         if TACLine_.src2.OperType == TACOPERANDTYPE.IMM:
             asmlines.append(construct_asm(op_string, reg_dst, str_src2))
         elif TACLine_.src2.OperType == TACOPERANDTYPE.VAR:
+            logger.debug(f" HIT VAR: {str_src2}")
             str_src2_encode = SymbolManager_.encode_var(str_src2)
-            pos = SymbolManager_.position(str_src2_encode)
-            if pos == POSTYPE.REG:
-                reg_src2 = SymbolManager_.avalue_reg(str_src2_encode)
-                asmlines.append(construct_asm(op_string, reg_dst, reg_src2))
-            elif pos == POSTYPE.MEM:
-                mem_src2 = SymbolManager_.avalue_mem(str_src2_encode)
-                asmlines.append(construct_asm(op_string, reg_dst, mem_src2))
-            elif pos == POSTYPE.GLOBAL:
-                asmlines.append(construct_asm(op_string, reg_dst, str_src2))
-            else:
-                logger.error("Common Default Error")
+            match SymbolManager_.position(str_src2_encode):
+                case POSTYPE.REG:
+                    reg_src2 = SymbolManager_.avalue_reg(str_src2_encode)
+                    asmlines.append(construct_asm(op_string, reg_dst, reg_src2))
+                case POSTYPE.MEM:
+                    mem_src2 = SymbolManager_.avalue_mem(str_src2_encode)
+                    asmlines.append(construct_asm(op_string, reg_dst, mem_src2))
+                case POSTYPE.GLOBAL:
+                    asmlines.append(construct_asm(op_string, reg_dst, str_src2))
+                case _:
+                    logger.error("Common Default Error")
 
+        # NOTE: 如果是 EDI 则是临时变量，可以不要
         if reg_dst != REG.EDI:
             SymbolManager_.set_avalue_reg(str_dst_encode, reg_dst)
 

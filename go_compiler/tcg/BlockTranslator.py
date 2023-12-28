@@ -89,7 +89,7 @@ class BlockTranslator:
                 )
 
             trans = TransMap.get(TACBlock_[i].op, CommonTranslator)()
-            # logger.info(f"Trans: {trans}")
+            logger.info(f"Trans: {trans}")
             tmp_res: ASMLines = trans.SentenceTranslate_(SymbolManager_, TACBlock_[i])
             logger.info(f"{TACBlock_[i]} -> {tmp_res}")
             ASMBlock_.asmlines.extend(tmp_res)

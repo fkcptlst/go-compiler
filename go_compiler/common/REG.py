@@ -1,8 +1,9 @@
 from enum import Enum, auto
 
 
+# NOTE: Start with 1
 class REG(Enum):
-    EAX = auto()
+    EAX = 0
     EBX = auto()
     ECX = auto()
     EDX = auto()

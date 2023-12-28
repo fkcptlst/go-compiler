@@ -5,7 +5,7 @@ from .Scope import Scope
 
 
 class TACOP(Enum):
-    ADD = auto()
+    ADD = 0
     SUB = auto()
     MUL = auto()
     DIV = auto()
@@ -42,7 +42,7 @@ def to_string(op: TACOP) -> str:
 
 
 class TACOPERANDTYPE(Enum):
-    IMM = auto()
+    IMM = 0
     VAR = auto()
     NULL_ = auto()
     PTR = auto()
@@ -56,7 +56,7 @@ class Operand:
         self.OperType: TACOPERANDTYPE = type_
 
     def __str__(self) -> str:
-        return f"(v:{self.value}, ui:{self.use_info}, ot:{self.OperType})"
+        return f"({self.value}, {self.use_info}, {self.OperType})"
 
 
 class TACLine:
@@ -77,7 +77,7 @@ class TACLine:
         self.scope: Scope = scope
 
     def __str__(self):
-        return f"{self.line}:(op:{to_string(self.op)}, src1:{self.src1}, src2:{self.src2}, dst:{self.dst})"
+        return f"{self.line}: ({to_string(self.op)}, src1:{self.src1.value}, src2:{self.src2.value}, dst:{self.dst.value})"
 
     def __repr__(self):
         return self.__str__()
