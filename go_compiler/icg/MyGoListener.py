@@ -10,23 +10,6 @@ from ..common.Scope import Scope, Symbol
 from ..icg.utils import ctx_decoder, ctx_encoder
 from ..icg.statement_icg.ForStatement import ForStatement
 
-my_func_count = 0
-
-
-def reset_my_func_count():
-    global my_func_count
-    my_func_count = 0
-
-
-def my_func(func):
-    def wrapper(*args, **kwargs):
-        global my_func_count
-        print(f"{my_func_count}: func called: {func.__name__}", flush=True)
-        my_func_count += 1
-        func(*args, **kwargs)
-
-    return wrapper
-
 
 class MyGoListener(GoParserListener):
     def __init__(self):
@@ -133,19 +116,16 @@ class MyGoListener(GoParserListener):
         self.my_print(self.currentScope)
         self.currentScope = self.currentScope.enclosing_scope
 
-    @my_func
     @override
     def exitInteger(self, ctx: GoParser.IntegerContext):
         self.values[ctx] = ctx.DECIMAL_LIT().getText()
 
-    @my_func
     @override
     def exitBasicLit(self, ctx: GoParser.BasicLitContext):
         if ctx.integer():
             basic_lit_value: str = self.values[ctx.integer()]
             self.values[ctx] = basic_lit_value
 
-    @my_func
     @override
     def exitOperand(self, ctx: GoParser.OperandContext):
         if ctx.literal():
@@ -158,14 +138,12 @@ class MyGoListener(GoParserListener):
             operand_value: str = self.values[ctx.operandName()]
             self.values[ctx] = operand_value
 
-    @my_func
     @override
     def exitLiteral(self, ctx: GoParser.LiteralContext):
         if ctx.basicLit():
             literal_value: str = self.values[ctx.basicLit()]
             self.values[ctx] = literal_value + DELIMITER
 
-    @my_func
     @override
     def exitPrimaryExpr(self, ctx: GoParser.PrimaryExprContext):
         # 是函数调用
@@ -270,13 +248,11 @@ class MyGoListener(GoParserListener):
             # NOTE: You have to encode it before assignment -> suffix must be #
             self.values[ctx] = ctx_encoder([tmp_ptr])
 
-    @my_func
     @override
     def exitPrimaryExpression(self, ctx: GoParser.PrimaryExpressionContext):
         expression_value: str = self.values[ctx.primaryExpr()]
         self.values[ctx] = expression_value
 
-    @my_func
     @override
     def exitPlusMinusOperation(self, ctx: GoParser.PlusMinusOperationContext):
         left: list[str] = ctx_decoder(self.values[ctx.expression(0)])
@@ -304,7 +280,6 @@ class MyGoListener(GoParserListener):
             )
         self.values[ctx] = ctx_encoder(plus_minus_operation_values)
 
-    @my_func
     @override
     def exitRelationOperation(self, ctx: GoParser.RelationOperationContext):
         left: list[str] = ctx_decoder(self.values[ctx.expression(0)])
@@ -316,8 +291,8 @@ class MyGoListener(GoParserListener):
 
         # expression 在for 下的情况，需要添加ifexp 并且反过来 将condition_loop信息写入forstatement里面
         if (
-            ctx.parentCtx.parentCtx.children[0].getText() == "for"
-            and ctx.parentCtx.parentCtx.children[1] == ctx.parentCtx
+                ctx.parentCtx.parentCtx.children[0].getText() == "for"
+                and ctx.parentCtx.parentCtx.children[1] == ctx.parentCtx
         ):
             tmp: ForStatement = self.for_values[ctx.parentCtx.parentCtx]
             dst: str = "ENDFOR" + tmp.cur_index
@@ -387,7 +362,6 @@ class MyGoListener(GoParserListener):
             elif ctx.LESS_OR_EQUALS():
                 push_line_partial(op=TACOP.IFGT)
 
-    @my_func
     @override
     def exitMulDivOperation(self, ctx: GoParser.MulDivOperationContext):
         left: list[str] = ctx_decoder(self.values[ctx.expression(0)])
@@ -418,7 +392,6 @@ class MyGoListener(GoParserListener):
 
         self.values[ctx] = ctx_encoder(mul_div_operation_values)
 
-    @my_func
     @override
     def enterSourceFile(self, ctx: GoParser.SourceFileContext):
         self.globalScope = Scope()
@@ -426,12 +399,10 @@ class MyGoListener(GoParserListener):
         current_block: TACBlock = []
         self.TACBlocks[self.cur_fun] = current_block
 
-    @my_func
     @override
     def exitSourceFile(self, ctx: GoParser.SourceFileContext):
         print("exit source file")
 
-    @my_func
     @override
     def exitExpressionList(self, ctx: GoParser.ExpressionListContext):
         expression_values: list[str] = []
@@ -443,7 +414,6 @@ class MyGoListener(GoParserListener):
                 expression_values.append(each)
         self.values[ctx] = ctx_encoder(expression_values)
 
-    @my_func
     @override
     def enterFunctionDecl(self, ctx: GoParser.FunctionDeclContext):
         identifier: str = ctx.IDENTIFIER().getText()
@@ -464,8 +434,8 @@ class MyGoListener(GoParserListener):
 
         # 函数ret参数
         if (
-            not ctx.signature().result()
-            or len(ctx.signature().result().parameters().parameterDecl()) == 0
+                not ctx.signature().result()
+                or len(ctx.signature().result().parameters().parameterDecl()) == 0
         ):  # 无返回值
             # do nothing
             pass
@@ -503,13 +473,13 @@ class MyGoListener(GoParserListener):
                 )
                 each_s_type: Symbol.Type = Symbol.to_type(each_type)
                 for j in range(
-                    len(
-                        ctx.signature()
-                        .parameters()
-                        .parameterDecl(i)
-                        .identifierList()
-                        .IDENTIFIER()
-                    )
+                        len(
+                            ctx.signature()
+                                    .parameters()
+                                    .parameterDecl(i)
+                                    .identifierList()
+                                    .IDENTIFIER()
+                        )
                 ):
                     fun_para_list.append(each_s_type)
 
@@ -549,13 +519,11 @@ class MyGoListener(GoParserListener):
                     Operand("", TACOPERANDTYPE.NULL_),
                 )
 
-    @my_func
     @override
     def exitFunctionDecl(self, ctx: GoParser.FunctionDeclContext):
         self.cur_fun = "global"
         self.pop_scope()
 
-    @my_func
     @override
     def exitVarSpec(self, ctx: GoParser.VarSpecContext):
         # 是否是数组
@@ -660,7 +628,6 @@ class MyGoListener(GoParserListener):
                     ),
                 )
 
-    @my_func
     @override
     def enterBlock(self, ctx: GoParser.BlockContext):
         # for 情况
@@ -677,9 +644,9 @@ class MyGoListener(GoParserListener):
         # TODO: need to fix index out of range
         # if else 情况
         if (
-            len(ctx.parentCtx.children) > 4
-            and ctx.parentCtx.children[4] == ctx
-            and ctx.parentCtx.children[3].getText() == "else"
+                len(ctx.parentCtx.children) > 4
+                and ctx.parentCtx.children[4] == ctx
+                and ctx.parentCtx.children[3].getText() == "else"
         ):
             self.push_line(
                 TACOP.LABEL,
@@ -689,7 +656,6 @@ class MyGoListener(GoParserListener):
             )
         self.add_scope()
 
-    @my_func
     @override
     def exitBlock(self, ctx: GoParser.BlockContext):
         # for 情况
@@ -712,8 +678,8 @@ class MyGoListener(GoParserListener):
 
         # if 情况
         if (
-            ctx.parentCtx.children[2] == ctx
-            and ctx.parentCtx.children[0].getText() == "if"
+                ctx.parentCtx.children[2] == ctx
+                and ctx.parentCtx.children[0].getText() == "if"
         ):
             self.push_line(
                 TACOP.GOTO,
@@ -724,7 +690,6 @@ class MyGoListener(GoParserListener):
 
         self.pop_scope()
 
-    @my_func
     @override
     def exitIncDecStmt(self, ctx: GoParser.IncDecStmtContext):
         if ctx.children[1].getText() == "++":
@@ -736,9 +701,9 @@ class MyGoListener(GoParserListener):
 
             # for statement 的情况，不写入3code，但是要记录在forstmt里面，作为update的条件
             if (
-                ctx.parentCtx.parentCtx.parentCtx.children[0].getText() == "for"
-                and ctx.parentCtx.parentCtx
-                == ctx.parentCtx.parentCtx.parentCtx.children[1]
+                    ctx.parentCtx.parentCtx.parentCtx.children[0].getText() == "for"
+                    and ctx.parentCtx.parentCtx
+                    == ctx.parentCtx.parentCtx.parentCtx.children[1]
             ):
                 varname: str = left_values[0]
                 varvalue: str = "1"
@@ -766,7 +731,6 @@ class MyGoListener(GoParserListener):
                     Operand(varname, self.operand_type_resolve(varname)),
                 )
 
-    @my_func
     @override
     def exitAssignment(self, ctx: GoParser.AssignmentContext):
         if ctx.assign_op().getText() == "=":
@@ -805,9 +769,9 @@ class MyGoListener(GoParserListener):
 
             # for statement 的情况，不写入3code，但是要记录在forstmt里面，作为update的条件
             if (
-                ctx.parentCtx.parentCtx.parentCtx.children[0].getText() == "for"
-                and ctx.parentCtx.parentCtx
-                == ctx.parentCtx.parentCtx.parentCtx.children[1]
+                    ctx.parentCtx.parentCtx.parentCtx.children[0].getText() == "for"
+                    and ctx.parentCtx.parentCtx
+                    == ctx.parentCtx.parentCtx.parentCtx.children[1]
             ):
                 varname: str = left_values[0]
                 varvalue: str = right_values[0]
@@ -835,7 +799,6 @@ class MyGoListener(GoParserListener):
                     Operand(varname, self.operand_type_resolve(varname)),
                 )
 
-    @my_func
     @override
     def exitShortVarDecl(self, ctx: GoParser.ShortVarDeclContext):
         n: int = len(ctx.identifierList().IDENTIFIER())
@@ -874,8 +837,8 @@ class MyGoListener(GoParserListener):
                 )
 
         if (
-            ctx.parentCtx.parentCtx.parentCtx.children[0].getText() == "for"
-            and ctx.parentCtx.parentCtx.parentCtx.children[1] == ctx.parentCtx.parentCtx
+                ctx.parentCtx.parentCtx.parentCtx.children[0].getText() == "for"
+                and ctx.parentCtx.parentCtx.parentCtx.children[1] == ctx.parentCtx.parentCtx
         ):
             # init 变量添加进forstmt结构体，方便在forstmt结束后销毁变量
             for_tmp: ForStatement = self.for_values[ctx.parentCtx.parentCtx.parentCtx]
@@ -884,7 +847,6 @@ class MyGoListener(GoParserListener):
                 for_tmp.new_paras.append(varname)
             self.for_values[ctx.parentCtx.parentCtx.parentCtx] = for_tmp
 
-    @my_func
     @override
     def exitReturnStmt(self, ctx: GoParser.ReturnStmtContext):
         return_values: list[str] = ctx_decoder(self.values[ctx.expressionList()])
@@ -905,13 +867,11 @@ class MyGoListener(GoParserListener):
                 Operand("", TACOPERANDTYPE.NULL_),
             )
 
-    @my_func
     @override
     def enterIfStmt(self, ctx: GoParser.IfStmtContext):
         if_tmp: str = self.create_else_label()
         self.if_values[ctx] = if_tmp
 
-    @my_func
     @override
     def exitIfStmt(self, ctx: GoParser.IfStmtContext):
         self.push_line(
@@ -921,7 +881,6 @@ class MyGoListener(GoParserListener):
             Operand("", TACOPERANDTYPE.NULL_),
         )
 
-    @my_func
     @override
     def enterForStmt(self, ctx: GoParser.ForStmtContext):
         tmp: str = self.create_for_label()
@@ -930,7 +889,6 @@ class MyGoListener(GoParserListener):
         self.for_values[ctx] = newfor
         self.add_scope()
 
-    @my_func
     @override
     def exitForStmt(self, ctx: GoParser.ForStmtContext):
         tmp: ForStatement = self.for_values[ctx]
@@ -942,7 +900,6 @@ class MyGoListener(GoParserListener):
             Operand("", TACOPERANDTYPE.NULL_),
         )
 
-    @my_func
     @override
     def enterParameterDecl(self, ctx: GoParser.ParameterDeclContext):
         if ctx.identifierList():
@@ -957,7 +914,6 @@ class MyGoListener(GoParserListener):
                 )
                 self.currentScope.para_define(symbol)
 
-    @my_func
     @override
     def exitOperandName(self, ctx: GoParser.OperandNameContext):
         tmp: Symbol | None = self.currentScope.resolve(ctx.IDENTIFIER().getText())
@@ -967,7 +923,6 @@ class MyGoListener(GoParserListener):
             exit(-1)
         self.values[ctx] = ctx.IDENTIFIER().getText() + DELIMITER
 
-    @my_func
     @override
     def exitArguments(self, ctx: GoParser.ArgumentsContext):
         if ctx.expressionList():

@@ -1,16 +1,24 @@
 import os
-
+import subprocess
 from pathlib import Path
 
 from antlr4 import InputStream, CommonTokenStream, ParseTreeWalker
 
 from go_compiler.grammar.generated.GoLexer import GoLexer
 from go_compiler.grammar.generated.GoParser import GoParser
-
-from go_compiler.icg.MyGoListener import MyGoListener, reset_my_func_count
+from go_compiler.icg.MyGoListener import MyGoListener
 
 
 def compile_to_3code(src_file_path: str, output_file_path: str):
+    """
+    Compile a Go source file to 3code and write the output to a file.
+    Args:
+        src_file_path: path to source file
+        output_file_path: path to output file
+
+    Returns:
+
+    """
     with open(src_file_path, "r") as f:
         program_text = f.read()
 
@@ -35,62 +43,119 @@ def diff_3code_files(file1: str, file2: str) -> bool:
     Returns: True if the files are the same, False otherwise
 
     """
-    assert os.system("diff --version > /dev/null") == 0, "diff command not available"
+    # check if files exist
+    assert os.path.exists(file1), f"file {file1} does not exist"
+    assert os.path.exists(file2), f"file {file2} does not exist"
 
-    ret = os.system(
-        f"diff -bBw <(sort {file1}) <(sort {file2})"
+    # assert diff command is available
+    assert os.system("bash -c 'diff --version > /dev/null'") == 0, "diff command not available"
+
+    ret = subprocess.run(
+        f"bash -c 'diff -bBw <(sort {file1}) <(sort {file2})'", shell=True, capture_output=True
     )  # ignore whitespace and sort lines
-    return ret == 0
+
+    if ret.returncode == 0:
+        return True
+    else:
+        print(ret.stdout.decode("utf-8"))
+        print(ret.stderr.decode("utf-8"))
+        return False
 
 
-def test_main():
+def get_src_tgt_pairs():
+    """
+    Util function to get source and target files for testing.
+    Returns:
+        src_tgt_pairs_dict:
+            {
+               "src_file_name_1":
+                     {
+                         "src": "source file path",
+                         "tgt": "target file path"
+                     },
+                     ...
+            }
+    """
     working_dir = Path.cwd()
-    print(f"Working directory: {working_dir}", flush=True)
-    assert (
-        working_dir.name == "tests"
-    ), "Please run this script from the tests directory"
+    tests_dir = working_dir / "tests"
+    assert tests_dir.exists(), (f"tests directory {tests_dir} does not exist, "
+                                f"make sure you are running pytest from project root")
 
     # 1. setup output directory
-    out_dir = Path("test_icg_out")
+    out_dir = tests_dir / Path("test_icg_out")
     out_dir.mkdir(exist_ok=True)
 
+    src_tgt_pairs_dict = {}
+
     # 2. load source files
-    src_files = list(Path("testdata/go_source").glob("*.go"))
-    src_files = sorted(src_files, key=lambda x: x.name)
+    src_files = sorted(list(Path("tests/testdata/go_source").glob("*.go")), key=lambda x: x.name)
     assert len(src_files) > 0, "No testdata found"
 
     # 3. load compare files
-    compare_files = list(Path("testdata/go_3code").glob("*.3code"))
-    compare_files = sorted(compare_files, key=lambda x: x.name)
+    compare_files = sorted(list(Path("tests/testdata/go_3code").glob("*.3code")), key=lambda x: x.name)
     assert len(compare_files) == len(
         src_files
     ), "Number of 3code files does not match number of source files"
 
-    success = []
-    failed = []
-    # 4. compile source files to 3code files
     for src_file, compare_file in zip(src_files, compare_files):
-        reset_my_func_count()
-        out_file = (out_dir / src_file.name).with_suffix(".3code")
-        print(f"Compiling {src_file} -> {out_file}")
+        src_tgt_pairs_dict[src_file.name] = {
+            "src": src_file,
+            "tgt": compare_file
+        }
 
-        try:
-            reset_my_func_count()
-            compile_to_3code(str(src_file), str(out_file))
-            # 5. compare the generated 3code file with the expected 3code file
-            # assert diff_3code_files(str(out_file), str(compare_file)), f"3code files {out_file} and {compare_file} differ"
-            if diff_3code_files(str(out_file), str(compare_file)):
-                success.append(out_file)
-            else:
-                failed.append(out_file)
-
-        except Exception as e:
-            print("Error: ", e)
-            failed.append(out_dir)
-
-    print(f"Failed: {failed}")
-    print(f"Success: {success}")
+    return src_tgt_pairs_dict
 
 
-if __name__ == "__main__":
-    test_main()
+src_tgt_pairs_dict = get_src_tgt_pairs()
+
+
+###############################################################################################################
+# TEST CASES                                                                                                  #
+###############################################################################################################
+
+def test_01assign():
+    src_file = src_tgt_pairs_dict["01assign.go"]["src"]
+    tgt_file = src_tgt_pairs_dict["01assign.go"]["tgt"]
+    out_file = Path("tests/test_icg_out/01assign.go").with_suffix(".3code")
+    compile_to_3code(str(src_file), str(out_file))
+    assert diff_3code_files(str(out_file), str(tgt_file)), f"3code files {out_file} and {tgt_file} differ"
+
+
+def test_02calculate():
+    src_file = src_tgt_pairs_dict["02calculate.go"]["src"]
+    tgt_file = src_tgt_pairs_dict["02calculate.go"]["tgt"]
+    out_file = Path("tests/test_icg_out/02calculate.go").with_suffix(".3code")
+    compile_to_3code(str(src_file), str(out_file))
+    assert diff_3code_files(str(out_file), str(tgt_file)), f"3code files {out_file} and {tgt_file} differ"
+
+
+def test_03if():
+    src_file = src_tgt_pairs_dict["03if.go"]["src"]
+    tgt_file = src_tgt_pairs_dict["03if.go"]["tgt"]
+    out_file = Path("tests/test_icg_out/03if.go").with_suffix(".3code")
+    compile_to_3code(str(src_file), str(out_file))
+    assert diff_3code_files(str(out_file), str(tgt_file)), f"3code files {out_file} and {tgt_file} differ"
+
+
+def test_04for():
+    src_file = src_tgt_pairs_dict["04for.go"]["src"]
+    tgt_file = src_tgt_pairs_dict["04for.go"]["tgt"]
+    out_file = Path("tests/test_icg_out/04for.go").with_suffix(".3code")
+    compile_to_3code(str(src_file), str(out_file))
+    assert diff_3code_files(str(out_file), str(tgt_file)), f"3code files {out_file} and {tgt_file} differ"
+
+
+def test_05func():
+    src_file = src_tgt_pairs_dict["05func.go"]["src"]
+    tgt_file = src_tgt_pairs_dict["05func.go"]["tgt"]
+    out_file = Path("tests/test_icg_out/05func.go").with_suffix(".3code")
+    compile_to_3code(str(src_file), str(out_file))
+    assert diff_3code_files(str(out_file), str(tgt_file)), f"3code files {out_file} and {tgt_file} differ"
+
+
+def test_06array():
+    src_file = src_tgt_pairs_dict["06array.go"]["src"]
+    tgt_file = src_tgt_pairs_dict["06array.go"]["tgt"]
+    out_file = Path("tests/test_icg_out/06array.go").with_suffix(".3code")
+    compile_to_3code(str(src_file), str(out_file))
+    assert diff_3code_files(str(out_file), str(tgt_file)), f"3code files {out_file} and {tgt_file} differ"
