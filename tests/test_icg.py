@@ -24,7 +24,7 @@ def get_src_tgt_pairs():
 
     # 1. setup output directory
     out_dir = Path("tmp/test_icg_out")
-    out_dir.mkdir(exist_ok=True)
+    out_dir.mkdir(exist_ok=True, parents=True)
 
     src_tgt_pairs_dict_ = {}
 

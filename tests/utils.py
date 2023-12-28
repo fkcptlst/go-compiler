@@ -96,7 +96,7 @@ def compile_myprint():
     print.asm -> print.o
     """
     tmp_dir = Path("tmp")
-    tmp_dir.mkdir(exist_ok=True)
+    tmp_dir.mkdir(exist_ok=True, parents=True)
     os.system(f"nasm -f elf32 -o {tmp_dir}/print.o tests/testdata/print.asm")
 
 
@@ -105,7 +105,7 @@ def asm_to_bin():
     assert len(asm_files) > 0, "No testdata found"
 
     output_dir = Path("tmp/test_tcg_out_bin")
-    output_dir.mkdir(exist_ok=True)
+    output_dir.mkdir(exist_ok=True, parents=True)
 
     for asm_file in asm_files:
         os.system(f"nasm -f elf32 -o {output_dir}/{asm_file.name}.o {asm_file}")
@@ -126,7 +126,7 @@ def ld_with_myprint():
     assert len(bin_files) > 0, "No testdata found"
 
     output_dir = Path("tmp/test_tcg_out_bin")
-    output_dir.mkdir(exist_ok=True)
+    output_dir.mkdir(exist_ok=True, parents=True)
 
     for bin_file in bin_files:
         ld_single_with_myprint(bin_file.name)
@@ -139,7 +139,7 @@ def generate_asm_codes(input_dir: Path, output_dir: Path):
     src_files = sorted(list(input_dir.glob("*.go")), key=lambda x: x.name)
     assert len(src_files) > 0, "No testdata found"
 
-    output_dir.mkdir(exist_ok=True)
+    output_dir.mkdir(exist_ok=True, parents=True)
 
     for src_file in src_files:
         out_file = (output_dir / src_file.name).with_suffix(".asm")
