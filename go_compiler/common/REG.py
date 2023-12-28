@@ -8,6 +8,7 @@ class REG(Enum):
     ECX = auto()
     EDX = auto()
     ESI = auto()
+
     NONE = auto()
 
     EDI = auto()

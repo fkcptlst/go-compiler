@@ -91,7 +91,6 @@ class CommonTranslator(BaseTranslator):
                 case _:
                     logger.error("Common Default Error")
 
-        # NOTE: 如果是 EDI 则是临时变量，可以不要
         if reg_dst != REG.EDI:
             SymbolManager_.set_avalue_reg(str_dst_encode, reg_dst)
 

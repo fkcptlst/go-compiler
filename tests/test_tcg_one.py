@@ -9,8 +9,10 @@ def test_main():
     working_dir = Path.cwd()
 
     tests_dir = working_dir / "tests"
-    assert tests_dir.exists(), (f"tests directory {tests_dir} does not exist, "
-                                f"make sure you are running pytest from project root")
+    assert tests_dir.exists(), (
+        f"tests directory {tests_dir} does not exist, "
+        f"make sure you are running pytest from project root"
+    )
 
     # 1. setup output directory
     out_dir = tests_dir / Path("test_icg_out")
@@ -23,27 +25,12 @@ def test_main():
 
     success = []
     failed = []
-    # 4. compile source files to 3code files
-    for src_file in src_files:
-        out_file = (out_dir / src_file.name).with_suffix(".asm")
-        logger.info(f"Compiling {src_file} -> {out_file}")
-        compile_to_asm(str(src_file), str(out_file))
 
-        # 5. compare the generated 3code file with the expected 3code file
-        # assert diff_3code_files(str(out_file), str(compare_file)), f"3code files {out_file} and {compare_file} differ"
+    src_file = src_files[5]
+    out_file = (out_dir / src_file.name).with_suffix(".asm")
+    logger.info(f"Compiling {src_file} -> {out_file}")
 
-        # try:
-        #     reset_my_func_count()
-        #     compile_to_asm(str(src_file), str(out_file))
-        #     # 5. compare the generated 3code file with the expected 3code file
-        #     # assert diff_3code_files(str(out_file), str(compare_file)), f"3code files {out_file} and {compare_file} differ"
-        #     success.append(out_file)
-        #
-        # except Exception as e:
-        #     logger.info("Error: ", e)
-        #     failed.append(out_dir)
-
-        break
+    compile_to_asm(str(src_file), str(out_file))
 
     logger.info(f"Failed: {failed}")
     logger.info(f"Success: {success}")

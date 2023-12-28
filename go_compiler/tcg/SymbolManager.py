@@ -146,11 +146,15 @@ class SymbolManager:
     def get_reg(self, dst, src1) -> REG:
         # 找到非活跃的寄存器
         if self.avalue_reg(dst) != REG.NONE:
+            logger.critical(f"1. {self.avalue_reg(dst)}")
             return self.avalue_reg(dst)
-        if dst not in self.avalue_mem_:
+        if dst in self.avalue_mem_:
+            logger.critical("2. dst")
             return REG.EDI
         if (src1 != "") and (self.avalue_reg(src1) != REG.NONE):
+            logger.critical("3333")
             return self.avalue_reg(src1)
+        logger.critical(f"444 free {self.get_free_reg()}")
         return self.get_free_reg()
 
     # 寻找一个将要替换的寄存器
@@ -165,6 +169,7 @@ class SymbolManager:
             val_mem: int = self.avalue_mem(replaced_val)
             if val_mem != -1:
                 return RelacedEeg(REG(i), self.rvalue_[i], False, val_mem)
+
         # 返回需要 push 备份的寄存器
         max_next_use: int = 0
         max_next_use_reg: REG = None
