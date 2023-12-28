@@ -3,7 +3,7 @@ from typing import TypeAlias
 
 
 class ASMOP(Enum):
-    MOV = auto()
+    MOV = 0
     PUSH = auto()
     POP = auto()
     CALL = auto()
@@ -12,7 +12,7 @@ class ASMOP(Enum):
 
 
 class OprandType(Enum):
-    t_NULL = auto()
+    t_NULL = 0
     t_IMM = auto()
     t_REG = auto()
     t_MEM = auto()

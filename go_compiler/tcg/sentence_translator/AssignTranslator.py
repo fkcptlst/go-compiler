@@ -8,7 +8,6 @@ from ...tcg.construct_asm import construct_asm, construct_asm_mem
 from ...tcg.sentence_translator.BaseTranslator import BaseTranslator
 
 
-
 class AssignTranslator(BaseTranslator):
     def __init__(self) -> None:
         super().__init__()
@@ -17,11 +16,11 @@ class AssignTranslator(BaseTranslator):
         self, SymbolManager_: SymbolManager, TACLine_: TACLine
     ) -> ASMLines:
         logger.warning("Assign SentenceTranslate_")
-        logger.info(f"Input {SymbolManager_}: {TACLine_}")
+        logger.info(f"{SymbolManager_}: {TACLine_}")
 
         asmlines: ASMLines = ASMLines()
         str_dst_encode = SymbolManager_.encode_var(TACLine_.dst.value)
-        # post_dst = SymbolManager_.position(str_dst_encode)
+        # pos_dst = SymbolManager_.position(str_dst_encode)
 
         replaced_reg: RelacedEeg = RelacedEeg()
         dst_reg: REG = SymbolManager_.get_reg(str_dst_encode, "")
@@ -47,7 +46,6 @@ class AssignTranslator(BaseTranslator):
                 # 如果 src1 是 立即数
                 asmlines.append(construct_asm("mov", dst_reg, str_src1))
             elif TACLine_.src1.OperType == TACOPERANDTYPE.VAR:
-                logger.warning("HIT")
                 # 如果 src1 是 变量，可能会是 寄存器、栈、全局变量
                 encode_str_src1 = SymbolManager_.encode_var(str_src1)
                 pos = SymbolManager_.position(encode_str_src1)
@@ -61,8 +59,9 @@ class AssignTranslator(BaseTranslator):
                     case POSTYPE.GLOBAL:
                         asmlines.append(construct_asm("mov", dst_reg, str_src1))
                     case _:
-                        logger.error(
-                            f"assign sentence: str1's pos wrong src1:{TACLine_.src1}"
+                        # 如果是 临时变量 Tx 类型则无所谓
+                        logger.warning(
+                            f"assign sentence: str1's pos wrong src1:{TACLine_.src1} (If Temp, ignore)"
                         )
 
             elif TACLine_.src1.OperType == TACOPERANDTYPE.PTR:

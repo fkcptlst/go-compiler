@@ -44,6 +44,6 @@ class ParaTranslator(BaseTranslator):
                     asmlines.append(construct_asm("push", REG.EDI))
 
                 case _:
-                    logger.error("para case _ error")
+                    logger.error(f"para case _ error {TACLine_.src1.value}")
 
         return asmlines

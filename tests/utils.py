@@ -1,5 +1,6 @@
 import os
 import subprocess
+from pathlib import Path
 
 from antlr4 import InputStream, CommonTokenStream, ParseTreeWalker
 
@@ -81,3 +82,82 @@ def diff_3code_files(file1: str, file2: str) -> bool:
         print(ret.stdout.decode("utf-8"))
         print(ret.stderr.decode("utf-8"))
         return False
+
+
+def compile_go_files():
+    """
+    Compile the go files using official go compiler as ground truth
+    """
+    os.system("scripts/compile_go_testcases.sh tests/testdata/go_source")
+
+
+def compile_myprint():
+    """
+    print.asm -> print.o
+    """
+    tmp_dir = Path("tmp")
+    tmp_dir.mkdir(exist_ok=True)
+    os.system(f"nasm -f elf32 -o {tmp_dir}/print.o tests/testdata/print.asm")
+
+
+def asm_to_bin():
+    asm_files = sorted(list(Path("tmp/test_tcg_out").glob("*.asm")), key=lambda x: x.name)
+    assert len(asm_files) > 0, "No testdata found"
+
+    output_dir = Path("tmp/test_tcg_out_bin")
+    output_dir.mkdir(exist_ok=True)
+
+    for asm_file in asm_files:
+        os.system(f"nasm -f elf32 -o {output_dir}/{asm_file.name}.o {asm_file}")
+
+
+def ld_single_with_myprint(file_name: str):
+    """
+    ld -m elf_i386 -o test test.o print.o
+
+    Args:
+        file_name: file_name without suffix .o
+    """
+    os.system(f'ld -m elf_i386 -o {file_name} tmp/test_tcg_out_bin/{file_name}.o tmp/print.o')
+
+
+def ld_with_myprint():
+    bin_files = sorted(list(Path("tmp/test_tcg_out_bin").glob("*.o")), key=lambda x: x.name)
+    assert len(bin_files) > 0, "No testdata found"
+
+    output_dir = Path("tmp/test_tcg_out_bin")
+    output_dir.mkdir(exist_ok=True)
+
+    for bin_file in bin_files:
+        ld_single_with_myprint(bin_file.name)
+
+
+def generate_asm_codes(input_dir: Path, output_dir: Path):
+    """
+    Generate asm codes using implemented compiler
+    """
+    src_files = sorted(list(input_dir.glob("*.go")), key=lambda x: x.name)
+    assert len(src_files) > 0, "No testdata found"
+
+    output_dir.mkdir(exist_ok=True)
+
+    for src_file in src_files:
+        out_file = (output_dir / src_file.name).with_suffix(".asm")
+        compile_to_asm(str(src_file), str(out_file))
+
+
+def run_single_test(name: str):
+    """
+
+    Args:
+        name: the name of the go file without .go suffix
+    """
+    ret_gt = subprocess.run(
+        f"bash -c 'tmp/gt/{name}'"
+    )
+
+    ret_test = subprocess.run(
+        f"bash -c 'tmp/test_tcg_out_bin/{name}'"
+    )
+
+    assert str(ret_gt.stdout) == str(ret_test.stdout), f"Not passing {name}"

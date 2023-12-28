@@ -6,3 +6,4 @@
 tests/*_out
 **/log.txt
 **/*.log
+**/tmp

@@ -30,7 +30,7 @@ class Translator:
         ASMBlock_ = ASMBlock()
         ASMBlock_.name = ""
         global_: TACBlock = self.TACFile_["global"]
-        logger.info(f"TACFile: {self.TACFile_}")
+        # logger.info(f"TACFile: {self.TACFile_}")
         for i in range(len(global_)):
             ASMLine_: str = ""
             if global_[i].op == TACOP.ASSIGN:
@@ -62,7 +62,7 @@ class Translator:
                 continue
             logger.debug("start 翻译函数: " + key)
             SymbolManager_: SymbolManager = SymbolManager(self.Global_Scope, key)
-            logger.info(f"InputValue: {key} : {value}")
+            # logger.info(f"InputValue: {key} : {value}")
             ASMBlock_: ASMBlock = self.BlockTranslator_.BlockTranslate(
                 SymbolManager_, value
             )
