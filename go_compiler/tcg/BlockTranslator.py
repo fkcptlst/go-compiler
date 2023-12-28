@@ -21,7 +21,29 @@ from ..tcg.SymbolManager import SymbolManager
 from ..common.REG import REG
 from ..common.tac import TACOP, TACOPERANDTYPE, TACBlock
 
-import logging
+from ..logger.logger import logger
+
+TransMap = {
+    TACOP.ASSIGN: AssignTranslator,
+    TACOP.CALL: CallTranslator,
+    TACOP.FUN_PARA: FunparaTranslator,
+    TACOP.FUN_RET: FunretTranslator,
+    TACOP.PARA: ParaTranslator,
+    TACOP.RET: RetTranslator,
+    TACOP.GOTO: GotoTranslator,
+    TACOP.LABEL: LabelTranslator,
+    TACOP.CREATLIST: CreatelistTranslator,
+    TACOP.IFEQ: IfTranslator,
+    TACOP.IFGE: IfTranslator,
+    TACOP.IFGT: IfTranslator,
+    TACOP.IFLE: IfTranslator,
+    TACOP.IFLT: IfTranslator,
+    TACOP.IFNEQ: IfTranslator,
+    TACOP.DIV: MulTranslator,
+    TACOP.MUL: MulTranslator,
+    # else:
+    #   CommonTranslator()
+}
 
 
 class BlockTranslator:
@@ -29,8 +51,8 @@ class BlockTranslator:
     def BlockTranslate(SymbolManager_: SymbolManager, TACBlock_: TACBlock) -> ASMBlock:
         ASMBlock_: ASMBlock = ASMBlock()
         SymbolManager_.push_reg(REG.EBP, 0)
-        ASMBlock_.asmlines.append(construct_asm(op="push", src=REG.EBP))
-        ASMBlock_.asmlines.append(construct_asm(op="mov", dst=REG.EBP, src=REG.ESP))
+        ASMBlock_.asmlines.append(construct_asm("push", REG.EBP))
+        ASMBlock_.asmlines.append(construct_asm("mov", REG.EBP, REG.ESP))
 
         if SymbolManager_.get_name() == "main":
             ASMBlock_.name = "_start"
@@ -41,15 +63,16 @@ class BlockTranslator:
             SymbolManager_.push_reg(REG.ECX, 0)
             SymbolManager_.push_reg(REG.EDX, 0)
             SymbolManager_.push_reg(REG.ESI, 0)
-            ASMBlock_.asmlines.append(construct_asm(op="push", src=REG.EAX))
-            ASMBlock_.asmlines.append(construct_asm(op="push", src=REG.EBX))
-            ASMBlock_.asmlines.append(construct_asm(op="push", src=REG.ECX))
-            ASMBlock_.asmlines.append(construct_asm(op="push", src=REG.EDX))
-            ASMBlock_.asmlines.append(construct_asm(op="push", src=REG.ESI))
+            ASMBlock_.asmlines.append(construct_asm("push", REG.EAX))
+            ASMBlock_.asmlines.append(construct_asm("push", REG.EBX))
+            ASMBlock_.asmlines.append(construct_asm("push", REG.ECX))
+            ASMBlock_.asmlines.append(construct_asm("push", REG.EDX))
+            ASMBlock_.asmlines.append(construct_asm("push", REG.ESI))
 
         SymbolManager_.cal_use_info(TACBlock_)
         SymbolManager_.set_zero_len()
-        # todo 完成对每个语句的翻译
+
+        # NOTE: 完成对每个语句的翻译
         for i in range(len(TACBlock_)):
             SymbolManager_.set_scope(TACBlock_[i].scope)
             if TACBlock_[i].src1.OperType == TACOPERANDTYPE.VAR:
@@ -65,77 +88,41 @@ class BlockTranslator:
                     TACBlock_[i].dst.value, TACBlock_[i].dst.use_info
                 )
 
-            # 翻译
-            trans: BaseTranslator
-            if TACBlock_[i].op == TACOP.ASSIGN:
-                trans: BaseTranslator = AssignTranslator()
-            elif TACBlock_[i].op == TACOP.CALL:
-                trans: CallTranslator = CallTranslator()
-            elif TACBlock_[i].op == TACOP.FUN_PARA:
-                trans: FunparaTranslator = FunparaTranslator()
-            elif TACBlock_[i].op == TACOP.FUN_RET:
-                trans: FunretTranslator = FunretTranslator()
-            elif TACBlock_[i].op == TACOP.PARA:
-                trans: ParaTranslator = ParaTranslator()
-            elif TACBlock_[i].op == TACOP.RET:
-                trans: RetTranslator = RetTranslator()
-            elif TACBlock_[i].op == TACOP.GOTO:
-                trans: GotoTranslator = GotoTranslator()
-            elif TACBlock_[i].op == TACOP.LABEL:
-                trans: LabelTranslator = LabelTranslator()
-            elif TACBlock_[i].op == TACOP.CREATLIST:
-                trans: CreatelistTranslator = CreatelistTranslator()
-            elif TACBlock_[i].op == TACOP.IFEQ:
-                trans: IfTranslator = IfTranslator()
-            elif TACBlock_[i].op == TACOP.IFGE:
-                trans: IfTranslator = IfTranslator()
-            elif TACBlock_[i].op == TACOP.IFGT:
-                trans: IfTranslator = IfTranslator()
-            elif TACBlock_[i].op == TACOP.IFLE:
-                trans: IfTranslator = IfTranslator()
-            elif TACBlock_[i].op == TACOP.IFLT:
-                trans: IfTranslator = IfTranslator()
-            elif TACBlock_[i].op == TACOP.IFNEQ:
-                trans: IfTranslator = IfTranslator()
-            elif TACBlock_[i].op == TACOP.DIV or TACBlock_[i].op == TACOP.MUL:
-                trans: MulTranslator = MulTranslator()
-            else:
-                trans: CommonTranslator = CommonTranslator()
-
+            trans = TransMap.get(TACBlock_[i].op, CommonTranslator)()
+            # logger.info(f"Trans: {trans}")
             tmp_res: ASMLines = trans.SentenceTranslate_(SymbolManager_, TACBlock_[i])
+            logger.info(f"{TACBlock_[i]} -> {tmp_res}")
             ASMBlock_.asmlines.extend(tmp_res)
 
         stack_len: int = SymbolManager_.get_stack_len()
         if stack_len > 0:
             SymbolManager_.set_esp_bias(-4 * stack_len)
-            ASMBlock_.asmlines.append(
-                construct_asm(op="add", dst=REG.ESP, src=str(stack_len * 4))
-            )
+            ASMBlock_.asmlines.append(construct_asm("add", REG.ESP, str(stack_len * 4)))
         elif stack_len < 0:
-            logging.error(f"{stack_len} stack overflow")
+            logger.error(f"{stack_len} stack overflow")
 
         if SymbolManager_.get_name() == "main":
             SymbolManager_.pop_reg(REG.EBP)
-            ASMBlock_.asmlines.append(construct_asm(op="pop", src=REG.EBP))
+            ASMBlock_.asmlines.append(construct_asm("pop", REG.EBP))
             # mov eax, 1
             # mov ebx, 0
             # int 80h
-            ASMBlock_.asmlines.append(construct_asm(op="mov", dst=REG.EAX, src=str(1)))
-            ASMBlock_.asmlines.append(construct_asm(op="mov", dst=REG.EBX, src=str(0)))
-            ASMBlock_.asmlines.append(construct_asm(op="int", src="80h"))
+            ASMBlock_.asmlines.append(construct_asm("mov", REG.EAX, str(1)))
+            ASMBlock_.asmlines.append(construct_asm("mov", REG.EBX, str(0)))
+            ASMBlock_.asmlines.append(construct_asm("int", "80h"))
         else:
             SymbolManager_.pop_reg(REG.ESI)
             SymbolManager_.pop_reg(REG.EDX)
             SymbolManager_.pop_reg(REG.ECX)
             SymbolManager_.pop_reg(REG.EBX)
             SymbolManager_.pop_reg(REG.EAX)
-            ASMBlock_.asmlines.append(construct_asm(op="pop", src=REG.ESI))
-            ASMBlock_.asmlines.append(construct_asm(op="pop", src=REG.EDX))
-            ASMBlock_.asmlines.append(construct_asm(op="pop", src=REG.ECX))
-            ASMBlock_.asmlines.append(construct_asm(op="pop", src=REG.EBX))
-            ASMBlock_.asmlines.append(construct_asm(op="pop", src=REG.EAX))
+            ASMBlock_.asmlines.append(construct_asm("pop", REG.ESI))
+            ASMBlock_.asmlines.append(construct_asm("pop", REG.EDX))
+            ASMBlock_.asmlines.append(construct_asm("pop", REG.ECX))
+            ASMBlock_.asmlines.append(construct_asm("pop", REG.EBX))
+            ASMBlock_.asmlines.append(construct_asm("pop", REG.EAX))
             SymbolManager_.pop_reg(REG.EBP)
-            ASMBlock_.asmlines.append(construct_asm(op="pop", src=REG.EBP))
-            ASMBlock_.asmlines.append(construct_asm(op="ret"))
+            ASMBlock_.asmlines.append(construct_asm("pop", REG.EBP))
+            ASMBlock_.asmlines.append(construct_asm("ret"))
 
         return ASMBlock_

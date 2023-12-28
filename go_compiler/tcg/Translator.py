@@ -3,7 +3,7 @@ from ..common.tac import TACOP, TACBlock, TACFile
 from ..common.Scope import Scope
 from ..tcg.BlockTranslator import ASMBlock, BlockTranslator
 from ..tcg.asm import ASMFile, ASMSection
-import logging
+from ..logger.logger import logger
 import pickle
 
 
@@ -20,27 +20,30 @@ class Translator:
     # std::shared_ptr<ASMFile> ASMFile_;
 
     def dataTranslate(self):
+        logger.warning("Start Data Translate")
         ASMSection_ = ASMSection()
         ASMSection_.name = ".data"
 
-        # todo 根据符号表的静态, SymbolManager_(Scope_) 变量，生成数据段
-        # todo 需要提供global的scope
-        # todo 在global的scope里面找全局变量
+        # TODO: 根据符号表的静态, SymbolManager_(Scope_) 变量，生成数据段
+        # TODO: 需要提供global的scope
+        # TODO: 在global的scope里面找全局变量
         ASMBlock_ = ASMBlock()
         ASMBlock_.name = ""
         global_: TACBlock = self.TACFile_["global"]
+        logger.info(f"TACFile: {self.TACFile_}")
         for i in range(len(global_)):
             ASMLine_: str = ""
             if global_[i].op == TACOP.ASSIGN:
                 ASMLine_ = global_[i].dst.value + "   equ  " + global_[i].src1.value
                 ASMBlock_.asmlines.append(ASMLine_)
             else:
-                logging.error("global op error: " + f"{pickle.dumps(global_[i].op)}")
+                logger.error("global op error: " + f"{pickle.dumps(global_[i].op)}")
 
         ASMSection_.asmblocks.append(ASMBlock_)
         self.ASMFile_.append(ASMSection_)
 
     def textTranslate(self):
+        logger.warning("Start Text Translate")
         ASMSection_ = ASMSection()
         ASMSection_.name = ".text"
 
@@ -54,14 +57,16 @@ class Translator:
         # todo 如何遍历TACblock待定
         # todo 以函数为单位
         for key, value in self.TACFile_.items():
-            # todo 根据函数名到block的map初始化
+            # TODO: 根据函数名到block的map初始化
             if key == "global" or key == "myprint" or len(value) == 0:
                 continue
-            logging.warning("start 翻译函数: " + key)
+            logger.debug("start 翻译函数: " + key)
             SymbolManager_: SymbolManager = SymbolManager(self.Global_Scope, key)
+            logger.info(f"InputValue: {key} : {value}")
             ASMBlock_: ASMBlock = self.BlockTranslator_.BlockTranslate(
                 SymbolManager_, value
             )
+
             ASMSection_.asmblocks.append(ASMBlock_)
 
         self.ASMFile_.append(ASMSection_)
@@ -71,7 +76,7 @@ class Translator:
         self.textTranslate()
 
     def OutputFile(self, filename: str):
-        print("Writing", filename)
+        logger.debug(f"Writing {filename}")
         with open(filename, "w") as outfile:
             for i in range(len(self.ASMFile_)):
                 if self.ASMFile_[i].name != "":

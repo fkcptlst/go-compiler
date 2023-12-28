@@ -1,10 +1,10 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 from ...tcg.asm import ASMLines
 from ...common.tac import TACLine
 from ..SymbolManager import SymbolManager
 
 
-class BaseTranslator:
+class BaseTranslator(ABC):
     def __init__(self) -> None:
         pass
 

@@ -5,7 +5,7 @@ from ..common.tac import TACOP, TACOPERANDTYPE, Operand, TACBlock
 from ..common.Scope import Symbol, Scope
 from ..common.REG import REG
 from ..common.UseInfo import UseInfo
-import logging
+from ..logger.logger import logger
 
 
 class POSTYPE(Enum):
@@ -27,6 +27,9 @@ class RelacedEeg:
         self.mem: int = (
             mem  # 如果该变量还要继续使用，且变量在内存中，则存储内存地址，否则为-1
         )
+
+    def __str__(self) -> str:
+        return f"(reg: {self.reg}, val: {self.val}, no_use: {self.no_use}, mem: {self.mem})"
 
     def copy(self):
         return RelacedEeg(self.reg, self.val, self.no_use, self.mem)
@@ -67,6 +70,9 @@ class SymbolManager:
 
         # reset local scope
 
+    def __repr__(self) -> str:
+        return f"SymbolManager[{self.name_}]"
+
     def set_scope(self, local_scope: Scope):
         self.local_scope_ = local_scope
 
@@ -80,7 +86,7 @@ class SymbolManager:
 
     # 计算一个代码块中, 变量的待用信息和活跃信息
     def cal_use_info(self, block: TACBlock):
-        logging.info("cal_use_info")
+        logger.debug("cal_use_info")
         # 初始化符号表中所有变量的待用信息
         self.use_info_.clear()
         # 根据基本块出口来设置变量的活跃信息
@@ -233,7 +239,7 @@ class SymbolManager:
     # 打印 当前通用寄存器中所存的变量
     def show_reg(self, reg: REG):
         if reg != REG.NONE:
-            logging.info(f"{reg.name}: {self.rvalue_[reg.value]}")
+            logger.info(f"{reg.name}: {self.rvalue_[reg.value]}")
         else:
             for i in range(REG.NONE.value):
                 en_var: str = self.rvalue_[i]
@@ -241,19 +247,20 @@ class SymbolManager:
                     var_next_use: int = self.use_info_[en_var].next_use
                 except KeyError:
                     var_next_use: int = 0
-                logging.info(f"{REG(i).name}: {en_var}, {var_next_use}")
+                logger.info(f"{REG(i).name}: {en_var}, {var_next_use}")
 
     # 打印 当前栈中所存的变量
     def show_mem(self, mem: int):
-        logging.info(f"len of mem: {self.len_}")
+        logger.info(f"len of mem: {self.len_}")
         for key, val in self.avalue_mem_.items():
-            logging.info(f"mem {val}: {key}")
+            logger.info(f"mem {val}: {key}")
 
     def position(self, variable: str) -> POSTYPE:
         pos = variable.find(":")
         scope_str = variable[:pos]
         ture_name = variable[pos + 1 :]
         scope_p: Scope = pickle.loads(eval(scope_str))
+
         if scope_p == self.global_scope_:
             return POSTYPE.GLOBAL
         elif variable in self.avalue_reg_:

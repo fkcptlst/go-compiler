@@ -9,6 +9,8 @@ from go_compiler.grammar.generated.GoParser import GoParser
 
 from go_compiler.icg.MyGoListener import MyGoListener, reset_my_func_count
 
+from go_compiler.logger.logger import logger
+
 
 def compile_to_3code(src_file_path: str, output_file_path: str):
     with open(src_file_path, "r") as f:
@@ -45,7 +47,7 @@ def diff_3code_files(file1: str, file2: str) -> bool:
 
 def test_main():
     working_dir = Path.cwd()
-    print(f"Working directory: {working_dir}", flush=True)
+    logger.info(f"Working directory: {working_dir}")
     assert (
         working_dir.name == "tests"
     ), "Please run this script from the tests directory"
@@ -72,7 +74,7 @@ def test_main():
     for src_file, compare_file in zip(src_files, compare_files):
         reset_my_func_count()
         out_file = (out_dir / src_file.name).with_suffix(".3code")
-        print(f"Compiling {src_file} -> {out_file}")
+        logger.info(f"Compiling {src_file} -> {out_file}")
 
         try:
             reset_my_func_count()
@@ -85,11 +87,11 @@ def test_main():
                 failed.append(out_file)
 
         except Exception as e:
-            print("Error: ", e)
+            logger.error("Error: ", e)
             failed.append(out_dir)
 
-    print(f"Failed: {failed}")
-    print(f"Success: {success}")
+    logger.info(f"Failed: {failed}")
+    logger.info(f"Success: {success}")
 
 
 if __name__ == "__main__":

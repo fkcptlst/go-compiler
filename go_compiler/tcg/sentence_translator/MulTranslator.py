@@ -5,7 +5,7 @@ from ...common.tac import TACOPERANDTYPE, TACLine
 from ...tcg.SymbolManager import POSTYPE, SymbolManager
 from ...tcg.sentence_translator.BaseTranslator import BaseTranslator
 from ...tcg.construct_asm import construct_asm
-import logging
+from ...logger.logger import logger
 
 
 class MulTranslator(BaseTranslator):
@@ -53,7 +53,7 @@ class MulTranslator(BaseTranslator):
                 case POSTYPE.GLOBAL:
                     asmlines.append(construct_asm("mov", REG.EAX, str_src1))
                 case _:
-                    logging.error("mul sentence: str1's pos wrong")
+                    logger.error("mul sentence: str1's pos wrong")
 
         SymbolManager_.set_avalue_reg(SymbolManager_.encode_var(str_src1), REG.EAX)
 
@@ -91,7 +91,7 @@ class MulTranslator(BaseTranslator):
                 case POSTYPE.GLOBAL:
                     asmlines.append(construct_asm("mov", reg_src2, str_src2))
                 case _:
-                    logging.error("mul sentence: str2's pos wrong")
+                    logger.error("mul sentence: str2's pos wrong")
 
         SymbolManager_.set_avalue_reg(SymbolManager_.encode_var(str_src2), reg_src2)
 

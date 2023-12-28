@@ -1,4 +1,4 @@
-import logging
+from ...logger.logger import logger
 from ...common.REG import REG
 from ...common.tac import TACOP, TACOPERANDTYPE, TACLine
 from ...tcg.SymbolManager import POSTYPE, SymbolManager
@@ -64,7 +64,7 @@ class CommonTranslator(BaseTranslator):
             elif pos == POSTYPE.GLOBAL:
                 asmlines.append(construct_asm("mov", reg_dst, str_src1))
             else:
-                logging.error("common default error")
+                logger.error("common default error")
 
         if TACLine_.src2.OperType == TACOPERANDTYPE.IMM:
             asmlines.append(construct_asm(op_string, reg_dst, str_src2))
@@ -80,7 +80,7 @@ class CommonTranslator(BaseTranslator):
             elif pos == POSTYPE.GLOBAL:
                 asmlines.append(construct_asm(op_string, reg_dst, str_src2))
             else:
-                logging.error("Common Default Error")
+                logger.error("Common Default Error")
 
         if reg_dst != REG.EDI:
             SymbolManager_.set_avalue_reg(str_dst_encode, reg_dst)

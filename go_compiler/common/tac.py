@@ -55,6 +55,9 @@ class Operand:
         self.use_info: UseInfo = UseInfo()
         self.OperType: TACOPERANDTYPE = type_
 
+    def __str__(self) -> str:
+        return f"(v:{self.value}, ui:{self.use_info}, ot:{self.OperType})"
+
 
 class TACLine:
     def __init__(
@@ -74,7 +77,7 @@ class TACLine:
         self.scope: Scope = scope
 
     def __str__(self):
-        return f"{self.line}:({to_string(self.op)},{self.src1.value},{self.src2.value},{self.dst.value})"
+        return f"{self.line}:(op:{to_string(self.op)}, src1:{self.src1}, src2:{self.src2}, dst:{self.dst})"
 
     def __repr__(self):
         return self.__str__()

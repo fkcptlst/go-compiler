@@ -4,7 +4,7 @@ from ...tcg.construct_asm import construct_asm
 from ...tcg.SymbolManager import POSTYPE, SymbolManager
 from ...tcg.asm import ASMLines
 from ...tcg.sentence_translator.BaseTranslator import BaseTranslator
-import logging
+from ...logger.logger import logger
 
 
 class FunretTranslator(BaseTranslator):
@@ -34,6 +34,6 @@ class FunretTranslator(BaseTranslator):
                 case POSTYPE.GLOBAL:
                     asmlines.append(construct_asm("mov", ret_mem, ret_src))
                 case _:
-                    logging.error("funret default error")
+                    logger.error("funret default error")
 
         return asmlines

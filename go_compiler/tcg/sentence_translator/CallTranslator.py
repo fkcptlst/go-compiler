@@ -1,4 +1,4 @@
-import logging
+from ...logger.logger import logger
 from ...common.REG import REG
 from ...common.tac import TACLine
 from ...tcg.SymbolManager import SymbolManager
@@ -22,6 +22,6 @@ class CallTranslator(BaseTranslator):
             SymbolManager_.set_esp_bias(-4 * para_num)
             asmlines.append(construct_asm("add", REG.ESP, str(4 * para_num)))
         else:
-            logging.error("call func error: ", fun_name)
+            logger.error("call func error: ", fun_name)
 
         return asmlines

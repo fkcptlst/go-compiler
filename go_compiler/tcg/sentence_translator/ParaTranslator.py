@@ -5,7 +5,7 @@ from ...common.tac import TACOPERANDTYPE
 from ...tcg.SymbolManager import POSTYPE, SymbolManager
 from ...tcg.construct_asm import construct_asm
 from ...tcg.sentence_translator.BaseTranslator import BaseTranslator
-import logging
+from ...logger.logger import logger
 
 
 class ParaTranslator(BaseTranslator):
@@ -44,6 +44,6 @@ class ParaTranslator(BaseTranslator):
                     asmlines.append(construct_asm("push", REG.EDI))
 
                 case _:
-                    logging.error("para case _ error")
+                    logger.error("para case _ error")
 
         return asmlines

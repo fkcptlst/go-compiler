@@ -38,11 +38,23 @@ class ASMBlock:
         self.name: str = ""
         self.asmlines: ASMLines = ASMLines()
 
+    def __str__(self) -> str:
+        return f"[{self.name}: {self.asmlines}]"
+
+    def __repr__(self) -> str:
+        return f"[{self.name}: {self.asmlines}]"
+
 
 class ASMSection:
     def __init__(self):
         self.name: str = ""
         self.asmblocks: list[ASMBlock] = []
+
+    def __str__(self) -> str:
+        return f"[{self.name}: {self.asmblocks}]"
+
+    def __repr__(self) -> str:
+        return f"[{self.name}: {self.asmblocks}]"
 
 
 ASMFile: TypeAlias = list[ASMSection]

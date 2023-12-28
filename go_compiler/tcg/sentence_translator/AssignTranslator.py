@@ -4,7 +4,7 @@ from ...tcg.SymbolManager import POSTYPE, RelacedEeg, SymbolManager
 from ...tcg.asm import ASMLines
 from ...tcg.construct_asm import construct_asm, construct_asm_mem
 from ...tcg.sentence_translator.BaseTranslator import BaseTranslator
-import logging
+from ...logger.logger import logger
 
 
 class AssignTranslator(BaseTranslator):
@@ -14,15 +14,20 @@ class AssignTranslator(BaseTranslator):
     def SentenceTranslate_(
         self, SymbolManager_: SymbolManager, TACLine_: TACLine
     ) -> ASMLines:
+        logger.warning("Assign SentenceTranslate_")
+        logger.info(f"Input {SymbolManager_}: {TACLine_}")
+
         asmlines: ASMLines = ASMLines()
         str_dst_encode = SymbolManager_.encode_var(TACLine_.dst.value)
         # post_dst = SymbolManager_.position(str_dst_encode)
+
         replaced_reg: RelacedEeg = RelacedEeg()
         dst_reg: REG = SymbolManager_.get_reg(str_dst_encode, "")
         if dst_reg == REG.NONE:
             replaced_reg = SymbolManager_.get_replaced_reg()
             dst_reg = replaced_reg.reg
 
+        logger.info(f"replaced_reg:{replaced_reg}")
         if not replaced_reg.no_use:
             if replaced_reg.mem == -1:
                 # 如果该变量内存中没有位置，push备份
@@ -37,21 +42,29 @@ class AssignTranslator(BaseTranslator):
         if TACLine_.dst.OperType == TACOPERANDTYPE.VAR:
             str_src1 = TACLine_.src1.value
             if TACLine_.src1.OperType == TACOPERANDTYPE.IMM:
+                # 如果 src1 是 立即数
                 asmlines.append(construct_asm("mov", dst_reg, str_src1))
             elif TACLine_.src1.OperType == TACOPERANDTYPE.VAR:
+                logger.warning("HIT")
+                # 如果 src1 是 变量，可能会是 寄存器、栈、全局变量
                 encode_str_src1 = SymbolManager_.encode_var(str_src1)
-                pos: POSTYPE = SymbolManager_.position(encode_str_src1)
-                if pos == POSTYPE.REG:
-                    src_reg: REG = SymbolManager_.avalue_reg(encode_str_src1)
-                    asmlines.append(construct_asm("mov", dst_reg, src_reg))
-                elif pos == POSTYPE.MEM:
-                    src_mem = SymbolManager_.avalue_mem(encode_str_src1)
-                    asmlines.append(construct_asm("mov", dst_reg, src_mem))
-                elif pos == POSTYPE.GLOBAL:
-                    asmlines.append(construct_asm("mov", dst_reg, str_src1))
-                else:
-                    logging.error("assign sentence: str1's pos wrong")
+                pos = SymbolManager_.position(encode_str_src1)
+                match pos:
+                    case POSTYPE.REG:
+                        src_reg = SymbolManager_.avalue_reg(encode_str_src1)
+                        asmlines.append(construct_asm("mov", dst_reg, src_reg))
+                    case POSTYPE.MEM:
+                        src_mem = SymbolManager_.avalue_mem(encode_str_src1)
+                        asmlines.append(construct_asm("mov", dst_reg, src_mem))
+                    case POSTYPE.GLOBAL:
+                        asmlines.append(construct_asm("mov", dst_reg, str_src1))
+                    case _:
+                        logger.error(
+                            f"assign sentence: str1's pos wrong src1:{TACLine_.src1}"
+                        )
+
             elif TACLine_.src1.OperType == TACOPERANDTYPE.PTR:
+                # 由于 TAC 对 operator[] 的处理，暂时可以认为这时指针一定在寄存器中
                 encode_str_src1 = SymbolManager_.encode_var(str_src1)
                 src_reg = SymbolManager_.avalue_reg(encode_str_src1)
                 asmlines.append(
@@ -59,12 +72,46 @@ class AssignTranslator(BaseTranslator):
                         "mov", to_string(dst_reg), construct_asm_mem(src_reg, 0)
                     )
                 )
+        elif TACLine_.dst.OperType == TACOPERANDTYPE.PTR:
+            str_src1 = TACLine_.src1.value
+            if TACLine_.src1.OperType == TACOPERANDTYPE.IMM:
+                # 如果 src1 是 立即数
+                asmlines.append(construct_asm("mov", dst_reg, 0, str_src1))
+            elif TACLine_.src1.OperType == TACOPERANDTYPE.VAR:
+                # 如果 src1 是 变量，可能会是 寄存器、栈、全局变量
+                encode_str_src1 = SymbolManager_.encode_var(str_src1)
+                pos = SymbolManager_.position(encode_str_src1)
+                match pos:
+                    case POSTYPE.REG:
+                        src_reg = SymbolManager_.avalue_reg(encode_str_src1)
+                        asmlines.append(construct_asm("mov", dst_reg, 0, src_reg))
+                    case POSTYPE.MEM:
+                        src_mem = SymbolManager_.avalue_mem(encode_str_src1)
+                        asmlines.append(construct_asm("mov", dst_reg, 0, src_mem))
+                    case POSTYPE.GLOBAL:
+                        asmlines.append(construct_asm("mov", dst_reg, 0, str_src1))
+                    case _:
+                        logger.error("assign sentence: str1's pos wrong")
+
+            elif TACLine_.src1.OperType == TACOPERANDTYPE.PTR:
+                encode_str_src1 = SymbolManager_.encode_var(str_src1)
+                src_reg = SymbolManager_.avalue_reg(encode_str_src1)
+                asmlines.append(
+                    construct_asm(
+                        "mov",
+                        construct_asm_mem(dst_reg, 0, "dword"),
+                        construct_asm_mem(src_reg, 0),
+                    )
+                )
         else:
-            logging.error("assign sentence: dst' TACOPERANDTYPE wrong")
+            logger.error("assign sentence: dst' TACOPERANDTYPE wrong")
 
         # TODO: 似乎不需要 如果 dst 也在内存中，更新其内存中的位置
         dst_mem = SymbolManager_.avalue_mem(str_dst_encode)
         if dst_mem != -1:
             asmlines.append(construct_asm("mov", dst_mem, dst_reg))
         SymbolManager_.set_avalue_reg(str_dst_encode, dst_reg)
+
+        logger.info(f"asmlines {asmlines}")
+
         return asmlines

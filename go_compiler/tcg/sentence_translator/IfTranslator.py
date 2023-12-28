@@ -5,7 +5,7 @@ from ...tcg.SymbolManager import POSTYPE, SymbolManager
 from ...tcg.asm import ASMLines
 from ...tcg.construct_asm import construct_asm
 from ...tcg.sentence_translator.BaseTranslator import BaseTranslator
-import logging
+from ...logger.logger import logger
 
 
 class IfTranslator(BaseTranslator):
@@ -40,7 +40,7 @@ class IfTranslator(BaseTranslator):
                     reg_src1 = REG.EDI
                     asmlines.append(construct_asm("mov", reg_src1, str_src1))
                 case _:
-                    logging.error("if src1 default error")
+                    logger.error("if src1 default error")
 
         if TACLine_.src2.OperType == TACOPERANDTYPE.IMM:
             asmlines.append(construct_asm("cmp", reg_src1, str_src2))
@@ -57,6 +57,6 @@ class IfTranslator(BaseTranslator):
                 case POSTYPE.GLOBAL:
                     asmlines.append(construct_asm("cmp", reg_src1, str_src2))
                 case _:
-                    logging.error("if src2 default error")
+                    logger.error("if src2 default error")
         asmlines.append(construct_asm(str_op, str_label))
         return asmlines
