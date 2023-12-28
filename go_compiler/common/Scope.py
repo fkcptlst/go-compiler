@@ -30,12 +30,18 @@ class Symbol:
         # string
         STRING = auto()
 
-    def __init__(self, name: str, scope: 'Scope', symbol_type: SymbolType, *,
-                 type_: Type = None,
-                 fun_ret_type_list: list[Type] = None,
-                 fun_para_type_list: list[Type] = None,
-                 is_array: bool = False,
-                 array_length: int = 0):
+    def __init__(
+        self,
+        name: str,
+        scope: "Scope",
+        symbol_type: SymbolType,
+        *,
+        type_: Type = None,
+        fun_ret_type_list: list[Type] = None,
+        fun_para_type_list: list[Type] = None,
+        is_array: bool = False,
+        array_length: int = 0,
+    ):
         self.name: str = name
         self.scope: Scope = scope
         self.symbol_type: Symbol.SymbolType = symbol_type
@@ -80,7 +86,7 @@ struct Scope{
 
 
 class Scope:
-    def __init__(self, enclosing_scope: 'Scope' = None):
+    def __init__(self, enclosing_scope: "Scope" = None):
         self.enclosing_scope: Scope = enclosing_scope
         self.fun_symbols: dict[str, Symbol] = {}
         self.para_symbols: dict[str, Symbol] = {}

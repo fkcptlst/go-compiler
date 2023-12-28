@@ -27,6 +27,16 @@ class TACOP(Enum):
     CREATLIST = auto()
 
 
+tacopmap = {
+    TACOP.IFEQ: "je",
+    TACOP.IFGE: "jge",
+    TACOP.IFGT: "jg",
+    TACOP.IFLE: "jle",
+    TACOP.IFLT: "jl",
+    TACOP.IFNEQ: "jne",
+}
+
+
 def to_string(op: TACOP) -> str:
     return op.name.lower()
 
@@ -45,9 +55,20 @@ class Operand:
         self.use_info: UseInfo = UseInfo()
         self.OperType: TACOPERANDTYPE = type_
 
+    def __str__(self) -> str:
+        return f"(v:{self.value}, ui:{self.use_info}, ot:{self.OperType})"
+
 
 class TACLine:
-    def __init__(self, line: int, op: TACOP, src1: Operand, src2: Operand, dst: Operand, scope: Scope):
+    def __init__(
+        self,
+        line: int,
+        op: TACOP,
+        src1: Operand,
+        src2: Operand,
+        dst: Operand,
+        scope: Scope,
+    ):
         self.line: int = line
         self.op: TACOP = op
         self.src1: Operand = src1
@@ -56,7 +77,7 @@ class TACLine:
         self.scope: Scope = scope
 
     def __str__(self):
-        return f"{self.line}:({to_string(self.op)},{self.src1.value},{self.src2.value},{self.dst.value})"
+        return f"{self.line}:(op:{to_string(self.op)}, src1:{self.src1}, src2:{self.src2}, dst:{self.dst})"
 
     def __repr__(self):
         return self.__str__()

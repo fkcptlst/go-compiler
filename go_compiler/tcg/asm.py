@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, auto
 from typing import TypeAlias
 
 
@@ -25,23 +25,36 @@ class ASMOperand:
 
 
 class ASMLine:
-    def __init__(self, op: ASMOP, oprands: List[ASMOperand]):
+    def __init__(self, op: ASMOP, oprands: list[ASMOperand]):
         self.op: ASMOP = op
-        self.oprands: List[ASMOperand] = oprands
+        self.oprands: list[ASMOperand] = oprands
 
 
-ASMLines: TypeAlias = List[str]
+ASMLines: TypeAlias = list[str]
 
 
 class ASMBlock:
-    def __init__(self, name: str, asmlines: ASMLines):
-        self.name: str = name
-        self.asmlines: ASMLines = asmlines
+    def __init__(self):
+        self.name: str = ""
+        self.asmlines: ASMLines = ASMLines()
+
+    def __str__(self) -> str:
+        return f"[{self.name}: {self.asmlines}]"
+
+    def __repr__(self) -> str:
+        return f"[{self.name}: {self.asmlines}]"
 
 
 class ASMSection:
-    def __init__(self, name: str, asmblocks: List[ASMBlock]):
-        self.name: str = name
-        self.asmblocks: List[ASMBlock] = asmblocks
+    def __init__(self):
+        self.name: str = ""
+        self.asmblocks: list[ASMBlock] = []
 
-ASMFile: TypeAlias = List[ASMSection]
+    def __str__(self) -> str:
+        return f"[{self.name}: {self.asmblocks}]"
+
+    def __repr__(self) -> str:
+        return f"[{self.name}: {self.asmblocks}]"
+
+
+ASMFile: TypeAlias = list[ASMSection]
