@@ -155,14 +155,14 @@ class MyGoListener(GoParserListener):
             identity: str = fun_identity[0]
             fun_symbol: Symbol | None = self.currentScope.resolve(identity)
             if fun_symbol is None:
-                logger.fatal(f"Undefined function: {identity}")
+                logger.error(f"Undefined function: {identity}")
                 logger.info(f"Undefined function: {identity}")
                 exit(-1)
             # 找到了函数
             arguments_values: list[str] = ctx_decoder(self.values[ctx.arguments()])
             # 判断参数数量合理
             if len(fun_symbol.fun_para_type_list) != len(arguments_values):
-                logger.fatal(f"Undefined function: {identity}")
+                logger.critical(f"Undefined function: {identity}")
                 logger.info(f"Wrong parameter number for : {identity}")
                 exit(-1)
 
@@ -207,14 +207,14 @@ class MyGoListener(GoParserListener):
             # 名字不是数组而是变量
             array_symbol: Symbol | None = self.currentScope.resolve(identity)
             if not array_symbol.is_array:
-                logger.fatal(f"Only array can be indexed: {identity}")
+                logger.critical(f"Only array can be indexed: {identity}")
                 logger.info(f"Only array can be indexed: {identity}")
                 exit(-1)
 
             array_index: list[str] = ctx_decoder(self.values[ctx.index().expression()])
             index_s: str = array_index[0]
             if 1 != len(array_index):
-                logger.fatal("wrong number of array index input")
+                logger.critical("wrong number of array index input")
                 logger.info("wrong number of array index input")
                 exit(-1)
 
@@ -222,9 +222,9 @@ class MyGoListener(GoParserListener):
             if self.is_digit(index_s):
                 idx: int = int(index_s)
                 if idx > array_symbol.array_length - 1 or idx < 0:
-                    logger.fatal(f"Array index out of bound: {identity}")
+                    logger.critical(f"Array index out of bound: {identity}")
                     logger.info(f"Array index out of bound: {identity}")
-                    logger.info(idx, array_symbol.array_length)
+                    logger.info(str(idx), array_symbol.array_length)
                     exit(-1)
 
             tmp_ptr_offset: str = self.create_local_var()
@@ -258,7 +258,7 @@ class MyGoListener(GoParserListener):
         left: list[str] = ctx_decoder(self.values[ctx.expression(0)])
         right: list[str] = ctx_decoder(self.values[ctx.expression(1)])
         if len(left) != 1 or len(right) != 1:
-            logger.fatal("wrong literal number1")
+            logger.critical("wrong literal number1")
             logger.info("wrong literal number1")
             exit(-1)
         dst: str = self.create_local_var()
@@ -285,7 +285,7 @@ class MyGoListener(GoParserListener):
         left: list[str] = ctx_decoder(self.values[ctx.expression(0)])
         right: list[str] = ctx_decoder(self.values[ctx.expression(1)])
         if len(left) != 1 or len(right) != 1:
-            logger.fatal("wrong literal number1")
+            logger.critical("wrong literal number1")
             logger.info("wrong literal number1")
             exit(-1)
 
@@ -368,7 +368,7 @@ class MyGoListener(GoParserListener):
         right: list[str] = ctx_decoder(self.values[ctx.expression(1)])
 
         if len(left) != 1 or len(right) != 1:
-            logger.fatal("wrong literal number2")
+            logger.critical("wrong literal number2")
             logger.info("wrong literal number2")
             exit(-1)
 
@@ -419,7 +419,7 @@ class MyGoListener(GoParserListener):
         identifier: str = ctx.IDENTIFIER().getText()
         # 判断是否函数名字重复
         if self.currentScope.cur_resolve(identifier) == SUCCESS:
-            logger.fatal(f"Redeclaration of function: {identifier}")
+            logger.critical(f"Redeclaration of function: {identifier}")
             logger.info(f"Redeclaration of function: {identifier}")
             exit(-1)
 
@@ -541,7 +541,7 @@ class MyGoListener(GoParserListener):
             )
             # 数量是否是1
             if 1 != len(right_values):
-                logger.fatal("wrong number of array length input")
+                logger.critical("wrong number of array length input")
                 logger.info("wrong number of array length input")
                 exit(-1)
 
@@ -551,11 +551,11 @@ class MyGoListener(GoParserListener):
                 array_length = int(array_length_s)
                 # 数组长度不为负数
                 if array_length < 1:
-                    logger.fatal("array length should >=1")
+                    logger.critical("array length should >=1")
                     logger.info("array length should >=1")
                     exit(-1)
             else:
-                logger.fatal("array declaration need static capacity")
+                logger.critical("array declaration need static capacity")
                 logger.info("array declaration need static capacity")
                 exit(-1)
 
@@ -579,7 +579,7 @@ class MyGoListener(GoParserListener):
 
             # 如果已经定义了，报错
             if self.currentScope.cur_resolve(varname) == SUCCESS:
-                logger.fatal(f"Redeclaration of parameter: {varname}")
+                logger.critical(f"Redeclaration of parameter: {varname}")
                 logger.info(f"Redeclaration of parameter: {varname}")
                 exit(-1)
             # 不重复，新建
@@ -609,7 +609,7 @@ class MyGoListener(GoParserListener):
             right_values: list[str] = ctx_decoder(self.values[ctx.expressionList()])
             # 数量是否匹配
             if n != len(right_values):
-                logger.fatal("wrong number matched")
+                logger.critical("wrong number matched")
                 logger.info("wrong number matched")
                 exit(-1)
             # 赋值
@@ -695,7 +695,7 @@ class MyGoListener(GoParserListener):
         if ctx.children[1].getText() == "++":
             left_values: list[str] = ctx_decoder(self.values[ctx.expression()])
             if len(left_values) != 1:
-                logger.fatal('too many parameter for incdec "++"')
+                logger.critical('too many parameter for incdec "++"')
                 logger.info('too many parameter for incdec "++"')
                 exit(-1)
 
@@ -738,7 +738,7 @@ class MyGoListener(GoParserListener):
             right_values: list[str] = ctx_decoder(self.values[ctx.expressionList(1)])
             # 左右参数量是否相等
             if len(left_values) != len(right_values):
-                logger.fatal("not equal number parameter for assign")
+                logger.critical("not equal number parameter for assign")
                 logger.info(
                     f"{left_values} != {right_values} not equal number parameter for assign"
                 )
@@ -763,7 +763,7 @@ class MyGoListener(GoParserListener):
             right_values: list[str] = ctx_decoder(self.values[ctx.expressionList(1)])
             # 左右参数量是否相等
             if len(left_values) != 1 or len(right_values) != 1:
-                logger.fatal('too many parameter for assign "+="')
+                logger.critical('too many parameter for assign "+="')
                 logger.info('too many parameter for assign "+="')
                 exit(-1)
 
@@ -817,7 +817,7 @@ class MyGoListener(GoParserListener):
             right_values: list[str] = ctx_decoder(self.values[ctx.expressionList()])
             # 数量是否匹配
             if n != len(right_values):
-                logger.fatal("wrong number matched")
+                logger.critical("wrong number matched")
                 logger.info("wrong number matched")
                 exit(-1)
             # 赋值
@@ -854,7 +854,7 @@ class MyGoListener(GoParserListener):
         for i in return_values:
             tmp: Symbol | None = self.currentScope.resolve(i)
             if tmp is None:
-                logger.fatal(f"Undefined: {i}")
+                logger.critical(f"Undefined: {i}")
                 logger.info(f"Undefined: {i}")
                 exit(-1)
 
@@ -918,7 +918,7 @@ class MyGoListener(GoParserListener):
     def exitOperandName(self, ctx: GoParser.OperandNameContext):
         tmp: Symbol | None = self.currentScope.resolve(ctx.IDENTIFIER().getText())
         if tmp is None:
-            logger.fatal(f"Undefined: {ctx.IDENTIFIER().getText()}")
+            logger.critical(f"Undefined: {ctx.IDENTIFIER().getText()}")
             exit(-1)
         self.values[ctx] = ctx.IDENTIFIER().getText() + DELIMITER
 
