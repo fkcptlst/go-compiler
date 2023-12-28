@@ -1,7 +1,6 @@
 from ..common.REG import REG, to_string
 import pickle
-from ..logger.logger import logger
-
+from loguru import logger
 
 def construct_asm(*args):
     op = args[0]

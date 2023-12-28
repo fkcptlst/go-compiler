@@ -5,7 +5,7 @@ from ..common.tac import TACOP, TACOPERANDTYPE, Operand, TACBlock
 from ..common.Scope import Symbol, Scope
 from ..common.REG import REG
 from ..common.UseInfo import UseInfo
-from ..logger.logger import logger
+from loguru import logger
 
 
 class POSTYPE(Enum):

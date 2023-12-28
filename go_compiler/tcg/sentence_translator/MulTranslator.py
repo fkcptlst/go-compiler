@@ -1,3 +1,4 @@
+from loguru import logger
 from ...common.REG import REG
 from ...common.tac import to_string
 from ...tcg.asm import ASMLines
@@ -5,7 +6,6 @@ from ...common.tac import TACOPERANDTYPE, TACLine
 from ...tcg.SymbolManager import POSTYPE, SymbolManager
 from ...tcg.sentence_translator.BaseTranslator import BaseTranslator
 from ...tcg.construct_asm import construct_asm
-from ...logger.logger import logger
 
 
 class MulTranslator(BaseTranslator):

@@ -1,3 +1,4 @@
+from loguru import logger
 from ...common.REG import REG
 from ...common.tac import TACOPERANDTYPE, TACLine
 from ...common.tac import tacopmap
@@ -5,7 +6,6 @@ from ...tcg.SymbolManager import POSTYPE, SymbolManager
 from ...tcg.asm import ASMLines
 from ...tcg.construct_asm import construct_asm
 from ...tcg.sentence_translator.BaseTranslator import BaseTranslator
-from ...logger.logger import logger
 
 
 class IfTranslator(BaseTranslator):

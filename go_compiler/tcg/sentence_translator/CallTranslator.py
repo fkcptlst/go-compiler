@@ -1,4 +1,4 @@
-from ...logger.logger import logger
+from loguru import logger
 from ...common.REG import REG
 from ...common.tac import TACLine
 from ...tcg.SymbolManager import SymbolManager

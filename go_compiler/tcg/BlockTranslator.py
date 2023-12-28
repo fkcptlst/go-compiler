@@ -21,7 +21,7 @@ from ..tcg.SymbolManager import SymbolManager
 from ..common.REG import REG
 from ..common.tac import TACOP, TACOPERANDTYPE, TACBlock
 
-from ..logger.logger import logger
+from loguru import logger
 
 TransMap = {
     TACOP.ASSIGN: AssignTranslator,

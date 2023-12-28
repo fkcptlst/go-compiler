@@ -1,4 +1,4 @@
-from ..logger.logger import logger
+from loguru import logger
 from antlr4.tree.Tree import ParseTree
 from typing import override
 from functools import partial

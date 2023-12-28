@@ -1,10 +1,10 @@
+import pickle
+from loguru import logger
 from ..tcg.SymbolManager import SymbolManager
 from ..common.tac import TACOP, TACBlock, TACFile
 from ..common.Scope import Scope
 from ..tcg.BlockTranslator import ASMBlock, BlockTranslator
 from ..tcg.asm import ASMFile, ASMSection
-from ..logger.logger import logger
-import pickle
 
 
 class Translator:

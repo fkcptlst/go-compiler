@@ -1,10 +1,12 @@
+from loguru import logger
+
 from ...common.REG import REG, to_string
 from ...common.tac import TACOPERANDTYPE, TACLine
 from ...tcg.SymbolManager import POSTYPE, RelacedEeg, SymbolManager
 from ...tcg.asm import ASMLines
 from ...tcg.construct_asm import construct_asm, construct_asm_mem
 from ...tcg.sentence_translator.BaseTranslator import BaseTranslator
-from ...logger.logger import logger
+
 
 
 class AssignTranslator(BaseTranslator):
