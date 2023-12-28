@@ -7,8 +7,8 @@ from ..grammar.generated.GoParser import GoParser
 from ..common.common import DELIMITER, SUCCESS
 from ..common.tac import TACFile, TACOP, TACOPERANDTYPE, Operand, TACLine, TACBlock
 from ..common.Scope import Scope, Symbol
-from ..icg.utils import ctx_decoder, ctx_encoder
-from ..icg.statement_icg.ForStatement import ForStatement
+from .utils import ctx_decoder, ctx_encoder
+from .statement_icg.ForStatement import ForStatement
 
 
 class MyGoListener(GoParserListener):
