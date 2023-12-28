@@ -1,5 +1,5 @@
 go_source_dir=$1
-output_dir=./tmp
+output_dir=./tmp/gt
 
 # 1. setup output dir
 if [ ! -d $output_dir ]; then

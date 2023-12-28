@@ -23,7 +23,7 @@ def get_src_tgt_pairs():
                                 f"make sure you are running pytest from project root")
 
     # 1. setup output directory
-    out_dir = tests_dir / Path("test_icg_out")
+    out_dir = Path("tmp/test_icg_out")
     out_dir.mkdir(exist_ok=True)
 
     src_tgt_pairs_dict_ = {}
@@ -57,7 +57,7 @@ src_tgt_pairs_dict = get_src_tgt_pairs()
 def test_01assign():
     src_file = src_tgt_pairs_dict["01assign.go"]["src"]
     tgt_file = src_tgt_pairs_dict["01assign.go"]["tgt"]
-    out_file = Path("tests/test_icg_out/01assign.go").with_suffix(".3code")
+    out_file = Path("tmp/test_icg_out/01assign.go").with_suffix(".3code")
     compile_to_3code(str(src_file), str(out_file))
     assert diff_3code_files(str(out_file), str(tgt_file)), f"3code files {out_file} and {tgt_file} differ"
 
@@ -65,7 +65,7 @@ def test_01assign():
 def test_02calculate():
     src_file = src_tgt_pairs_dict["02calculate.go"]["src"]
     tgt_file = src_tgt_pairs_dict["02calculate.go"]["tgt"]
-    out_file = Path("tests/test_icg_out/02calculate.go").with_suffix(".3code")
+    out_file = Path("tmp/test_icg_out/02calculate.go").with_suffix(".3code")
     compile_to_3code(str(src_file), str(out_file))
     assert diff_3code_files(str(out_file), str(tgt_file)), f"3code files {out_file} and {tgt_file} differ"
 
@@ -73,7 +73,7 @@ def test_02calculate():
 def test_03if():
     src_file = src_tgt_pairs_dict["03if.go"]["src"]
     tgt_file = src_tgt_pairs_dict["03if.go"]["tgt"]
-    out_file = Path("tests/test_icg_out/03if.go").with_suffix(".3code")
+    out_file = Path("tmp/test_icg_out/03if.go").with_suffix(".3code")
     compile_to_3code(str(src_file), str(out_file))
     assert diff_3code_files(str(out_file), str(tgt_file)), f"3code files {out_file} and {tgt_file} differ"
 
@@ -81,7 +81,7 @@ def test_03if():
 def test_04for():
     src_file = src_tgt_pairs_dict["04for.go"]["src"]
     tgt_file = src_tgt_pairs_dict["04for.go"]["tgt"]
-    out_file = Path("tests/test_icg_out/04for.go").with_suffix(".3code")
+    out_file = Path("tmp/test_icg_out/04for.go").with_suffix(".3code")
     compile_to_3code(str(src_file), str(out_file))
     assert diff_3code_files(str(out_file), str(tgt_file)), f"3code files {out_file} and {tgt_file} differ"
 
@@ -89,7 +89,7 @@ def test_04for():
 def test_05func():
     src_file = src_tgt_pairs_dict["05func.go"]["src"]
     tgt_file = src_tgt_pairs_dict["05func.go"]["tgt"]
-    out_file = Path("tests/test_icg_out/05func.go").with_suffix(".3code")
+    out_file = Path("tmp/test_icg_out/05func.go").with_suffix(".3code")
     compile_to_3code(str(src_file), str(out_file))
     assert diff_3code_files(str(out_file), str(tgt_file)), f"3code files {out_file} and {tgt_file} differ"
 
@@ -97,6 +97,6 @@ def test_05func():
 def test_06array():
     src_file = src_tgt_pairs_dict["06array.go"]["src"]
     tgt_file = src_tgt_pairs_dict["06array.go"]["tgt"]
-    out_file = Path("tests/test_icg_out/06array.go").with_suffix(".3code")
+    out_file = Path("tmp/test_icg_out/06array.go").with_suffix(".3code")
     compile_to_3code(str(src_file), str(out_file))
     assert diff_3code_files(str(out_file), str(tgt_file)), f"3code files {out_file} and {tgt_file} differ"
