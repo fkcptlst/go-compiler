@@ -110,6 +110,7 @@ def asm_to_bin():
     output_dir.mkdir(exist_ok=True, parents=True)
 
     for asm_file in asm_files:
+        print(f"{asm_file}->{output_dir}/{asm_file.stem}.o")
         assert os.system(
             f"nasm -f elf32 -o {output_dir}/{asm_file.stem}.o {asm_file}") == 0, f"error while asm_to_bin: {asm_file}"
 
