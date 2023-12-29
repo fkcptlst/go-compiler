@@ -33,5 +33,7 @@ jobs:
         with:
           go-version: ^1.21
         id: go
+      - name: Compiling ground truth Go
+        run: scripts/compile_go_testcases.sh tests/testdata/go_source
       - name: Run unit tests
         run: pytest tests/
