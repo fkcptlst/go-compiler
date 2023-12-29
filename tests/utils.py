@@ -158,11 +158,11 @@ def run_single_test(name: str):
     """
     print(f"cwd: {os.getcwd()}")
     ret_gt = subprocess.run(
-        f"bash -c './tmp/gt/{name}'"
+        f"./tmp/gt/{name}"
     )
 
     ret_test = subprocess.run(
-        f"bash -c './tmp/test_tcg_out_bin/{name}'"
+        f"./tmp/test_tcg_out_bin/{name}"
     )
 
     assert str(ret_gt.stdout) == str(ret_test.stdout), f"Not passing {name}"
