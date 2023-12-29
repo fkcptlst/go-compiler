@@ -110,7 +110,6 @@ def asm_to_bin():
     output_dir.mkdir(exist_ok=True, parents=True)
 
     for asm_file in asm_files:
-        print(f"{asm_file}->{output_dir}/{asm_file.stem}.o")
         assert os.system(
             f"nasm -f elf32 -o {output_dir}/{asm_file.stem}.o {asm_file}") == 0, f"error while asm_to_bin: {asm_file}"
 
@@ -123,7 +122,7 @@ def ld_single_with_myprint(file_name: str):
         file_name: file_name without suffix .o
     """
     assert os.system(
-        f'ld -m elf_i386 -o {file_name} tmp/test_tcg_out_bin/{file_name}.o tmp/print.o') == 0, f"error while ld_single_with_myprint({file_name})"
+        f'ld -m elf_i386 -o tmp/test_tcg_out_bin/{file_name} tmp/test_tcg_out_bin/{file_name}.o tmp/print.o') == 0, f"error while ld_single_with_myprint({file_name})"
 
 
 def ld_with_myprint():
@@ -157,9 +156,6 @@ def run_single_test(name: str):
     Args:
         name: the name of the go file without .go suffix
     """
-    print(f"cwd: {os.getcwd()}")
-    print(f"files under 'tmp': {list(os.walk("tmp"))}")
-
     ret_gt = subprocess.run(
         f"./tmp/gt/{name}"
     )
