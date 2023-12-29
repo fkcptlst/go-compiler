@@ -157,8 +157,8 @@ def run_single_test(name: str):
         name: the name of the go file without .go suffix
     """
     print(f"cwd: {os.getcwd()}")
-    print(f"files under 'tmp': {list(Path('tmp').iterdir())}")
-    print(f"files under 'tmp/gt': {list(Path('tmp/gt').iterdir())}")
+    print(f"files under 'tmp': {list(os.walk("tmp"))}")
+
     ret_gt = subprocess.run(
         f"./tmp/gt/{name}"
     )
