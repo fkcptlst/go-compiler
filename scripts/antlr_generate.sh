@@ -8,3 +8,6 @@ CLASSPATH=".:$ANTLR_JAR:$CLASSPATH"
 cd go_compiler/grammar/
 
 java -jar $ANTLR_JAR -Dlanguage=Python3 *.g4 -o generated
+
+git reset --hard HEAD >/dev/null 2>&1
+
