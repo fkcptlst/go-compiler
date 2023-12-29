@@ -88,7 +88,8 @@ def compile_go_files():
     """
     Compile the go files using official go compiler as ground truth
     """
-    os.system("scripts/compile_go_testcases.sh tests/testdata/go_source")
+    assert os.system(
+        "scripts/compile_go_testcases.sh tests/testdata/go_source") == 0, "error while executing compile_go_files"
 
 
 def compile_myprint():
@@ -97,7 +98,8 @@ def compile_myprint():
     """
     tmp_dir = Path("tmp")
     tmp_dir.mkdir(exist_ok=True, parents=True)
-    os.system(f"nasm -f elf32 -o {tmp_dir}/print.o tests/testdata/print.asm")
+    assert os.system(
+        f"nasm -f elf32 -o {tmp_dir}/print.o tests/testdata/print.asm") == 0, "error while executing compile_myprint"
 
 
 def asm_to_bin():
@@ -108,7 +110,8 @@ def asm_to_bin():
     output_dir.mkdir(exist_ok=True, parents=True)
 
     for asm_file in asm_files:
-        os.system(f"nasm -f elf32 -o {output_dir}/{asm_file.name}.o {asm_file}")
+        assert os.system(
+            f"nasm -f elf32 -o {output_dir}/{asm_file.name}.o {asm_file}") == 0, f"error while asm_to_bin: {asm_file}"
 
 
 def ld_single_with_myprint(file_name: str):
@@ -118,7 +121,8 @@ def ld_single_with_myprint(file_name: str):
     Args:
         file_name: file_name without suffix .o
     """
-    os.system(f'ld -m elf_i386 -o {file_name} tmp/test_tcg_out_bin/{file_name}.o tmp/print.o')
+    assert os.system(
+        f'ld -m elf_i386 -o {file_name} tmp/test_tcg_out_bin/{file_name}.o tmp/print.o') == 0, f"error while ld_single_with_myprint({file_name})"
 
 
 def ld_with_myprint():
