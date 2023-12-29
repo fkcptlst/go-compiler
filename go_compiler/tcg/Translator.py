@@ -20,7 +20,6 @@ class Translator:
     # std::shared_ptr<ASMFile> ASMFile_;
 
     def dataTranslate(self):
-        logger.warning("Start Data Translate")
         ASMSection_ = ASMSection()
         ASMSection_.name = ".data"
 
@@ -30,7 +29,7 @@ class Translator:
         ASMBlock_ = ASMBlock()
         ASMBlock_.name = ""
         global_: TACBlock = self.TACFile_["global"]
-        # logger.info(f"TACFile: {self.TACFile_}")
+        # logger.debug(f"TACFile: {self.TACFile_}")
         for i in range(len(global_)):
             ASMLine_: str = ""
             if global_[i].op == TACOP.ASSIGN:
@@ -43,7 +42,6 @@ class Translator:
         self.ASMFile_.append(ASMSection_)
 
     def textTranslate(self):
-        logger.warning("Start Text Translate")
         ASMSection_ = ASMSection()
         ASMSection_.name = ".text"
 
@@ -62,7 +60,7 @@ class Translator:
                 continue
             logger.debug("start 翻译函数: " + key)
             SymbolManager_: SymbolManager = SymbolManager(self.Global_Scope, key)
-            # logger.info(f"InputValue: {key} : {value}")
+            # logger.debug(f"InputValue: {key} : {value}")
             ASMBlock_: ASMBlock = self.BlockTranslator_.BlockTranslate(
                 SymbolManager_, value
             )

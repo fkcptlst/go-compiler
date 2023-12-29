@@ -25,7 +25,7 @@ class CommonTranslator(BaseTranslator):
     def SentenceTranslate_(
         self, SymbolManager_: SymbolManager, TACLine_: TACLine
     ) -> ASMLines:
-        logger.info(f"line: {TACLine_}")
+        logger.debug(f"line: {TACLine_}")
 
         asmlines: ASMLines = ASMLines()
         str_dst_encode = SymbolManager_.encode_var(TACLine_.dst.value)
@@ -45,19 +45,15 @@ class CommonTranslator(BaseTranslator):
 
             asmlines.append(construct_asm("mov", reg_dst, str_src1))
         else:
-            logger.warning(f"str_src1: {str_src1}")
             str_src1_encode = SymbolManager_.encode_var(str_src1)
             reg_dst = SymbolManager_.get_reg(str_dst_encode, str_src1_encode)
-            logger.warning(f"reg_dst: {reg_dst}")
             if reg_dst == REG.NONE:
-                logger.warning("reg_dst=None")
                 replaced_reg = SymbolManager_.get_replaced_reg()
                 reg_dst = replaced_reg.reg
                 SymbolManager_.push_reg(reg_dst)
                 asmlines.append(construct_asm("push", reg_dst))
             match SymbolManager_.position(str_src1_encode):
                 case POSTYPE.REG:
-                    logger.warning("Match REG")
                     reg_src1 = SymbolManager_.avalue_reg(str_src1_encode)
                     if reg_dst != reg_src1:
                         asmlines.append(construct_asm("mov", reg_dst, reg_src1))
@@ -65,11 +61,9 @@ class CommonTranslator(BaseTranslator):
                         SymbolManager_.push_reg(reg_src1)  # reg_src1 edi
                         asmlines.append(construct_asm("push", reg_src1))
                 case POSTYPE.MEM:
-                    logger.warning("Match MEM")
                     mem_src1 = SymbolManager_.avalue_mem(str_src1_encode)
                     asmlines.append(construct_asm("mov", reg_dst, mem_src1))
                 case POSTYPE.GLOBAL:
-                    logger.warning("Match Global")
                     asmlines.append(construct_asm("mov", reg_dst, str_src1))
                 case _:
                     logger.error("common default error")

@@ -146,15 +146,11 @@ class SymbolManager:
     def get_reg(self, dst, src1) -> REG:
         # 找到非活跃的寄存器
         if self.avalue_reg(dst) != REG.NONE:
-            logger.critical(f"1. {self.avalue_reg(dst)}")
             return self.avalue_reg(dst)
         if dst in self.avalue_mem_:
-            logger.critical("2. dst")
             return REG.EDI
         if (src1 != "") and (self.avalue_reg(src1) != REG.NONE):
-            logger.critical("3333")
             return self.avalue_reg(src1)
-        logger.critical(f"444 free {self.get_free_reg()}")
         return self.get_free_reg()
 
     # 寻找一个将要替换的寄存器
@@ -243,7 +239,7 @@ class SymbolManager:
     # 打印 当前通用寄存器中所存的变量
     def show_reg(self, reg: REG):
         if reg != REG.NONE:
-            logger.info(f"{reg.name}: {self.rvalue_[reg.value]}")
+            logger.debug(f"{reg.name}: {self.rvalue_[reg.value]}")
         else:
             for i in range(0, REG.NONE.value):
                 en_var: str = self.rvalue_[i]
@@ -251,13 +247,13 @@ class SymbolManager:
                     var_next_use: int = self.use_info_[en_var].next_use
                 except KeyError:
                     var_next_use: int = 0
-                logger.info(f"{REG(i).name}: {en_var}, {var_next_use}")
+                logger.debug(f"{REG(i).name}: {en_var}, {var_next_use}")
 
     # 打印 当前栈中所存的变量
     def show_mem(self, mem: int):
-        logger.info(f"len of mem: {self.len_}")
+        logger.debug(f"len of mem: {self.len_}")
         for key, val in self.avalue_mem_.items():
-            logger.info(f"mem {val}: {key}")
+            logger.debug(f"mem {val}: {key}")
 
     def position(self, variable: str) -> POSTYPE:
         pos = variable.find(":")

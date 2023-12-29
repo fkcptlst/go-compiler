@@ -24,3 +24,7 @@ dev = [
     "pytest~=7.4.3",
     "pytest-cov~=4.1.0"
 ]
+
+# cli entrypoint
+[project.scripts]
+go_compiler = "go_compiler.__main__:main"

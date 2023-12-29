@@ -15,8 +15,7 @@ class AssignTranslator(BaseTranslator):
     def SentenceTranslate_(
         self, SymbolManager_: SymbolManager, TACLine_: TACLine
     ) -> ASMLines:
-        logger.warning("Assign SentenceTranslate_")
-        logger.info(f"{SymbolManager_}: {TACLine_}")
+        logger.debug(f"{SymbolManager_}: {TACLine_}")
 
         asmlines: ASMLines = ASMLines()
         str_dst_encode = SymbolManager_.encode_var(TACLine_.dst.value)
@@ -28,7 +27,7 @@ class AssignTranslator(BaseTranslator):
             replaced_reg = SymbolManager_.get_replaced_reg()
             dst_reg = replaced_reg.reg
 
-        logger.info(f"replaced_reg:{replaced_reg}")
+        logger.debug(f"replaced_reg:{replaced_reg}")
         if not replaced_reg.no_use:
             if replaced_reg.mem == -1:
                 # 如果该变量内存中没有位置，push备份
@@ -113,6 +112,6 @@ class AssignTranslator(BaseTranslator):
             asmlines.append(construct_asm("mov", dst_mem, dst_reg))
         SymbolManager_.set_avalue_reg(str_dst_encode, dst_reg)
 
-        logger.info(f"asmlines {asmlines}")
+        logger.debug(f"asmlines {asmlines}")
 
         return asmlines
