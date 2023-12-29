@@ -27,4 +27,7 @@ done
 echo "3. compiling"
 cd $output_dir && find . -name "*.go" | xargs -I {} go build {}
 
-echo "4. done."
+# go back
+cd -
+
+echo "4. done. files in output_dir: $(ls -l $output_dir)"
