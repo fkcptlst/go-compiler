@@ -111,7 +111,7 @@ def asm_to_bin():
 
     for asm_file in asm_files:
         assert os.system(
-            f"nasm -f elf32 -o {output_dir}/{asm_file.name}.o {asm_file}") == 0, f"error while asm_to_bin: {asm_file}"
+            f"nasm -f elf32 -o {output_dir}/{asm_file.stem}.o {asm_file}") == 0, f"error while asm_to_bin: {asm_file}"
 
 
 def ld_single_with_myprint(file_name: str):
@@ -133,7 +133,7 @@ def ld_with_myprint():
     output_dir.mkdir(exist_ok=True, parents=True)
 
     for bin_file in bin_files:
-        ld_single_with_myprint(bin_file.name)
+        ld_single_with_myprint(bin_file.stem)
 
 
 def generate_asm_codes(input_dir: Path, output_dir: Path):
